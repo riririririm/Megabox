@@ -9,18 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.megabox.member.MemberService;
+
 /**
- * Servlet implementation class HomeController
+ * Servlet implementation class MemberController
  */
-@WebServlet("/HomeController")
-public class HomeController extends HttpServlet {
+@WebServlet("/MemberController")
+public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeController() {
+	MemberService memberService;
+    public MemberController() {
         super();
+        memberService = new MemberService();
         // TODO Auto-generated constructor stub
     }
 
@@ -28,8 +32,12 @@ public class HomeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher view = request.getRequestDispatcher("./WEB-INF/views/index.jsp");
+		String command = request.getPathInfo();
+		String path=null;
+		if(command.equals("/memberJoin")) {
+			path = (String) memberService.insert();
+		}
+		RequestDispatcher view = request.getRequestDispatcher(path);
 		view.forward(request, response);
 	}
 

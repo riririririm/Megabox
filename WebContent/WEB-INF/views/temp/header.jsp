@@ -145,7 +145,7 @@
   textarea {
     resize: none;
   }
- /* 하림 언니 바보 >< */
+
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -170,7 +170,7 @@
 						<li><a href="#band">상영시간표</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="#contact">커뮤니티</a></li>
-						<li><a href="#more">로그인</a></li>
+						<li><a href="${pageContext.request.contextPath}/member/memberJoin">로그인</a></li>
 					</ul>
 				</div>
 			</div>
