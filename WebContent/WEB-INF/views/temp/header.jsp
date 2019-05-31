@@ -145,7 +145,7 @@
   textarea {
     resize: none;
   }
-  
+ /* 하림 언니 바보 >< */
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
