@@ -99,13 +99,14 @@
     margin-bottom: 0;
     background-color: white;
     border: 0;
-    font-size: 15px !important;
+    font-size: 13px !important;
     color:black;
     
   }
   .nav>li>a { 
-    width:110px;
+    width:80px;
     text-align:center;
+    padding:15px 0px 15px 0px;
  	   
   }
   .navbar-nav li a:hover {
@@ -161,13 +162,14 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#myPage">
-					<img src="./images/header_nav_logo.png"></a>
+					<img src="/Megabox/images/header_nav_logo.png"></a>
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 					<!-- href #부분에 각자 보여줄 페이지 링크 넣어주세요 -->
 						<li><a href="#myPage">영화</a></li>
 						<li><a href="#band">상영시간표</a></li>
+						<li><a href="#store">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="#contact">커뮤니티</a></li>
 						<li><a href="#more">로그인</a></li>

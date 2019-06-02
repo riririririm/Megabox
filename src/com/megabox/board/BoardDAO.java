@@ -13,7 +13,7 @@ public interface BoardDAO {
 		public int getTotalCount(SearchRow searchRow, Connection conn) throws Exception;
 		
 		//select; // noticeDTo와 qnaDTO가 BoardDTO를 상속 받았으므로--다형성
-		public BoardDTO select(int num, Connection conn) throws Exception;
+		public BoardDTO selectOne(int num, Connection conn) throws Exception;
 		
 		//selectList
 		public List<BoardDTO> selectList(SearchRow searchRow, Connection conn) throws Exception;

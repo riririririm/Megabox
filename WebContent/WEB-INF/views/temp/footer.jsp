@@ -85,7 +85,7 @@
 		<div class="wrap">
 			<div class="logo">
 				<a href="" title="MEGABOX메인으로 가기"> 
-					<img src="./images/logo_footer_new.png" alt="MEGABOX">
+					<img src="/Megabox/images/logo_footer_new.png" alt="MEGABOX">
 				</a>
 			</div>
 			<div class="text2 ars">
