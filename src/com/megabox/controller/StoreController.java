@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
+import com.megabox.store.StoreService;
 
 /**
  * Servlet implementation class StoreController
@@ -17,13 +18,14 @@ import com.megabox.action.ActionForward;
 @WebServlet("/StoreController")
 public class StoreController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private StoreService storeService;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public StoreController() {
         super();
-        // TODO Auto-generated constructor stub
+        storeService = new StoreService();
     }
 
 	/**
@@ -34,11 +36,9 @@ public class StoreController extends HttpServlet {
 		ActionForward actionForward = new ActionForward();
 		
 		if(command.equals("/storeReg")) {
-			actionForward.setCheck(true);
-			actionForward.setPath("../WEB-INF/views/store/storeReg.jsp");
+			actionForward = storeService.insert(request, response);
 		}else if(command.equals("/storeList")) {
-			actionForward.setCheck(true);
-			actionForward.setPath("../WEB-INF/views/store/storeList.jsp");
+			actionForward = storeService.selectList(request, response);
 		}
 
 		if(actionForward.isCheck()) {

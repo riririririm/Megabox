@@ -16,8 +16,7 @@
     color: #777;
   }
   h3, h4 {
-    margin: 10px 0 30px 0;
-    letter-spacing: 10px;      
+   /*  margin: 10px 0 30px 0;    */   
     font-size: 20px;
     color: #111;
   }
@@ -80,7 +79,7 @@
     background-color: #fff;
     color: #000;
   }
-  .modal-header, h4, .close {
+ /*  .modal-header, h4, .close {
     background-color: #333;
     color: #fff !important;
     text-align: center;
@@ -88,7 +87,7 @@
   }
   .modal-header, .modal-body {
     padding: 40px 50px;
-  }
+  } */
   .nav-tabs li a {
     color: #777;
   }
