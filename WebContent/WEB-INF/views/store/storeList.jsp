@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>스토어</title>
 <jsp:include page="../temp/bootstrap.jsp"/>
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <style type="text/css">
 	h2{
@@ -53,7 +57,7 @@
   	width:55%;
   	min-height:560px;
   }
-  .row{
+  .row2{
   	margin: 0px;
   	padding: 25px 40px 20px 30px;
   	color:black;
@@ -109,9 +113,79 @@
     color: #503396;
     font-weight: bold;
     font-size:24px;
+    text-align: center;
   }
-  
-  
+  .store_payment_row > .f{
+  	font-size:14px;
+  	color:black;
+  }
+  .store_sms_info{
+    margin-top: 15px;
+    padding: 0 20px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+  }
+  .store_sms_info > dl {
+    padding: 11px 0 12px;
+    margin: 0px;
+  }
+  .store_sms_info dl:first-child {
+    border-bottom: 1px dashed #999;
+  }
+  .store_sms_info > dl > dt {
+    float: left;
+    font-size: 13px;
+  }
+  .store_sms_info > dl > dd {
+    float: right;
+  }
+  input[readonly="readonly"], input[readonly], input[text] {
+    color: #666 !important;
+    border: 1px solid #c2c2c2 !important;
+    background: #f2f2f2 !important;
+    width:65px;
+    text-align: center;
+    font-size: 12px;
+    height: 26px;
+  }
+  .receiver > input{
+  	color: #666 !important;
+    border: 1px solid #c2c2c2 !important;
+    background: white !important;
+    width:65px;
+    text-align: center;
+    font-size: 12px;
+    height: 26px;
+  }
+  .store_btn_wrap {
+    padding: 30px 0;
+    text-align: center;
+    line-height: 49px;
+  }
+  .btn-l {
+    float: none;
+    width: 200px !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 56px;
+    margin-left: 0 !important;
+    border-radius: 3px;
+  }
+  .btn-st2 {
+    color: #351F66;
+    border: 1px solid #351F66;
+    background-color: #fff;
+  }
+  .btn-l.btn-st1 {
+    border: 2px solid #503396;
+ }
+ .btn-st1 {
+    color: #fff;
+    border: 1px solid #351F66;
+    background-color: #503396;
+ }
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -125,7 +199,7 @@
 		//상품명 클릭시 모달창 뜨기
 		$(".alink").click(function() {
 			store_num= $(this).attr("title");
-			store_name = $("#num"+store_num).text();
+			store_name = $("#num"+store_num).text().trim();
 			store_category = $("#cate"+store_num).text();
 			store_period = $("#per"+store_num).text();
 			store_count= $("#count"+store_num).text();
@@ -146,8 +220,66 @@
 				str="ooo부터~ooo까지";
 			}
 			$(".s_dd").text(str);
-			$("#store_balance").text(store_count*store_price);
+			$("#store_balance").text(store_price);
 		}); 
+		
+		//kakaopay
+		$("#check_module").click(function () {
+         	var IMP = window.IMP; // 생략가능
+        	IMP.init('imp72232577');
+        	// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        	// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+	       	IMP.request_pay({
+        	pg: 'kakao', // version 1.1.0부터 지원.
+         	/*'kakao':카카오페이,  	html5_inicis':이니시스(웹표준결제)   	'nice':나이스페이       	'jtnet':제이티넷       	'uplus':LG유플러스       	'danal':다날
+        		'payco':페이코        	'syrup':시럽페이        	'paypal':페이팔*/
+        	pay_method: 'card',
+        	/*
+        	'samsung':삼성페이,
+        	'card':신용카드,
+        	'trans':실시간계좌이체,
+        	'vbank':가상계좌,
+        	'phone':휴대폰소액결제
+        	*/
+	       	merchant_uid: 'merchant_' + new Date().getTime(),
+        	/*
+        	merchant_uid에 경우
+        	https://docs.iamport.kr/implementation/payment
+        	위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+        	참고하세요.
+        	나중에 포스팅 해볼게요.
+        	*/
+        	name: '주문명:'+store_name,
+        	//결제창에서 보여질 이름
+        	amount: store_price,
+        	//가격
+         	buyer_email: 'iamport@siot.do',
+        	buyer_name: '구매자이름',
+        	buyer_tel: '010-1234-5678',
+        	buyer_addr: '서울특별시 강남구 삼성동',
+        	buyer_postcode: '123-456',
+         	//m_redirect_url: 'http://localhost/Megabox/store/storeList'
+        	/*
+        	모바일 결제시,
+        	결제가 끝나고 랜딩되는 URL을 지정
+        	(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
+        	*/
+        	 }, function (rsp) {
+        	console.log(rsp);
+        	if (rsp.success) {
+        	var msg = '결제가 완료되었습니다.';
+        	msg += '고유ID : ' + rsp.imp_uid;
+        	msg += '상점 거래ID : ' + rsp.merchant_uid;
+        	msg += '결제 금액 : ' + rsp.paid_amount;
+        	msg += '카드 승인번호 : ' + rsp.apply_num;
+        	} else {
+        	var msg = '결제에 실패하였습니다.';
+        	msg += '에러내용 : ' + rsp.error_msg;
+        	}
+        	alert(msg);
+        	}); 
+        	
+		});
 		
 	});
 </script>
@@ -175,14 +307,14 @@
 				<tr>
 					<td>${dto.store_num}</td>
 					<td id="cate${dto.store_num}">${dto.store_category}</td>
-					<td id="num${dto.store_num }">
+					<td id="num${dto.store_num}">
 						<c:catch>
 						<c:forEach begin="1" end="${dto.depth}" varStatus="i">
 						--
 						<c:if test="${i.last}">&gt;</c:if>
 						</c:forEach>
 						</c:catch>
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num }">${dto.store_name}</a></td>
+						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">${dto.store_name}</a></td>
 					<td>${dto.store_theater}</td>
 					<td>${dto.store_noTheater}</td>
 					<td id="per${dto.store_num}">${dto.store_period}</td>
@@ -207,10 +339,10 @@
           		<h3>image</h3>
           	</div>
           	<div class="right">
-          		<div class="row">
+          		<div class="row2">
           			<h2 class="right_title"></h2>
           		</div>
-          		<div class="row">
+          		<div class="row2">
           			<button class="btn_buy" data-toggle="modal" data-target="#myModal2">구매하기</button>
           		</div>
           	</div>
@@ -241,6 +373,34 @@
 				<h5 class="pull-left">총 결제금액</h5>
 				<span class="total_price pull-right"><strong id="store_balance"></strong>원</span>
 		  </div>
+		  <div class="store_payment_row">
+				<h5 class="pull-left">결제수단선택</h5>
+				<span class="f pull-right">
+					<input type="radio"> KaKaoPay
+				</span>
+		  </div>
+		  <div class="store_sms_info">
+				<dl class="clearfix">
+					<dt><label for="sender-mobileNo1">보내는 분 <span class="sel_line"></span></label></dt>
+					<dd>
+						<input type="text" id="sender-mobileNo1" name="sender-mobileNo1" title="휴대폰 번호 첫번째 자리 입력" maxlength="3" allowtype="number" validate="number" fieldname="보내는 분 휴대폰 번호" required="" value="1544" readonly="readonly"> -
+						<input type="text" id="sender-mobileNo2" name="sender-mobileNo2" title="휴대폰 번호 두번째 자리 입력" maxlength="4" allowtype="number" validate="number" fieldname="보내는 분 휴대폰 번호" required="" value="0070" readonly="readonly">
+					</dd>
+				</dl>
+				<dl class="clearfix">
+					<dt><label for="receiver-mobileNo1">받는 분 <span>(쿠폰번호가 전송됩니다)</span></label></dt>
+						<dd class="receiver">
+							<input type="text" id="receiver-mobileNo1" name="receiver-mobileNo1" title="휴대폰 번호 첫번째 자리 입력" value="010" maxlength="3" allowtype="number" validate="number" fieldname="받는 분 휴대폰 번호" required=""> -
+							<input type="text" id="receiver-mobileNo2" name="receiver-mobileNo2" title="휴대폰 번호 두번째 자리 입력" value="4111" maxlength="4" allowtype="number" validate="number" fieldname="받는 분 휴대폰 번호" required=""> -
+							<input type="text" id="receiver-mobileNo3" name="receiver-mobileNo3" title="휴대폰 번호 세번째 자리 입력" value="1520" maxlength="4" allowtype="number" validate="number" fieldname="받는 분 휴대폰 번호" required="">
+						</dd>
+				</dl>
+			</div>
+		  	
+		  	<div class="store_btn_wrap">
+				<button class="btn-l btn-st2" data-dismiss="modal" aria-hidden="true" onclick="cancelStorePay()">취소</button>
+				<button class="btn-l btn-st1" id="check_module">결제</button>
+			</div>
           
         </div><!-- end of modal2-body -->
       </div>
