@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
+import com.megabox.movie.MovieDAO;
+import com.megabox.movie.MovieService;
 
 /**
  * Servlet implementation class MovieController
@@ -17,13 +19,13 @@ import com.megabox.action.ActionForward;
 @WebServlet("/MovieController")
 public class MovieController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private MovieService movieService;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public MovieController() {
         super();
-        // TODO Auto-generated constructor stub
+        movieService = new MovieService();
     }
 
 	/**
@@ -34,8 +36,11 @@ public class MovieController extends HttpServlet {
 		String command = request.getPathInfo();
 		
 		if(command.equals("/movieReg")) {
-			actionForward.setCheck(true);
-			actionForward.setPath("../WEB-INF/views/movie/movieReg.jsp");
+			actionForward = movieService.insert(request, response);
+		}else if(command.equals("/movieTimetableAdmin")) {
+			actionForward = movieService.selectList(request, response);
+		}else if(command.equals("/movieTimetable")) {
+			actionForward = movieService.selectList(request, response);
 		}
 		
 		if(actionForward.isCheck()) {

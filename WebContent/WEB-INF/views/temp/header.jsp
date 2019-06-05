@@ -167,7 +167,7 @@
 					<ul class="nav navbar-nav navbar-right">
 					<!-- href #부분에 각자 보여줄 페이지 링크 넣어주세요 -->
 						<li><a href="#myPage">영화</a></li>
-						<li><a href="${pageContext.request.contextPath}/movie/movieReg">상영시간표</a></li>
+						<li><a href="${pageContext.request.contextPath}/movie/movieTimetableAdmin">상영시간표</a></li>
 						<li><a href="${pageContext.request.contextPath}/store/storeList">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="#contact">커뮤니티</a></li>
