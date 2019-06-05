@@ -335,6 +335,8 @@
 		</div>
 	</div>
 </div>
+
+<input id="ckck">
 <!-- 풋터 -->
 <jsp:include page="../temp/footer.jsp"/>
 <script type="text/javascript">
@@ -343,10 +345,19 @@
 		$('.ckbox').prop('checked', c);
 		$('.ckboxSelect').prop('checked', c);
 	});
-
 	
+		
 	$('.btn_ok').click(function() {
-		var c = true;
+		var ck = false;
+		$('.ckbox').each(function() {
+			ck = $(this).prop('checked');
+			if(ck){
+				$('#ckck').val(ck);				
+				return false;
+			}
+		});
+		
+		/* var c = true;
 		$('.ckbox').each(function() {
 			if(!$(this).prop('checked')){
 				c=false;
@@ -356,7 +367,7 @@
 			location.href="./memberJoin";
 		}else{
 			$('#btn_modal').trigger('click');
-		}
+		} */
 	});
 </script>
 </body>
