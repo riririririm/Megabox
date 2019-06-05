@@ -16,7 +16,6 @@
     color: #777;
   }
   h3, h4 {
-    margin: 10px 0 30px 0;
     letter-spacing: 10px;      
     font-size: 20px;
     color: #111;
@@ -48,11 +47,14 @@
   .carousel-caption h3 {
     color: #fff !important;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 960px) {
     .carousel-caption {
       display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+      
     }
+
   }
+  
   .bg-1 {
     background: #2d2d30;
     color: #bdbdbd;
@@ -80,7 +82,7 @@
     background-color: #fff;
     color: #000;
   }
-  .modal-header, h4, .close {
+/*   .modal-header, h4, .close {
     background-color: #333;
     color: #fff !important;
     text-align: center;
@@ -88,7 +90,7 @@
   }
   .modal-header, .modal-body {
     padding: 40px 50px;
-  }
+  } */
   .nav-tabs li a {
     color: #777;
   }
@@ -113,7 +115,7 @@
     color: #555 !important;
     
   } 
-   .navbar-nav li a {
+   .navbar-nav li {
     color: #555 !important;
      border-left: 1px solid #cccccc;
   } 
@@ -129,24 +131,18 @@
    .navbar-default .navbar-toggle {
     border-color: transparent;
   } 
-  .open .dropdown-toggle {
-    color: #fff;
-    background-color: #555 !important;
-  }
-  .dropdown-menu li a {
-    color: #000 !important;
-  }
-  .dropdown-menu li a:hover {
-    background-color: red !important;
-  }
-  
+
+
   .form-control {
     border-radius: 0;
   }
   textarea {
     resize: none;
   }
-  
+  .conainer{
+  	display:block;
+  }
+
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -172,20 +168,15 @@
 						<li><a href="#store">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="#contact">커뮤니티</a></li>
-						<li><a href="#more">로그인</a></li>
+						<li>
+							<jsp:include page="/WEB-INF/views/temp/header_drop_down.jsp"/>
+						</li>
 					</ul>
-				</div>
+				</div><!--헤더 전체부분-->
 			</div>
-				
-			</div>
-
 		</div>
+	</div>
 </nav>
-
-
-
-
-
 
 </body>
 </html>

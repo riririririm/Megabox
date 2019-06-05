@@ -8,4 +8,12 @@
     <servlet-name>home</servlet-name>
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>member</servlet-name>
+    <servlet-class>com.megabox.controller.MemberController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>member</servlet-name>
+    <url-pattern>/member/*</url-pattern>
+  </servlet-mapping>
 </web-app>

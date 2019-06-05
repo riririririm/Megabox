@@ -16,6 +16,7 @@
 	#contents_wrap {
 		width:100%;
 	
+	
 	}
 	.carousel-inner {
 		display: block;
@@ -57,12 +58,8 @@
 		hieght : 565px;
 		
 	
+	
 		}
-	
-	
-	
-	
-	
 	
 	#promotion_left {
 		width:550px;
