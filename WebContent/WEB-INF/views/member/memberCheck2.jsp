@@ -335,8 +335,8 @@
 		</div>
 	</div>
 </div>
-<input id="agreeck">
-<input id="selectCheck">
+
+<input id="ckck">
 <!-- 풋터 -->
 <jsp:include page="../temp/footer.jsp"/>
 <script type="text/javascript">
@@ -344,11 +344,30 @@
 		var c = $(this).prop('checked');
 		$('.ckbox').prop('checked', c);
 		$('.ckboxSelect').prop('checked', c);
-	});//전체 동의 체크시 체크박스 true
-
-	$('.btn_ok').click(function() {
-			location.href="./memberJoin";
+	});
+	
 		
+	$('.btn_ok').click(function() {
+		var ck = false;
+		$('.ckbox').each(function() {
+			ck = $(this).prop('checked');
+			if(ck){
+				$('#ckck').val(ck);				
+				return false;
+			}
+		});
+		
+		/* var c = true;
+		$('.ckbox').each(function() {
+			if(!$(this).prop('checked')){
+				c=false;
+			}
+		});
+		if(c){
+			location.href="./memberJoin";
+		}else{
+			$('#btn_modal').trigger('click');
+		} */
 	});
 </script>
 </body>

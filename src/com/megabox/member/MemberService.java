@@ -140,10 +140,14 @@ public class MemberService implements Action{
 			try {
 				conn = DBConnector.getConnect();
 				memberDTO = new MemberDTO();
+				String phone1 = request.getParameter("phone1");
+				String phone2 = request.getParameter("phone2");
+				String phone3 = request.getParameter("phone3");
+				String phone = phone1 + "-" + phone2 + "-" + phone3;
 				memberDTO.setId(request.getParameter("id"));
 				memberDTO.setPw(request.getParameter("pw1"));
 				memberDTO.setName(request.getParameter("name"));
-				memberDTO.setPhone(request.getParameter("phone"));
+				memberDTO.setPhone(phone);
 				memberDTO.setEmail(request.getParameter("email"));
 				result = memberDAO.memberJoin(conn, memberDTO);
 			} catch (Exception e) {

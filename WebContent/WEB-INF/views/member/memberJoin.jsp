@@ -102,7 +102,7 @@
     border-top: 1px solid #dcdcdc;
 	}
 	.form-style .form-table th label {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: normal;
 	}
 	.form-style .form-table td span {
@@ -110,7 +110,7 @@
 	}
 	.form-style .form-table td label{
     color: #666;
-    font-size: 12px;
+    font-size: 16px;
     margin-bottom: 0;
     font-weight: normal;
     vertical-align: middle;
@@ -159,7 +159,7 @@
 	}
 	.text-sub {
     color: #666;
-    font-size: 12px;
+    font-size: 16px;
 	}	
 	colgroup {
     display: table-column-group;
@@ -193,6 +193,10 @@
     width: 100%;
 	}
 
+	.phone_span{
+		font-size: 16px;
+		font-weight: 800;
+	}
 </style>
 </head>
 <body>
@@ -233,7 +237,7 @@
 							<label for="inputtext1">*아이디</label>
 						</th>
 						<td headers="th_joininput_info_id">
-							<input type="text" class="blank_ck" id="member_id" name="id" title="아이디"> 
+							<input type="text" class="blank_ck" id="id" name="id" title="아이디" maxlength="12"> 
 							<button type="button" id="dupl">중복확인</button>
 							<input type="text" id="dupl_check" value="0" hidden="hidden">
 							<span class="text-sub ml10">영문이나 숫자 혹은 그 조합 8~12자리</span>
@@ -245,9 +249,8 @@
 							<label for="inputtext2">*비밀번호</label>
 						</th>
 						<td headers="th_joininput_info_password">
-							<input type="password" class="blank_ck" id="member_pw" name="pw1" title="비밀번호">
-							<input type="text" id="pw1_ck" value="0"> 
-							<span class="text-sub" style="margin-left:91px;">영문, 숫자, 특수문자 조합 10자리 이상</span>
+							<input type="password" class="blank_ck" id="pw1" name="pw1" title="비밀번호" maxlength="20">
+							<span class="text-sub" style="margin-left:94px;">영문, 숫자, 특수문자 조합 10자리 이상</span>
 						</td>
 					</tr>
 					<tr>
@@ -255,8 +258,7 @@
 						<label for="inputtext3">*비밀번호 확인</label>
 						</th>
 						<td headers="th_joininput_info_passwordconfirm"> 
-						<input type="password" class="blank_ck" id="member_pw_ck" name="pw2" title="비밀번호">
-						<input type="text"id="pw2_ck"  value="0">
+						<input type="password" class="blank_ck" id="pw2" name="pw2" title="비밀번호">
 						</td>
 					</tr>
 					<tr>
@@ -264,13 +266,19 @@
 						<label for="inputtext4">*이름</label>
 						</th>
 						<td headers="th_joininput_info_name">
-						<input type="text" class="blank_ck" id="member_name" name="name" title="이름">
+						<input type="text" class="blank_ck" id="member_name" name="name" title="이름" maxlength="10">
 						</td>
 					</tr>
 					<tr>
-						<th scope="row" id="th_joininput_info_mobile">*휴대폰</th>
+						<th scope="row" id="th_joininput_info_mobile">
+						<label for="inputtext4">*휴대폰</label>
+						</th>
 						<td headers="th_joininput_info_mobile">
-						<input type="text" title="휴대폰" name="phone" class="w67 blank_ck" id="member_phone">
+						<input type="text" title="휴대폰" name="phone1" class="w67 blank_ck" id="phone1" maxlength="3">
+						<span class="phone_span">-</span>
+						<input type="text" title="휴대폰" name="phone2" class="w67 blank_ck" id="phone2" maxlength="4">
+						<span class="phone_span">-</span>
+						<input type="text" title="휴대폰" name="phone3" class="w67 blank_ck" id="phone3" maxlength="4">
 						</td>
 					</tr>
 					<tr>
@@ -278,7 +286,7 @@
 					<label for="inputtext9">*이메일</label>
 					</th>
 					<td headers="th_joininput_info_email">
-					<input type="text" id="member_email"  name="email" maxlength="30" class="blank_ck" title="이메일">
+					<input type="email" id="email"  name="email" maxlength="30" class="blank_ck" title="이메일">
 					</td>
 				</tr>
 				</tbody>
@@ -359,7 +367,7 @@
 <jsp:include page="../temp/footer.jsp"/>
 <script type="text/javascript">
 	$('#dupl').click(function() {
-			var len=$('#member_id').val().length;
+			var len=$('#id').val().length;
 			if(0<len && len<8){
 					$('#btn_modal').trigger("click");//강제클릭발생
 					$('.m_text').html("아이디는 숫자, 영문포함 8자리 이상만 가능합니다.");
@@ -370,7 +378,7 @@
 				$('#btn_modal').trigger('click');
 				$('.m_text').html("아이디는 숫자, 영문포함 12자리 이하만 가능합니다.");	
 			}else{
-				var id = $('#member_id').val();
+				var id = $('#id').val();
 				$.get("./memberDupl?id="+id, function(data) { //포워딩
 						var data = data.trim();
 						if(data=='1'){
@@ -384,18 +392,18 @@
 				});
 			}
 	});
-	$('#member_id').change(function() {
+	
+	$('#id').change(function() {
 		$('#dupl_check').val(0);
 	});
-	var pw1_check = $('#pw1_check').val();
-	var pw2_check = $('#pw2_check').val();
+	
 	
 	$('.join_ok').click(function() {
 		var pattern1 = /[0-9]/; 
 		var pattern2 = /[a-zA-Z]/;
 		var pattern3 = /[~!@#$%^&*><]/;
-		var pw1 = $('#member_pw').val();
-		var pw2 = $('#member_pw_ck').val();
+		var pw1 = $('#pw1').val();
+		var pw2 = $('#pw2').val();
 		var len = pw1.length;
 		var blank = true;
 		$('.blank_ck').each(function() {
@@ -417,13 +425,24 @@
 				blank = false;
 			}else if(len<10||!pattern1.test(pw1)||!pattern2.test(pw1)||!pattern3.test(pw1)){
 				$('#btn_modal').trigger('click');
-				$('.m_text').html("영문, 숫자, 특수문자 조합 10자 이상");
+				$('.m_text').html("비밀번호는 영문, 숫자, 특수문자 조합 10자 이상");
 				$('#member_pw').val("");
 				blank = false;
 			}else if(dupl_check == '0'){
 				$('#btn_modal').trigger('click');
 				$('.m_text').html("아이디 중복을 확인해주세요");
 				blank = false;
+			}else{
+				var email = $('#email').val();
+				var n = email.indexOf("@");
+				var dot = email.indexOf(".");
+				if(n==-1 || dot ==-1){
+					$('#btn_modal').trigger('click');
+					$('.m_text').html("이메일형식으로 입력해주세요.");
+					blank = false;
+				}else if(n!=-1 && dot!=-1){
+					blank = true;
+				}
 			}
 		}
 		if(blank){
