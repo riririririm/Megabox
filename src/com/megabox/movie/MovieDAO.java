@@ -4,16 +4,41 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.megabox.action.Action;
-import com.megabox.action.ActionForward;
 
 public class MovieDAO  {
 
+	public ArrayList<String> calcDateList(Connection con) throws Exception {
+		//상영시간표에서 날짜 리스트를 보여줄 메소드
+		Calendar calendar = new GregorianCalendar(Locale.KOREA);
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String start_date= fm.format(calendar.getTime()); //현재 날짜
+		calendar.add(Calendar.MONTH, 1); //1달 더함
+		String end_date = fm.format(calendar.getTime());
+		
+		Date sdate = fm.parse(start_date);
+		Date edate = fm.parse(end_date);
+		Date cdate = sdate;
+		
+		ArrayList<String> dates = new ArrayList<String>();
+		while(cdate.compareTo(edate)<=0) {
+			dates.add(fm.format(cdate));
+			Calendar c = Calendar.getInstance();
+			c.setTime(cdate);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			cdate=c.getTime();
+		}
+		
+		return dates;
+		
+	}
 	
 	public ArrayList<MovieDTO> selectList(Connection con) throws Exception {
 		// 등록한 영화 목록
@@ -39,6 +64,7 @@ public class MovieDAO  {
 		return ar;
 	}
 	public ArrayList<ShowTimeDTO> selectShowTimeList(String movie_code, Connection con) throws Exception {
+		//영화별 상영시간 리스트
 		ArrayList<ShowTimeDTO> ar = new ArrayList<ShowTimeDTO>();
 		String sql= "select * from showTime where movie_code=?";
 		PreparedStatement st = con.prepareStatement(sql);

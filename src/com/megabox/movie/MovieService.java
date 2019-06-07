@@ -25,15 +25,23 @@ public class MovieService implements Action{
 		Connection con=null;
 		ArrayList<MovieDTO> mar =new ArrayList<MovieDTO>();
 		ArrayList<ShowTimeDTO> sar = new ArrayList<ShowTimeDTO>();
+		ArrayList<ArrayList<ShowTimeDTO>>ssar = new ArrayList<ArrayList<ShowTimeDTO>>();
+		ArrayList<String> dates = new ArrayList<String>();
+		
 		try {
 			con = DBConnector.getConnect();
-			mar= movieDAO.selectList(con);
+			mar= movieDAO.selectList(con); //상영중인 영화리스트 가져오기
 			for(int i=0;i<mar.size();i++) {
-				sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);			
+				//각 영화의 상영시간리스트 가져오기
+				sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);	
+				ssar.add(sar);
 			}
 			
+			dates = movieDAO.calcDateList(con); // 날짜리스트 
+			
 			request.setAttribute("movie", mar);
-			request.setAttribute("showtime", sar);
+			request.setAttribute("showtime", ssar);
+			request.setAttribute("dates", dates);
 			
 			String command = request.getPathInfo();
 			if(command.equals("/movieTimetableAdmin")) {

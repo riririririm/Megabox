@@ -31,7 +31,7 @@
 				<td>상영시간</td>		
 			</tr>
 
-			<c:forEach items="${movie}" var="dto">
+			<c:forEach items="${movie}" var="dto" varStatus="i">
 				<tr>
 					<td>${dto.movie_code}</td>
 					<td>${dto.movie_kind}</td>
@@ -40,8 +40,13 @@
 					<td>${dto.auditorium}</td>
 					<td>${dto.view_date}</td>
 					<td>
-						<c:forEach items="${showtime}" var="st">
-							${st.show_time}&nbsp;
+						<c:forEach items="${showtime}" var="st" varStatus="j">
+							<c:if test="${i.index eq j.index }">
+							<c:forEach items="${st}" var="sdto" varStatus="k">
+								${sdto.show_time}
+							</c:forEach>
+							
+							</c:if>
 						</c:forEach>
 					</td>
 				</tr>

@@ -20,7 +20,11 @@
 	<form id="store" action="./storeReg" method="post">
 		<div class="form-group">
 			<label for="store_category">카테고리:</label> 
-			<input type="text" class="form-control" id="store_category" name="store_category" placeholder="상품카테고리를 입력하세요">
+			<select class="form-group" id="store_category" name="store_category">
+				<option>메가티켓</option>
+				<option>메가찬스</option>
+				<option>팝콘/음료/굿즈</option>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="store_num">상품코드:</label> 
