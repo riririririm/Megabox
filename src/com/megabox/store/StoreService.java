@@ -15,6 +15,13 @@ public class StoreService implements Action{
 		storeDAO = new StoreDAO();
 	}
 
+	public ActionForward store(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		actionForward.setPath("../WEB-INF/views/store/store.jsp");
+		actionForward.setCheck(true);
+		return actionForward;
+	}
+	
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
