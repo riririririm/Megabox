@@ -16,8 +16,14 @@
     <servlet-name>member</servlet-name>
     <url-pattern>/member/*</url-pattern>
   </servlet-mapping>
-  
-  
+  <servlet>
+    <servlet-name>myPage</servlet-name>
+    <servlet-class>com.megabox.controller.MyPageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>myPage</servlet-name>
+    <url-pattern>/myPage/*</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>store</servlet-name>
     <servlet-class>com.megabox.controller.StoreController</servlet-class>

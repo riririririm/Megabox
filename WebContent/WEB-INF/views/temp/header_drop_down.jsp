@@ -37,6 +37,14 @@
 	.member_hand{
 		cursor: pointer;
 	}
+	
+	.join_title Strong{
+		color: #6E2FC7;
+	}
+	.join_title h5 {
+		font-weight: bold;
+	}
+
 </style>
 </head>
 <body>
@@ -51,17 +59,24 @@
 			<div class="member_drop">
 				<c:if test="${sessionScope.member ne null }">
 					<h3>${member.id}</h3>
+					<a href="${pageContext.request.contextPath}/myPage/myPage">MyPage</a>
 					<a href="<%=application.getContextPath()%>/member/memberLogout">Logout</a>
 				</c:if>
 				<c:if test="${sessionScope.member eq null}">
 					<div>
 						<form method="post" action="./member/memberLogin">
-							<h5>MEGABOX Login</h5>
-							<input type="text" placeholder="아이디" id="member_id" name="id" value="${cookie.ckbox.value}">
-							<input type="password" placeholder="비밀번호" id="member_pw" name="pw">
-							<br>
-							<button>LOGIN</button>
-							<input type="checkbox" id="remember" name="remember">ID기억
+							<div class="join_title">
+								<h5><Strong>MEGABOX</Strong> Login</h5>
+							</div>
+							<div class="join_content">
+								<input type="text" placeholder="아이디" id="member_id" name="id" value="${cookie.ckbox.value}" >
+								<input type="password" placeholder="비밀번호" id="member_pw" name="pw">
+							</div>
+							<div class="join_content">
+								<button>LOGIN</button>
+								<input type="checkbox" id="remember" name="remember">ID기억
+							</div>
+								
 						</form>
 					</div>
 					<div>

@@ -157,13 +157,13 @@
 						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#myPage">
+					<a class="navbar-brand" href="${pageContext.request.contextPath}/index.do">
 					<img src="/Megabox/images/header_nav_logo.png"></a>
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 					<!-- href #부분에 각자 보여줄 페이지 링크 넣어주세요 -->
-						<li><a href="#myPage">영화</a></li>
+						<li><a href="#moovie">영화</a></li>
 						<li><a href="#band">상영시간표</a></li>
 						<li><a href="${pageContext.request.contextPath}/store/store">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>

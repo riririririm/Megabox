@@ -9,14 +9,14 @@
 <style type="text/css">
 	.container {
 		width: 100%;
-		height: 100%;
-		padding-top: 4%;
+		padding : 3% 0 0 0 ;
 		position : relative;
 		overflow : hidden;
 		clear:both;
 	}
 	
 	.sub_navi {
+	
     background-color: #f2f2f2;
     border-top: 1px solid #e1e1e1;
     border-bottom: 3px solid #503396;
@@ -30,6 +30,7 @@
 	.clearfix li{
 		list-style: none;
 	}
+
 	
 	#container {
     position: relative;
@@ -71,7 +72,7 @@
     height: 8px;
 	}
 	.form-style h4 {
-    font-size: 13px;
+    font-size: 18px;
     padding-left: 1rem;
     letter-spacing: -0.05em;
     margin: 40px 0 10px;
@@ -92,7 +93,7 @@
 	.form-style .form-table th {
     background-color: #f8f8f8;
     vertical-align: top;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: normal;
     border-top: 1px solid #dcdcdc ;
     padding: 5px;
@@ -119,7 +120,7 @@
     margin-left: 10px !important;
 	}
 	.form-style h4 {
-    font-size: 13px;
+    font-size: 18px;
     padding-left: 1rem;
     letter-spacing: -0.05em;
     margin: 40px 0 10px;
@@ -128,7 +129,7 @@
     display: table-column-group;
 	}
 	.personal_information_wrap .form-table td {
-    font-size: 12px;
+    font-size: 15px;
     text-align : center;
     border-left: 1px solid #dcdcdc;
     padding: 15px 20px !important;
@@ -197,6 +198,13 @@
 		font-size: 16px;
 		font-weight: 800;
 	}
+	.join_form {
+		margin-top: 20px;
+	}
+	.join_form p{
+		font-size: 20px;
+		
+	}
 </style>
 </head>
 <body>
@@ -205,15 +213,17 @@
 <div class="container">
 	<div class="sub_navi">
 		<div class="sub_navi_wrap">
-			<ul class="clearfix">
+			<ul class="clearfix join_form" style="padding-left: 22px;">
 				<li>
-					<a class="join" title="회원가입-본인인증 바로가기">회원가입</a>
+					<p>
+						회원가입
+					</p>
 				</li>
 			</ul>
 		</div>
 	</div>
 	<div id="container" class="width-fixed">
-		<div class="user_wrap" id="userWrap">
+		<div class="user_wrap" id="userWrap" style="padding-left:20px;"> 
 			<h2 class="mb35">
 			가입정보입력
 			<span class="ml10">
