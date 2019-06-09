@@ -1,117 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<jsp:include page="../temp/bootstrap.jsp" />
+<title>스토어</title>
+<jsp:include page="../temp/bootstrap.jsp"/>
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <style type="text/css">
-.container {
-	width: 100%;
-	height: 2000px;
-	padding-top: 50px;
-	padding-left: 0px;
-	padding-right: 0px;
-}
-.store_main {
-	width: 100%;
-}
-.store_main img {
-	width: 100%;
-	height: 400px;
-	position: absolute;
-	z-index: 1;
-}
-.store_sub {
-	margin-top: 360px;
-	position: absolute;
-	width: 100%;
-	padding-left: 12%;
-	padding-right: 15%;
-	z-index: 2;
-	background: url("../images/sub_menu_bg.png") repeat-x;
-}
-.store_sub li {
-	padding-top: 8px;
-	padding-bottom: 8px; 
-	font-size: 15px;
-	float: left;
-	z-index: 3;
-	padding-right: 50px;
-	list-style: none
-}
-.store_sub li >a{
-	text-decoration: none;
-	color: white;
-	font-weight: bold;
-}
-.blind {
-	padding-top: 150px;
-	padding-left: 15%;
-	padding-right: 15%;
-	color: white;
-	z-index: 4;
-	position: absolute;
-	font-size: 20px;
-}
-.sub_menu{
-	margin-top: 400px;
-	padding-left: 15%;
-	padding-right: 15%;
-}
-.ticket{
-	clear: both;
-	font-weight : bold;
-	padding-top: 20px;
-	font-size: 500;
-}
-.ticket_list li{
-	list-style: none;
-	float : left;
-	margin-right: 30px;
-	height : 320px;
-	border: 1px solid #9999;
-	text-decoration: none;
-	color: #333;
-}
-.ticket_list img{
-	width: 200px;
-	height: 200px;
-}
-.ticket_info{
-	padding-top: 10px;
-	padding-left : 10px;
-	font-size: 18px;
-	font-weight: bold;
-	width : 200px;
-	word-wrap: break-word;
-}
-.ticket_price{
-	padding-right : 8px;
-	font-size: 18px;
-	font-weight: bold;
-	float : right;
-}
-.ticket_category{
-	display: none;
-}
-.tt{
-	height: 285px;
-}
-.chance{
-	clear:both;
-	font-weight : bold;
-	padding-top : 50px;
-	font-size: 500;
-}
-.modal-header, .close {
+	h2{
+		margin:0px;
+	}
+	.container{
+		margin-top: 40px;
+		min-height:800px;
+	}
+	.modal-header, .close {
     background-color: white;
     color: black !important;
     text-align: center;
@@ -277,9 +186,6 @@
     border: 1px solid #351F66;
     background-color: #503396;
  }
- .reg_btn{
- 	float:right;
- }
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -293,10 +199,10 @@
 		//상품명 클릭시 모달창 뜨기
 		$(".alink").click(function() {
 			store_num= $(this).attr("title");
-			store_name = $("#name"+store_num).text().trim();
-			store_category = $("#cate"+store_num).text().trim();
+			store_name = $("#num"+store_num).text().trim();
+			store_category = $("#cate"+store_num).text();
 			store_period = $("#per"+store_num).text();
-			//store_count= $("#count"+store_num).text();
+			store_count= $("#count"+store_num).text();
 			store_price= $("#price"+store_num).text();
 			$(".modal-title").text(store_category);
 			$(".right_title").text(store_name);
@@ -310,7 +216,7 @@
 				str="예매 가능 유효기간은 구매일로부터 "+store_period/12+"년입니다"
 			}else if(store_category=="메가찬스"){
 				str="＜주말/공휴일 사용가능, 종영시 사용 불가＞"
-			}else if(store_category=="팝콘/음료/굿즈"){
+			}else{
 				str="ooo부터~ooo까지";
 			}
 			$(".s_dd").text(str);
@@ -320,13 +226,29 @@
 		//kakaopay
 		$("#check_module").click(function () {
          	var IMP = window.IMP; // 생략가능
-        	IMP.init('imp72232577');// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        	IMP.init('imp72232577');
+        	// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        	// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
 	       	IMP.request_pay({
         	pg: 'kakao', // version 1.1.0부터 지원.
          	/*'kakao':카카오페이,  	html5_inicis':이니시스(웹표준결제)   	'nice':나이스페이       	'jtnet':제이티넷       	'uplus':LG유플러스       	'danal':다날
         		'payco':페이코        	'syrup':시럽페이        	'paypal':페이팔*/
         	pay_method: 'card',
+        	/*
+        	'samsung':삼성페이,
+        	'card':신용카드,
+        	'trans':실시간계좌이체,
+        	'vbank':가상계좌,
+        	'phone':휴대폰소액결제
+        	*/
 	       	merchant_uid: 'merchant_' + new Date().getTime(),
+        	/*
+        	merchant_uid에 경우
+        	https://docs.iamport.kr/implementation/payment
+        	위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+        	참고하세요.
+        	나중에 포스팅 해볼게요.
+        	*/
         	name: '주문명:'+store_name,
         	//결제창에서 보여질 이름
         	amount: store_price,
@@ -363,134 +285,46 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../temp/header.jsp" />
+	<jsp:include page="../temp/header.jsp"/>
 	<div class="container">
-		<div class="store_main">
-			<img src="../images/store_bg.png">
-			<div class="content_wrap">
-				<div class="blind">
-					<strong>MEGABOX </strong>STORE<br> 더 즐거운 영화감상을 하는방법!<br>
-					스토어의 다양한 상품과 함께 하세요!<br>
-					<div class="store_text1">메가박스의 고객을 위한 다양한 상품을 제공합니다.</div>
-				</div>
-			</div>
-			<div class="store_sub">
-				<ul>
-					<li><a>메가티켓</a></li>
-					<li><a>메가찬스</a></li>
-					<li><a>팝콘/음료/굿즈</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="reset"></div>
-		
-		<div class="sub_menu">
-			<div class="ticket">메가티켓</div>
-			<div class="reg_btn">
-				<a href="./storeReg" class="btn btn-primary">상품등록</a>
-			</div>
-			
-			<div class="ticket">
-				<div class="ticket_list">
-					<ul>
-						<c:forEach items ="${megaTicket}" var="dto" varStatus="i">
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">
-						<li>
-							<div class="tt">
-								<img alt="" src="../images/ticket${i.count}.jpg" >
-								<div class="ticket_info" id="name${dto.store_num}">
-									${dto.store_name}
-								</div>
-							</div>
-							<div class="ticket_price" id="price${dto.store_num}">
-								${dto.store_price}
-							</div>	
-							<div class="ticket_category" id="cate${dto.store_num}"> <!-- display none -->
-								${dto.store_category}
-							</div>							
-							<div class="ticket_category" id="per${dto.store_num}"> <!-- display none -->
-								${dto.store_period}
-							</div>	
-							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
-								${dto.store_price}
-							</div>										
-						</li>
-						</a>
+		<h1> 스토어 리스트 페이지 </h1>
+		<a href="./storeReg" class="btn btn-primary">상품등록</a>
+		<table class="table table-hover">
+			<tr>
+				<td>상품코드</td>
+				<td>카테고리</td>
+				<td>상품명</td>
+				<td>사용가능매장</td>
+				<td>사용불가매장</td>
+				<td>유효기간</td>
+				<td>1회 구매가능 횟수</td>
+				<td>취소가능여부</td>
+				<td>가격</td>
+				
+			</tr>
+
+			<c:forEach items="${list}" var="dto">
+				<tr>
+					<td>${dto.store_num}</td>
+					<td id="cate${dto.store_num}">${dto.store_category}</td>
+					<td id="num${dto.store_num}">
+						<c:catch>
+						<c:forEach begin="1" end="${dto.depth}" varStatus="i">
+						--
+						<c:if test="${i.last}">&gt;</c:if>
 						</c:forEach>
-						
-					</ul>
-				</div>
-			</div> 
-			
-			<div class="chance">메가찬스</div>
-			<div class="ticket">
-				<div class="ticket_list">
-					<ul>
-						<c:forEach items ="${megaChance}" var="dto" varStatus="i">
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">
-						<li>
-							<div class="tt">
-								<img alt="" src="../images/chance${i.count}.jpg" >
-								<div class="ticket_info" id="name${dto.store_num}">
-									${dto.store_name}
-								</div>
-							</div>
-							<div class="ticket_price" id="price${dto.store_num}">
-								${dto.store_price}
-							</div>	
-							<div class="ticket_category" id="cate${dto.store_num}"><!-- display none -->
-								${dto.store_category}
-							</div>		
-							<div class="ticket_category" id="per${dto.store_num}"> <!-- display none -->
-								${dto.store_period}
-							</div>	
-							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
-								${dto.store_price}
-							</div>										
-						</li>
-						</a>
-						</c:forEach>
-						
-					</ul>
-				</div>
-			</div>
-			
-			<div class="chance">팝콘/음료/굿즈</div>
-			<div class="ticket">
-				<div class="ticket_list">
-					<ul>
-						<c:forEach items ="${goods}" var="dto" varStatus="i">
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">
-						<li>
-							<div class="tt">
-								<img alt="" src="../images/pop${i.count}.jpg" >
-								<div class="ticket_info" id="name${dto.store_num}">
-									${dto.store_name}
-								</div>
-							</div>
-							<div class="ticket_price" id="price${dto.store_num}">
-								${dto.store_price}
-							</div>	
-							<div class="ticket_category" id="cate${dto.store_num}"> <!-- display none -->
-								${dto.store_category}
-							</div>	
-							<div class="ticket_category" id="per${dto.store_num}"> <!-- display none -->
-								${dto.store_period}
-							</div>	
-							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
-								${dto.store_price}
-							</div>																
-						</li>
-						</a>
-						</c:forEach>
-						
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!-- end of sub_menu -->
+						</c:catch>
+						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">${dto.store_name}</a></td>
+					<td>${dto.store_theater}</td>
+					<td>${dto.store_noTheater}</td>
+					<td id="per${dto.store_num}">${dto.store_period}</td>
+					<td id="count${dto.store_num}">${dto.store_count}</td>
+					<td>${dto.store_cancel}</td>
+					<td id="price${dto.store_num}">${dto.store_price}</td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
-	
 	
 	<!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -516,7 +350,6 @@
       </div>
     </div>
   </div>
-  
   
   <!-- modal 2 -->
   <div class="modal fade" id="myModal2" role="dialog">
@@ -573,8 +406,9 @@
       </div>
       
     </div>
-  </div><!-- end of modal2 -->
+  </div>
 	
-	<jsp:include page="../temp/footer.jsp" />
+	
+	<jsp:include page="../temp/footer.jsp"/>
 </body>
 </html>

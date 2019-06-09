@@ -5,7 +5,7 @@ public class StoreDTO {
 	private String store_category;
 	private String store_name;
 	private String store_theater;
-	private String store_noTheater;
+	//private String store_noTheater;
 	private int store_period;
 	private int store_count;
 	private String store_cancel;
@@ -35,12 +35,12 @@ public class StoreDTO {
 	public void setStore_theater(String store_theater) {
 		this.store_theater = store_theater;
 	}
-	public String getStore_noTheater() {
-		return store_noTheater;
-	}
-	public void setStore_noTheater(String store_noTheater) {
-		this.store_noTheater = store_noTheater;
-	}
+//	public String getStore_noTheater() {
+//		return store_noTheater;
+//	}
+//	public void setStore_noTheater(String store_noTheater) {
+//		this.store_noTheater = store_noTheater;
+//	}
 	public int getStore_period() {
 		return store_period;
 	}

@@ -39,8 +39,6 @@ public class StoreController extends HttpServlet {
 			actionForward = storeService.insert(request, response);
 		}else if(command.equals("/storeList")) {
 			actionForward = storeService.selectList(request, response);
-		}else if(command.equals("/store")) {
-			actionForward = storeService.store(request, response);
 		}
 		
 

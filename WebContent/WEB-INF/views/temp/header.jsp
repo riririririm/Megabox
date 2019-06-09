@@ -69,7 +69,7 @@
 
   .btn {
     padding: 10px 20px;
-    background-color: #333;
+    background-color: #503396;
     color: #f1f1f1;
     border-radius: 0;
     transition: .2s;

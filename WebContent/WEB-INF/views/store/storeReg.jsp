@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,10 @@
 		width:60%;
 		margin-top: 40px;
 	}
+	.store_noTheater{
+		width:150px;
+	}
+	
 </style>
 </head>
 <body>
@@ -26,10 +31,10 @@
 				<option>팝콘/음료/굿즈</option>
 			</select>
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="store_num">상품코드:</label> 
 			<input type="text" class="form-control" id="store_num" name="store_num" placeholder="상품코드를 입력하세요">
-		</div>
+		</div> -->
 		<div class="form-group">
 			<label for="store_name">상품명:</label> 
 			<input type="text" class="form-control" id="store_name" name="store_name" placeholder="상품명을 입력하세요">
@@ -40,7 +45,16 @@
 		</div>
 		<div class="form-group">
 			<label for="store_noTheater">사용불가능 영화관:</label> 
+			<!-- 
 			<input type="text" class="form-control" id="store_noTheater" name="store_noTheater"  placeholder="사용불가능한 영화관을 입력하세요">
+			-->
+			<div class="form-group" data-toggle="buttons">
+				<c:forEach items="${theater}" var="dto">
+					<label class="btn btn-default store_noTheater">
+						<input type="checkbox" class="store_noTheater" name="store_noTheater" value="${dto.theater_name}">${dto.theater_name}
+					</label>
+				</c:forEach>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="store_period">유효기간:</label> 
