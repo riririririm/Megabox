@@ -18,26 +18,54 @@
 		align-items: center;
 	}
 	.container{
-		min-height: 800px;
+		min-height:2000px;
 		margin-top: 50px;
 	}
 	.step1{
 		width:25%;		
-		height: 30px;
-		background: #555;
 		float: left;
 	}
 	.col-head{
 		color:white;
 		text-align: center;
 		vertical-align: middle;
+		background-color: #555;
 	}
-	.col-body .col-body>ul{
+	.col-body {
+	height: 500px;
+	overflow: auto;
+	}
+	.col-body>ul{
 		width: :100%;
-		
 	}
+	
 
 </style>
+<script type="text/javascript">
+	$(function() {
+		var m="";//movie
+		var th=""; //theater
+		var d=""; //date
+		var sh=""; //showtime
+	
+		$(".movie").click(function() {
+			m = $(this).text().trim();
+			alert(m);
+		});
+		$(".theater").click(function() {
+			th = $(this).text().trim();
+			alert(th);
+		});
+		$(".date").click(function() {
+			d = $(this).text().trim();
+			alert(d);
+		});
+		$(".showtime").click(function() {
+			sh = $(this).text().trim();
+			alert(sh);
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -54,7 +82,7 @@
 					<div class="movie-list">
 						<ul>
 							<c:forEach items="${movie}" var="dto">
-								<li>${dto.movie_title}(${dto.movie_kind})</li>
+								<li class="movie">${dto.movie_title}(${dto.movie_kind})</li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -69,8 +97,8 @@
 				<div class="col-body">
 					<div class="movie-list">
 						<ul>
-							<c:forEach items="${movie}" var="dto">
-								<li>${dto.theater}</li>
+							<c:forEach items="${theater}" var="dto">
+								<li class="theater">${dto.theater_name}</li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -87,13 +115,29 @@
 					<div class="movie-list">
 						<ul>
 							<c:forEach items="${dates}" var="date">
-								<li>${date }</li>
+								<li class="date">${date }</li>
 							</c:forEach>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<!----------step3 날짜---------->
+			
+			<div class="step1">
+				<div class="col-head">
+					<p>시간</p>
+				</div>
+				<div class="col-body">
+					<div class="movie-list">
+						<ul>
+							<c:forEach items="${dates}" var="date">
+								<li class="showtime">${date }</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!----------step4 시간---------->
 		
 		</div> 
 		<!-- end of steps -->

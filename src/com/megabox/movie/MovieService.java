@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
+import com.megabox.theater.TheaterDAO;
+import com.megabox.theater.TheaterDTO;
 import com.megabox.util.DBConnector;
 
 public class MovieService implements Action{
 	private MovieDAO movieDAO;
+	private TheaterDAO theaterDAO;
 	
 	public MovieService() {
 		movieDAO = new MovieDAO();
+		theaterDAO =new TheaterDAO();
 	}
 
 	@Override
@@ -27,6 +31,7 @@ public class MovieService implements Action{
 		ArrayList<ShowTimeDTO> sar = new ArrayList<ShowTimeDTO>();
 		ArrayList<ArrayList<ShowTimeDTO>>ssar = new ArrayList<ArrayList<ShowTimeDTO>>();
 		ArrayList<String> dates = new ArrayList<String>();
+		ArrayList<TheaterDTO> theaters = new ArrayList<TheaterDTO>();
 		
 		try {
 			con = DBConnector.getConnect();
@@ -36,10 +41,11 @@ public class MovieService implements Action{
 				sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);	
 				ssar.add(sar);
 			}
-			
+			theaters = theaterDAO.selectList(con);//극장리스트
 			dates = movieDAO.calcDateList(con); // 날짜리스트 
 			
 			request.setAttribute("movie", mar);
+			request.setAttribute("theater", theaters);
 			request.setAttribute("showtime", ssar);
 			request.setAttribute("dates", dates);
 			
