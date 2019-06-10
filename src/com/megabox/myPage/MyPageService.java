@@ -61,22 +61,25 @@ public class MyPageService implements Action{
 		//session에 있는 ID값 꺼내오기
 		HttpSession session = request.getSession();
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		String id = memberDTO.getId();
+		String id = null;
 		Connection conn = null;
 		try {
-			conn = DBConnector.getConnect();
-			ar = store_historyDAO.selectList(conn, id);
-			request.setAttribute("list", ar);
-			actionForward.setCheck(true);
-			actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
-			System.out.println(ar.get(1));
-		} catch (Exception e) {
-			request.setAttribute("msg", "Server Error");
+			id = memberDTO.getId();
+			if(id!= null) {
+				conn = DBConnector.getConnect();
+				ar = store_historyDAO.selectList(conn, id);
+				request.setAttribute("list", ar);
+				actionForward.setCheck(true);
+				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
+			}
+		}catch (Exception e) {
+			request.setAttribute("msg", "다시 로그인 해주세요");
 			request.setAttribute("path", "../index.do");
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/common/result.jsp");
 			e.printStackTrace();
 		}
+	
 		return actionForward;
 	}
 

@@ -126,9 +126,19 @@
 						<td>쿠폰정보</td>
 						<td>취소가능일</td>
 					</tr>
-					<tr>
-						<td colspan="8" style="padding-top: 130px;">등록된 구매내역이 없습니다.</td>
-					</tr>
+					<c:forEach items="${list}" var="DTO">
+						<c:if test="${DTO eq null}">
+							<tr>
+								<td colspan="8" style="padding-top: 130px;">등록된 구매내역이 없습니다.</td>
+							</tr>
+						</c:if>
+						<c:if test="${DTO ne null}">
+							<tr>
+								<td>${DTO.id}</td>
+							</tr>
+						</c:if>
+					</c:forEach>
+					
 				</table>
 				<div>
 					<ul class="">
