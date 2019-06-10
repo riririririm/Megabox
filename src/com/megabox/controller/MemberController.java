@@ -10,22 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
-import com.megabox.store.StoreService;
+import com.megabox.member.MemberService;
 
 /**
- * Servlet implementation class StoreController
+ * Servlet implementation class MemberController
  */
-@WebServlet("/StoreController")
-public class StoreController extends HttpServlet {
+@WebServlet("/MemberController")
+public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private StoreService storeService;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StoreController() {
+	private MemberService memberService;
+    public MemberController() {
         super();
-        storeService = new StoreService();
+        memberService = new MemberService();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,17 +34,19 @@ public class StoreController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();
-		ActionForward actionForward = new ActionForward();
-		
-		if(command.equals("/storeReg")) {
-			actionForward = storeService.insert(request, response);
-		}else if(command.equals("/storeList")) {
-			actionForward = storeService.selectList(request, response);
-		}else if(command.equals("/storePurchase")) {
-			actionForward = storeService.insertStoreHistory(request, response);
+		ActionForward actionForward = null;
+		if(command.equals("/memberCheck")) {
+			actionForward = memberService.memberCheck(request, response);
+		}else if(command.equals("/memberJoin")) {
+			actionForward = memberService.insert(request, response);
+		}else if(command.equals("/memberDupl")){
+			actionForward = memberService.idCheck(request, response);
+		}else if(command.equals("/memberLogin")) {
+			actionForward = memberService.selectOne(request, response);
+		}else if(command.equals("/memberLogout")) {
+			actionForward = memberService.logout(request, response);
 		}
 		
-
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);

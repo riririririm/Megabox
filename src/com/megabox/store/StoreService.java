@@ -26,8 +26,10 @@ public class StoreService implements Action{
 		noTheaterDAO = new NoTheaterDAO();
 	}
 
-	public ActionForward store(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward insertStoreHistory(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
+		
+		
 		actionForward.setPath("../WEB-INF/views/store/store.jsp");
 		actionForward.setCheck(true);
 		return actionForward;

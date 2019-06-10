@@ -331,12 +331,12 @@
         	//결제창에서 보여질 이름
         	amount: store_price,
         	//가격
-         	buyer_email: 'iamport@siot.do',
-        	buyer_name: '구매자이름',
-        	buyer_tel: '010-1234-5678',
-        	buyer_addr: '서울특별시 강남구 삼성동',
-        	buyer_postcode: '123-456',
-         	//m_redirect_url: 'http://localhost/Megabox/store/storeList'
+         	buyer_email: '${sessionScope.member.email}',
+        	buyer_name: '${sessionScope.member.id}',
+        	buyer_tel: '${sessionScope.member.phone}',
+        	//buyer_addr: '서울특별시 강남구 삼성동',
+        	//buyer_postcode: '123-456',
+         	m_redirect_url: 'http://localhost/Megabox/store/storeList'
         	/*
         	모바일 결제시,
         	결제가 끝나고 랜딩되는 URL을 지정
@@ -353,11 +353,17 @@
         	
         	
         	/////////
-        	
+        	$.post("/storePurchase", function(){
+        	     id: "${sessionScope.member.id}",
+        	     category: store_category,
+        	     store_name: store_name,
+        	     store_count: "1"
+        	     store_price: store_price	    
+        	    });
         	
         	} else {
-        	var msg = '결제에 실패하였습니다.';
-        	msg += '에러내용 : ' + rsp.error_msg;
+        		var msg = '결제에 실패하였습니다.';
+        		msg += '에러내용 : ' + rsp.error_msg;
         	}
         	alert(msg);
         	}); 
