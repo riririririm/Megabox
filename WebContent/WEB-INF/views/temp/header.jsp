@@ -47,7 +47,7 @@
   .carousel-caption h3 {
     color: #fff !important;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 960px) {
     .carousel-caption {
       display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
     }
@@ -112,10 +112,14 @@
     color: #555 !important;
     
   } 
-   .navbar-nav li a {
+   .navbar-nav li {
     color: #555 !important;
      border-left: 1px solid #cccccc;
   } 
+   /* .navbar-nav li a {
+    color: #555 !important;
+     border-left: 1px solid #cccccc;
+  } */ 
    .navbar-nav li:last-child {
     color: #555 !important;
      border-right: 1px solid #cccccc;
@@ -128,22 +132,16 @@
    .navbar-default .navbar-toggle {
     border-color: transparent;
   } 
-  .open .dropdown-toggle {
-    color: #fff;
-    background-color: #555 !important;
-  }
-  .dropdown-menu li a {
-    color: #000 !important;
-  }
-  .dropdown-menu li a:hover {
-    background-color: red !important;
-  }
   
   .form-control {
     border-radius: 0;
   }
   textarea {
     resize: none;
+  }
+  
+  .conainer{
+  	display:block;
   }
   
   </style>
@@ -160,7 +158,7 @@
 						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#myPage">
+					<a class="navbar-brand" href="${pageContext.request.contextPath}/index.do">
 					<img src="/Megabox/images/header_nav_logo.png"></a>
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
@@ -171,7 +169,7 @@
 						<li><a href="${pageContext.request.contextPath}/store/storeList">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="#contact">커뮤니티</a></li>
-						<li><a href="#more">로그인</a></li>
+						<li><jsp:include page="/WEB-INF/views/temp/header_drop_down.jsp"/></li>
 					</ul>
 				</div>
 			</div>
