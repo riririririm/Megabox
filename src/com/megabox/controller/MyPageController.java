@@ -40,7 +40,7 @@ public class MyPageController extends HttpServlet {
 		}else if(command.equals("/bookPage")) {
 			actionForward = myPageService.bookPage(request, response);
 		}else if(command.equals("/myStorePage")) {
-			actionForward = myPageService.myStorePage(request, response);
+			actionForward = myPageService.selectList(request, response);
 		}else if(command.equals("/myQnA")) {
 			actionForward = myPageService.myQnA(request, response);
 		}

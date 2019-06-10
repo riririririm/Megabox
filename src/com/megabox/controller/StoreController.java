@@ -18,28 +18,30 @@ import com.megabox.store.StoreService;
 @WebServlet("/StoreController")
 public class StoreController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private StoreService storeService;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-	private StoreService storeService;
     public StoreController() {
         super();
         storeService = new StoreService();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String command = request.getPathInfo();
 		ActionForward actionForward = new ActionForward();
-		if(command.equals("/store")) {
-			actionForward = storeService.store(request, response);
+		
+		if(command.equals("/storeReg")) {
+			actionForward = storeService.insert(request, response);
+		}else if(command.equals("/storeList")) {
+			actionForward = storeService.selectList(request, response);
 		}
 		
+
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);

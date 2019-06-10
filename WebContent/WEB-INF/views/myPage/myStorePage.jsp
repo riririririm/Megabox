@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,16 +138,22 @@
 				</div>
 				<h4 >취소내역</h4>
 				<table class="store_content table">
-					<tr>
-						<td>구매일</td>
-						<td>상품명</td>
-						<td>구매수량</td>
-						<td>결제내역</td>
-						<td>취소일시</td>
-					</tr>
-					<tr>
-						<td colspan="5" style="padding-top: 130px;">등록된 취소내역이 없습니다.</td>
-					</tr>
+				<c:forEach items="${list}" var="dto">
+					<c:if test="${dto.state} eq 0">
+						<tr>
+							<td>구매일</td>
+							<td>상품명</td>
+							<td>구매수량</td>
+							<td>결제내역</td>
+							<td>취소일시</td>
+						</tr>
+					</c:if>
+					<c:if test="${dto.state} eq null">
+						<tr>
+							<td colspan="5" style="padding-top: 130px;">등록된 취소내역이 없습니다.</td>
+						</tr>
+					</c:if>
+				</c:forEach>
 				</table>
 			</div>
 		</div>
