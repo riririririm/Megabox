@@ -19,19 +19,51 @@ public class StoreService implements Action{
 	private StoreDAO storeDAO;
 	private TheaterDAO theaterDAO;
 	private NoTheaterDAO noTheaterDAO;
+	private Store_historyDAO store_historyDAO;
 	
 	public StoreService() {
 		storeDAO = new StoreDAO();
 		theaterDAO = new TheaterDAO();
 		noTheaterDAO = new NoTheaterDAO();
+		store_historyDAO = new Store_historyDAO();
 	}
 
 	public ActionForward insertStoreHistory(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		
+		Store_historyDTO historyDTO = new Store_historyDTO();
+		historyDTO.setId(request.getParameter("id"));
+		historyDTO.setCategory(request.getParameter("category"));
+		historyDTO.setStore_name(request.getParameter("store_name"));
+		historyDTO.setBuy_count(Integer.parseInt(request.getParameter("buy_count")));
+		historyDTO.setPrice(Integer.parseInt(request.getParameter("store_price"))*Integer.parseInt(request.getParameter("buy_count")));
+		int period = Integer.parseInt(request.getParameter("store_period"));
 		
-		actionForward.setPath("../WEB-INF/views/store/store.jsp");
-		actionForward.setCheck(true);
+		Connection con=null;
+		int result=0;
+		
+		try {
+			con = DBConnector.getConnect();
+			result = store_historyDAO.insert(historyDTO,period, con);
+			
+				request.setAttribute("result",result);
+				actionForward.setPath("../WEB-INF/views/store/result2.jsp");
+				actionForward.setCheck(true);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
 		return actionForward;
 	}
 	

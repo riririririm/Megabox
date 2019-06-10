@@ -295,9 +295,9 @@
 			store_num= $(this).attr("title");
 			store_name = $("#name"+store_num).text().trim();
 			store_category = $("#cate"+store_num).text().trim();
-			store_period = $("#per"+store_num).text();
+			store_period = $("#per"+store_num).text().trim();
 			//store_count= $("#count"+store_num).text();
-			store_price= $("#price"+store_num).text();
+			store_price= $("#price"+store_num).text().trim();
 			$(".modal-title").text(store_category);
 			$(".right_title").text(store_name);
 		});
@@ -353,13 +353,17 @@
         	
         	
         	/////////
-        	$.post("/storePurchase", function(){
-        	     id: "${sessionScope.member.id}",
-        	     category: store_category,
-        	     store_name: store_name,
-        	     store_count: "1"
-        	     store_price: store_price	    
-        	    });
+        	$.post("./storePurchase",{
+        		id: "${sessionScope.member.id}",
+       	   	 	category: store_category,
+       	     	store_name: store_name,
+       	     	buy_count: "1",
+       	     	store_price: store_price,
+       	     	store_period: store_period
+       	     	
+        		}, function(data){
+        	         
+        	});
         	
         	} else {
         		var msg = '결제에 실패하였습니다.';
