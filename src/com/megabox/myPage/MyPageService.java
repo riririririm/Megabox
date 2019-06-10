@@ -7,6 +7,17 @@ import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
 
 public class MyPageService implements Action{
+	//StoprePage
+	public ActionForward myStorePage(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/myPage/myStorePage.jsp";
+		boolean check = true;
+		
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
+	
 	//myPage Main화면
 	public ActionForward myPageMain(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -24,6 +35,16 @@ public class MyPageService implements Action{
 		String path = "../WEB-INF/views/myPage/bookPage.jsp";
 		boolean check = true;
 		
+		actionForward.setPath(path);
+		actionForward.setCheck(check);
+		return actionForward;
+	}
+	
+	//myQnA
+	public ActionForward myQnA(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/myPage/myQnA.jsp";
+		boolean check = true;
 		actionForward.setPath(path);
 		actionForward.setCheck(check);
 		return actionForward;

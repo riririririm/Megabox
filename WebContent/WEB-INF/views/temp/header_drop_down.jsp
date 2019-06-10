@@ -64,7 +64,7 @@
 				</c:if>
 				<c:if test="${sessionScope.member eq null}">
 					<div>
-						<form method="post" action="./member/memberLogin">
+						<form method="post" action="${pageContext.request.contextPath}/member/memberLogin">
 							<div class="join_title">
 								<h5><Strong>MEGABOX</Strong> Login</h5>
 							</div>

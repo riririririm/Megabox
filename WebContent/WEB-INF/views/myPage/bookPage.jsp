@@ -54,7 +54,7 @@
 .myPage img {
 	margin-right: 120px;
 	float: left;
-	border: 1px solid black;
+	border: 1px solid #ddd;
 }
 
 .book_table{
@@ -75,6 +75,11 @@
 	list-style: none;
 	line-height: 30px;
 }
+
+ .nav-tabs li.active a {
+    color: #555 !important;
+   border: 1px solid #ddd;
+  } 
 </style>
 </head>
 <body>
@@ -93,9 +98,12 @@
 			<div class="myPage_nav">
 				<ul style="padding-left: 0px;">
 					<li><a href="${pageContext.request.contextPath}/myPage/bookPage"><img src="../images/book.PNG"></a></li>
-					<li><img src="../images/store.PNG"></li>
+					<li><a href="./myStorePage"><img src="../images/store.PNG"></a></li>
 					<li><img src="../images/personal_info.PNG"></li>
-					<li><img src="../images/qna.PNG" style="margin-right: 0px;"></li>
+					<li>
+						<a href="./myQnA">
+						<img src="../images/qna.PNG" style="margin-right: 0px;"></a>
+					</li>
 				</ul>
 			</div>
 			<div class="reset"></div>
@@ -154,7 +162,7 @@
 						<!-- pass end-->
 						<!-- cancel start-->
 						<div id="cancel" class="tab-pane fade">
-							<<table class="book_content table">
+							<table class="book_content table">
 								<tr>
 									<td>NO</td>
 									<td>예매번호</td>
