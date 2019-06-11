@@ -10,9 +10,15 @@ import javax.servlet.http.HttpSession;
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
 import com.megabox.member.MemberDTO;
+import com.megabox.page.SearchMakePage;
+import com.megabox.page.SearchPager;
+import com.megabox.page.SearchRow;
+import com.megabox.page.StoreSearchMakePage;
 import com.megabox.store.Store_historyDAO;
 import com.megabox.store.Store_historyDTO;
 import com.megabox.util.DBConnector;
+
+import sun.nio.cs.HistoricallyNamedCharset;
 
 public class MyPageService implements Action{
 	Store_historyDAO store_historyDAO = null;
@@ -56,19 +62,50 @@ public class MyPageService implements Action{
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
-		ArrayList<Store_historyDTO> ar = null;
+		ArrayList<Store_historyDTO> buy = new ArrayList<Store_historyDTO>();
+		ArrayList<Store_historyDTO> cancel = new ArrayList<Store_historyDTO>();
+		
+		int curPage = 1;
+		int cancelPage =1;
+		try {
+			curPage = Integer.parseInt(request.getParameter("curPage"));
+		}catch(Exception e) {
+			//예외 발생시 curPage는 1로 설정
+		}
+		try {
+			cancelPage = Integer.parseInt(request.getParameter("cancelPage"));
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		StoreSearchMakePage storeSearchMakePage = new StoreSearchMakePage(curPage);
+		StoreSearchMakePage storeSearchMakePage2 = new StoreSearchMakePage(cancelPage);
+		
+		SearchRow searchRow =  storeSearchMakePage.makeRow();
+		SearchRow searchRow2 = storeSearchMakePage2.makeRow();
 		
 		//session에 있는 ID값 꺼내오기
 		HttpSession session = request.getSession();
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		String id = null;
 		Connection conn = null;
 		try {
-			id = memberDTO.getId();
+			String id = memberDTO.getId(); 
 			if(id!= null) {
 				conn = DBConnector.getConnect();
-				ar = store_historyDAO.selectList(conn, id);
-				request.setAttribute("list", ar);
+				int totalCount = store_historyDAO.getTotalCount(conn, id);
+				int totalCountCancel = store_historyDAO.getTotalCountCancel(conn, id);
+				
+				SearchPager searchPager = storeSearchMakePage.makePage(totalCount);
+				SearchPager searchPagerCancel = storeSearchMakePage2.makePage(totalCountCancel);
+				
+				buy = store_historyDAO.buyList(conn, id, searchRow);
+				cancel = store_historyDAO.cancelList(conn, id, searchRow2);
+				
+				request.setAttribute("cancelPager", searchPagerCancel);
+				request.setAttribute("pager", searchPager);
+				
+				request.setAttribute("buyList", buy);
+				request.setAttribute("cancelList", cancel);
 				actionForward.setCheck(true);
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}
@@ -93,13 +130,32 @@ public class MyPageService implements Action{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	//stroe 구매 취소 update문
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionForward actionForward = new ActionForward();
+		int history_num = Integer.parseInt(request.getParameter("history_num"));
+		Connection conn = null;
+		int result = 0;
+		try {
+			conn = DBConnector.getConnect();
+			result = store_historyDAO.canceUpdate(conn, history_num);
+			if(result>0) {
+				actionForward.setCheck(true);
+				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
+			}else {
+				request.setAttribute("msg", "다시 시도해주세요");
+				request.setAttribute("path", "./myStorePage");
+				actionForward.setPath("../WEB-INF/views/common/result.jsp");
+				actionForward.setCheck(true);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return actionForward;
 	}
-
+	
 	@Override
 	public ActionForward delete(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub

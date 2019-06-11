@@ -168,7 +168,7 @@
 						<li><a href="${pageContext.request.contextPath}/store/storeList">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="#">커뮤니티</a></li>
-						<li>
+						<li><a href="/WEB-INF/views/temp/header_drop_down.jsp">로그인</a>
 							<jsp:include page="/WEB-INF/views/temp/header_drop_down.jsp"/>
 						</li>
 					</ul>

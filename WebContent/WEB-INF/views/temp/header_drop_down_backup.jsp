@@ -48,7 +48,27 @@
 </style>
 </head>
 <body>
-	<div class="dropdown">
+<button id="btn_modal" data-toggle="modal" data-target="#myModal" hidden="hidden"></button>
+<!-- modal form -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-diaglod">
+		<!-- Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">알림</h4>
+			</div><!-- modal-header -->
+			<div class="modal-body">
+				<p class="m_text"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- modal-content -->
+	</div>
+</div>
+<%-- 	<div class="dropdown">
 		<c:if test="${sessionScope.member eq null }">
 			<a class="member_hand" style="text-decoration: none; color: #777">로그인</a>
 		</c:if>
@@ -59,7 +79,7 @@
 			<div class="member_drop">
 				<c:if test="${sessionScope.member ne null }">
 					<h3>${member.id}</h3>
-					<a href="${pageContext.request.contextPath}/myPage/bookPage">예약관리</a>
+					<a href="${pageContext.request.contextPath}/myPage/myPage">MyPage</a>
 					<a href="<%=application.getContextPath()%>/member/memberLogout">Logout</a>
 				</c:if>
 				<c:if test="${sessionScope.member eq null}">
@@ -89,6 +109,6 @@
 			<!-- dropdown부분 -->
 		</div>
 	</div>
-	<!-- dropdown login 부분 -->
+	<!-- dropdown login 부분 --> --%>
 </body>
 </html>

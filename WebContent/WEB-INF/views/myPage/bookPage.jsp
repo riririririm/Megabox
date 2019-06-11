@@ -99,7 +99,7 @@
 				<ul style="padding-left: 0px;">
 					<li><a href="${pageContext.request.contextPath}/myPage/bookPage"><img src="../images/book.PNG"></a></li>
 					<li><a href="./myStorePage"><img src="../images/store.PNG"></a></li>
-					<li><img src="../images/personal_info.PNG"></li>
+					<li><a href="${pageContext.request.contextPath}/member/"><img src="../images/personal_info.PNG"></a></li>
 					<li>
 						<a href="./myQnA">
 						<img src="../images/qna.PNG" style="margin-right: 0px;"></a>

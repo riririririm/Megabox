@@ -43,6 +43,8 @@ public class MyPageController extends HttpServlet {
 			actionForward = myPageService.selectList(request, response);
 		}else if(command.equals("/myQnA")) {
 			actionForward = myPageService.myQnA(request, response);
+		}else if(command.equals("/storeCancel")) {
+			actionForward = myPageService.update(request, response);
 		}
 		
 		if(actionForward.isCheck()) {

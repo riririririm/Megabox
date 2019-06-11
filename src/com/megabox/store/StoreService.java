@@ -19,17 +19,51 @@ public class StoreService implements Action{
 	private StoreDAO storeDAO;
 	private TheaterDAO theaterDAO;
 	private NoTheaterDAO noTheaterDAO;
+	private Store_historyDAO store_historyDAO;
 	
 	public StoreService() {
 		storeDAO = new StoreDAO();
 		theaterDAO = new TheaterDAO();
 		noTheaterDAO = new NoTheaterDAO();
+		store_historyDAO = new Store_historyDAO();
 	}
 
-	public ActionForward store(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward insertStoreHistory(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
-		actionForward.setPath("../WEB-INF/views/store/store.jsp");
-		actionForward.setCheck(true);
+		
+		Store_historyDTO historyDTO = new Store_historyDTO();
+		historyDTO.setId(request.getParameter("id"));
+		historyDTO.setCategory(request.getParameter("category"));
+		historyDTO.setStore_name(request.getParameter("store_name"));
+		historyDTO.setBuy_count(Integer.parseInt(request.getParameter("buy_count")));
+		historyDTO.setPrice(Integer.parseInt(request.getParameter("store_price"))*Integer.parseInt(request.getParameter("buy_count")));
+		int period = Integer.parseInt(request.getParameter("store_period"));
+		
+		Connection con=null;
+		int result=0;
+		
+		try {
+			con = DBConnector.getConnect();
+			result = store_historyDAO.insert(historyDTO,period, con);
+			
+				request.setAttribute("result",result);
+				actionForward.setPath("../WEB-INF/views/store/result2.jsp");
+				actionForward.setCheck(true);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
 		return actionForward;
 	}
 	
@@ -108,12 +142,12 @@ public class StoreService implements Action{
 				}
 			
 				if(result1>0 && result2>0) {
-					request.setAttribute("message", "상품을 등록했습니다.");
+					request.setAttribute("msg", "상품을 등록했습니다.");
 					request.setAttribute("path", "./storeList");
 					check = true;
 					path = "../WEB-INF/views/common/result.jsp";
 				}else {
-					request.setAttribute("message", "상품등록 실패.");
+					request.setAttribute("msg", "상품등록 실패.");
 					request.setAttribute("path", "./storeList");
 					check = true;
 					path = "../WEB-INF/views/common/result.jsp";

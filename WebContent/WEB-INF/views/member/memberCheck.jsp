@@ -298,8 +298,8 @@
 					</dl>
 				</div>
 				<div class="term_check pl15">
-				<span><input type="checkbox" class="ckboxSelect"></span>
-				<label for="term2" >위의 '제휴 모바일 멤버십 서비스 이용을 위한 제3자 제공에 대한 안내'를 읽고 동의 합니다. (선택 동의)</label>
+				<span><input type="checkbox" class="ckbox"></span>
+				<label for="term2" >위의 '제휴 모바일 멤버십 서비스 이용을 위한 제3자 제공에 대한 안내'를 읽고 동의 합니다. (필수 동의)</label>
 				<p class="fz13 c_purple">※ 제3자 정보 제공 동의를 거부할 권리가 있으며, 동의를 거부하더라도 회원가입 및 서비스 이용이 가능합니다.</p> 
 				</div>
 				
@@ -335,20 +335,31 @@
 		</div>
 	</div>
 </div>
-<input id="agreeck">
-<input id="selectCheck">
 <!-- 풋터 -->
 <jsp:include page="../temp/footer.jsp"/>
 <script type="text/javascript">
 	$('.ckboxAll').click(function() {
 		var c = $(this).prop('checked');
 		$('.ckbox').prop('checked', c);
-		$('.ckboxSelect').prop('checked', c);
 	});//전체 동의 체크시 체크박스 true
 
+	$('.ckbox').click(function() {
+		var c = true;
+		$('.ckbox').each(function() {
+			if(!$(this).prop('checked')){
+				c=false;
+			}
+		});
+		$('.ckboxAll').prop('checked', c);
+	});
+	
 	$('.btn_ok').click(function() {
+		var join = $('.ckboxAll').prop('checked');
+		if(join){
 			location.href="./memberJoin";
-		
+		}else{
+			$('#btn_modal').trigger('click');
+		}
 	});
 </script>
 </body>
