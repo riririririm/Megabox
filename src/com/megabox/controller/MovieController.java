@@ -37,10 +37,15 @@ public class MovieController extends HttpServlet {
 		if(command.equals("/movieReg")) {
 			actionForward = movieService.insert(request, response);
 		}else if(command.equals("/movieTimetableAdmin")) {
-			actionForward = movieService.selectList(request, response);
+			actionForward = movieService.selectList2(request, response);
 		}else if(command.equals("/movieTimetable")) {
 			actionForward = movieService.selectList(request, response);
+		}else if(command.equals("/movieViewDate")) {
+			actionForward = movieService.searchDateList(request, response);
+		}else if(command.equals("/movieShowTime")) {
+			actionForward = movieService.searchShowTimeList(request, response);
 		}
+		
 		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());

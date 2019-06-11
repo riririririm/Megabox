@@ -12,43 +12,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 
-public class MovieDAO  {
-	
-	public int getNum(Connection con) throws Exception { //영화db의 인덱스번호
-		int result=0;
-		String sql="select movie_seq.nextval from dual";
-		PreparedStatement st = con.prepareStatement(sql);
-		ResultSet rs = st.executeQuery();
-		
-		rs.next();
-		result=rs.getInt(1);
-		
-		rs.close();
-		st.close();
-		
-		return result;
-	}
-	
-	public ArrayList<String> searchShowTimeList(String movie_title, String theater, String view_date, Connection con) throws Exception {
-		//선택한 영화, 극장, 날짜에 상영하는 시간
-		ArrayList<String> show_times = new ArrayList<String>();
-		String sql="select show_time from movie join showTime on movie.num= showTime.movie_num " + 
-				"where movie_title=? and theater=? and view_date=?";
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, movie_title);
-		st.setString(2, theater);
-		st.setString(3, view_date);
-		
-		ResultSet rs = st.executeQuery();
-		
-		while(rs.next()) {
-			show_times.add(rs.getString(1));
-		}
-		return show_times;
-		
-	}
+public class MovieDAO2  {
 
-	public ArrayList<String> calcDateList() throws Exception {
+	public ArrayList<String> calcDateList(Connection con) throws Exception {
 		//상영시간표에서 날짜 리스트를 보여줄 메소드
 		Calendar calendar = new GregorianCalendar(Locale.KOREA);
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
@@ -74,49 +40,16 @@ public class MovieDAO  {
 		
 	}
 	
-	public ArrayList<String> searchDateList(String movie_title, String theater, Connection con) throws Exception{// 클릭한 영화의 상영일이 있는 날짜 찾기
-		ArrayList<String> dates = new ArrayList<String>();
-		String sql ="select to_char(view_date,'YYYY-MM-DD') from movie where movie_title=? and theater=?";
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, movie_title);
-		st.setString(2, theater);
-		ResultSet rs = st.executeQuery();
-		while(rs.next())
-			dates.add(rs.getString(1));
-		
-		rs.close();
-		st.close();
-		return dates;
-	}
-	
-	public ArrayList<String> selectMovieTitleList(Connection con) throws Exception {
-		// 영화 제목만 받아오기
-		ArrayList<String> ar = new ArrayList<String>();
-		String sql= "select distinct movie_title from movie";
-		PreparedStatement st = con.prepareStatement(sql);
-		ResultSet rs = st.executeQuery();
-		
-		
-		while(rs.next()) {
-			ar.add(rs.getString("movie_title"));
-		}
-		rs.close();
-		st.close();
-		
-		return ar;
-	}
-	
 	public ArrayList<MovieDTO> selectList(Connection con) throws Exception {
 		// 등록한 영화 목록
 		ArrayList<MovieDTO> ar = new ArrayList<MovieDTO>();
-		String sql= "select num, movie_code, movie_title,movie_kind, theater, auditorium, to_char(view_date,'yyyy-mm-dd') vd from movie";
+		String sql= "select movie_code, movie_title,movie_kind, theater, auditorium, to_char(view_date,'yyyy-mm-dd') vd from movie";
 		PreparedStatement st = con.prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
 		
 		MovieDTO movieDTO =null;
 		while(rs.next()) {
 			movieDTO = new MovieDTO();
-			movieDTO.setNum(rs.getInt("num"));
 			movieDTO.setMovie_code(rs.getString("movie_code"));
 			movieDTO.setMovie_title(rs.getString("movie_title"));
 			movieDTO.setMovie_kind(rs.getString("movie_kind"));
@@ -130,13 +63,12 @@ public class MovieDAO  {
 		
 		return ar;
 	}
-	public ArrayList<ShowTimeDTO> selectShowTimeList(int num, Connection con) throws Exception {
+	public ArrayList<ShowTimeDTO> selectShowTimeList(String movie_code, Connection con) throws Exception {
 		//영화별 상영시간 리스트
 		ArrayList<ShowTimeDTO> ar = new ArrayList<ShowTimeDTO>();
-		//String sql= "select * from showTime where movie_code=?";
-		String sql= "select * from showTime where movie_num=?";
+		String sql= "select * from showTime where movie_code=?";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, num);
+		st.setString(1, movie_code);
 		ResultSet rs = st.executeQuery();
 		
 		ShowTimeDTO showTimeDTO =null;
@@ -185,11 +117,11 @@ public class MovieDAO  {
 		//상영시간 DB등록
 		int result=0;
 		
-		String sql = "insert into showTime values(show_time_seq.nextval,?,?,?)";
+		String sql = "insert into showTime values(show_time_seq.nextval,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, showTimeDTO.getMovie_num());
-		st.setString(2, showTimeDTO.getMovie_code());
-		st.setString(3, showTimeDTO.getShow_time());
+		
+		st.setString(1, showTimeDTO.getMovie_code());
+		st.setString(2, showTimeDTO.getShow_time());
 			
 		result=st.executeUpdate();
 		

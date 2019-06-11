@@ -2,6 +2,7 @@ package com.megabox.movie;
 
 public class ShowTimeDTO {
 	private int num;
+	private int movie_num;
 	private String movie_code;
 	private String show_time;
 	public int getNum() {
@@ -9,6 +10,13 @@ public class ShowTimeDTO {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	
+	public int getMovie_num() {
+		return movie_num;
+	}
+	public void setMovie_num(int movie_num) {
+		this.movie_num = movie_num;
 	}
 	public String getMovie_code() {
 		return movie_code;

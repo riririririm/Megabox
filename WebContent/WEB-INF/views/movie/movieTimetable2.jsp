@@ -11,21 +11,6 @@
 	p{
 		font-size: 20px;
 	}
-	.all_list{
-		height:550px;
-		background-color: #f2f2f2;
-	}
-	.form-div{
-	margin-top:20px;
-	background-color: #1b1b1b;
-	width: 100%;
-	height:150px;
-	align-items: center;
-	}
-	.form-div >img{
-		padding-top: 20px;
-		padding-right: 20px;
-	}
 	.movie-list>ul>li{
 		list-style: none;
 		border-bottom: 1px solid #9999;
@@ -33,8 +18,8 @@
 		align-items: center;
 	}
 	.container{
-		min-height:900px;
-		margin-top: 150px;
+		min-height:2000px;
+		margin-top: 50px;
 	}
 	.step1{
 		width:25%;		
@@ -53,18 +38,7 @@
 	.col-body>ul{
 		width: :100%;
 	}
-	.seat_btn{
-		padding_top:50px;
-		float:right;
-	}
-	.emp{
-		width:212px;
-	}
-	.steps_img{
-		padding-top:60px;
-		padding-left:100px;
-		float:left;
-	}
+	
 
 </style>
 <script type="text/javascript">
@@ -74,42 +48,22 @@
 		var d=""; //date
 		var sh=""; //showtime
 	
-		
 		$(".movie").click(function() {
 			m = $(this).text().trim();
-			
+			alert(m);
 		});
 		$(".theater").click(function() {
 			th = $(this).text().trim();
-			getDateList();
-			
+			alert(th);
 		});
-		
-		function getDateList(){
-			$.post("./movieViewDate",{
-				movie_title: m,
-				theater: th
-			},function(data){
-				data = data.trim();
-				$("#date-list").html(data);
-			});
-		};
-		
-		
-		var date="";	
-		$("#date-list").on("click",".date",function() {
-			date = $(this).text().trim();
-			$.post("./movieShowTime",{
-				movie_title: m,
-				theater: th,
-				view_date:date
-			},function(data){
-				data = data.trim();
-				$("#show_time-list").html(data);
-			});
+		$(".date").click(function() {
+			d = $(this).text().trim();
+			alert(d);
 		});
-		
-	
+		$(".showtime").click(function() {
+			sh = $(this).text().trim();
+			alert(sh);
+		});
 	});
 </script>
 </head>
@@ -117,7 +71,7 @@
 
 	<jsp:include page="../temp/header.jsp"/>
 	<div class="container">
-	<div class="all_list">
+		<h1> (일반)상영시간표 리스트 </h1>
 		<div class="steps">
 			<div class="step1">
 				<div class="col-head">
@@ -127,8 +81,8 @@
 					<!-- 영화선택  or 선택되어 있게 -->
 					<div class="movie-list">
 						<ul>
-							<c:forEach items="${movieTitle}" var="dto">
-								<li ><span class="movie">${dto}</span></li>
+							<c:forEach items="${movie}" var="dto">
+								<li class="movie">${dto.movie_title}(${dto.movie_kind})</li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -159,8 +113,10 @@
 				</div>
 				<div class="col-body">
 					<div class="movie-list">
-						<ul id="date-list">
-							
+						<ul>
+							<c:forEach items="${dates}" var="date">
+								<li class="date">${date }</li>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>
@@ -173,8 +129,10 @@
 				</div>
 				<div class="col-body">
 					<div class="movie-list">
-						<ul id="show_time-list">
-							
+						<ul>
+							<c:forEach items="${dates}" var="date">
+								<li class="showtime">${date }</li>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>
@@ -184,17 +142,6 @@
 		</div> 
 		<!-- end of steps -->
 		
-	</div>
-	<!-- end of all_list -->
-	<div class="form-div">
-		<div class="steps_img">
-		<span class="emp"><img src="../images/step_movie.png"></span>
-		<span class="emp"><img src="../images/step_theater.png"></span>
-		<span class="emp"><img src="../images/step_seat.png"></span>
-		<span class="emp"><img src="../images/step_pay.png"></span>
-		</div>
-		<img class="seat_btn" src="../images/seat_btn1.png">
-	</div>
 		<form action="" method="post" id="bookInfo">
 			<input type="hidden" class="form-group" id="movie_code" name="movie_code">
 			<input type="hidden" class="form-group" id="movie_title" name="movie_title">
@@ -202,11 +149,9 @@
 			<input type="hidden" class="form-group" id="view_date" name="view_date">
 			<input type="hidden" class="form-group" id="auditorium" name="auditorium">
 			<input type="hidden" class="form-group" id="show_time" name="show_time">
-			
 		</form>
-	
 	</div>
-	<!-- end of container -->
+	
 	
 	<jsp:include page="../temp/footer.jsp"/>
 

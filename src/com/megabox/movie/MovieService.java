@@ -21,16 +21,48 @@ public class MovieService implements Action{
 		movieDAO = new MovieDAO();
 		theaterDAO =new TheaterDAO();
 	}
-
-	@Override
-	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	public ActionForward searchShowTimeList(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		
+		Connection con=null;
+		ArrayList<String> show_times = new ArrayList<String>();
+		
+		try {
+			con = DBConnector.getConnect();
+			String movie_title = request.getParameter("movie_title");
+			String theater = request.getParameter("theater");
+			String view_date = request.getParameter("view_date");
+			
+			show_times = movieDAO.searchShowTimeList(movie_title, theater,view_date,con);
+			System.out.println("////////////////////"+show_times.size());
+			System.out.println(movie_title);
+			System.out.println(theater);
+			System.out.println(view_date);
+			request.setAttribute("show_times", show_times);
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/views/common/showTimeList.jsp");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return actionForward;
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	public ActionForward selectList2(HttpServletRequest request, HttpServletResponse response) {
+		//admin용
 		ActionForward actionForward = new ActionForward();
 		
 		Connection con=null;
 		ArrayList<MovieDTO> mar =new ArrayList<MovieDTO>();
 		ArrayList<ShowTimeDTO> sar = new ArrayList<ShowTimeDTO>();
 		ArrayList<ArrayList<ShowTimeDTO>>ssar = new ArrayList<ArrayList<ShowTimeDTO>>();
-		ArrayList<String> dates = new ArrayList<String>();
+		
 		ArrayList<TheaterDTO> theaters = new ArrayList<TheaterDTO>();
 		
 		try {
@@ -38,25 +70,18 @@ public class MovieService implements Action{
 			mar= movieDAO.selectList(con); //상영중인 영화리스트 가져오기
 			for(int i=0;i<mar.size();i++) {
 				//각 영화의 상영시간리스트 가져오기
-				sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);	
+				//sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);
+				sar= movieDAO.selectShowTimeList(mar.get(i).getNum(),con);
 				ssar.add(sar);
 			}
 			theaters = theaterDAO.selectList(con);//극장리스트
-			dates = movieDAO.calcDateList(con); // 날짜리스트 
-			
 			request.setAttribute("movie", mar);
 			request.setAttribute("theater", theaters);
 			request.setAttribute("showtime", ssar);
-			request.setAttribute("dates", dates);
+		
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/views/movie/movieTimetableAdmin.jsp");				
 			
-			String command = request.getPathInfo();
-			if(command.equals("/movieTimetableAdmin")) {
-				actionForward.setCheck(true);
-				actionForward.setPath("../WEB-INF/views/movie/movieTimetableAdmin.jsp");				
-			}else if(command.equals("/movieTimetable")) {
-				actionForward.setCheck(true);
-				actionForward.setPath("../WEB-INF/views/movie/movieTimetable.jsp");
-			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,13 +101,99 @@ public class MovieService implements Action{
 		
 		return actionForward;
 	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public ActionForward searchDateList(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		
+		ArrayList<String> dates = new ArrayList<String>();
+		Connection con=null;
+		try {
+			con = DBConnector.getConnect();
+			dates = movieDAO.searchDateList(request.getParameter("movie_title"),request.getParameter("theater"), con);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println(request.getParameter("movie_title"));
+		System.out.println(request.getParameter("theater"));
+		request.setAttribute("dates", dates);
+		actionForward.setCheck(true);
+		actionForward.setPath("../WEB-INF/views/common/dateList.jsp");
+		return actionForward;
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		//actionForward.setCheck(true);
+		//actionForward.setPath("../WEB-INF/views/movie/movieTimetable.jsp");
+		
+		Connection con=null;
+		ArrayList<String> tar = new ArrayList<String>();
+		ArrayList<MovieDTO> mar =new ArrayList<MovieDTO>();
+		ArrayList<ShowTimeDTO> sar = new ArrayList<ShowTimeDTO>();
+		ArrayList<ArrayList<ShowTimeDTO>>ssar = new ArrayList<ArrayList<ShowTimeDTO>>();
+		ArrayList<String> all_dates = new ArrayList<String>();
+		ArrayList<TheaterDTO> theaters = new ArrayList<TheaterDTO>();
+		
+		try {
+			con = DBConnector.getConnect();
+			tar = movieDAO.selectMovieTitleList(con);
+			mar= movieDAO.selectList(con); //상영중인 영화리스트 가져오기
+			for(int i=0;i<mar.size();i++) {
+				//각 영화의 상영시간리스트 가져오기
+				//sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);	
+				sar= movieDAO.selectShowTimeList(mar.get(i).getNum(),con);	
+				ssar.add(sar);
+			}
+			theaters = theaterDAO.selectList(con);//극장리스트
+			all_dates = movieDAO.calcDateList(); // 날짜리스트 
+			
+			request.setAttribute("movieTitle", tar);
+			request.setAttribute("movie", mar);
+			request.setAttribute("theater", theaters);
+			request.setAttribute("all_dates", all_dates);
+			
+			request.setAttribute("showtime", ssar);
+			
+			System.out.println(request.getParameter("movie_title"));
+			System.out.println(request.getParameter("theater"));
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/views/movie/movieTimetable.jsp");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			request.setAttribute("message", "Sever Error");
+			request.setAttribute("path", "../index.do");
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/views/common/result.jsp");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
+		
+		return actionForward;
+	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public ActionForward selectOne(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public ActionForward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -108,8 +219,10 @@ public class MovieService implements Action{
 				
 				result1 = movieDAO.insert(movieDTO, con);
 				
+				int movie_num = movieDAO.getNum(con)-1;
 				ShowTimeDTO showTimeDTO=new ShowTimeDTO();
 				for(int i=0;i<show_times.length;i++) {
+					showTimeDTO.setMovie_num(movie_num);
 					showTimeDTO.setMovie_code(movieDTO.getMovie_code());
 					showTimeDTO.setShow_time(show_times[i]);
 					result2 = movieDAO.insertShowTime(showTimeDTO, con);
@@ -146,7 +259,7 @@ public class MovieService implements Action{
 		actionForward.setPath(path);
 		return actionForward;
 	}
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
