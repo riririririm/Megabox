@@ -127,13 +127,13 @@
 		
 		$("#seat").click(function() {
 			//form의 value값들
-			$("#movie_code").val()=mCode;
-			$("#movie_title").val()=m;
-			$("#theater").val()=th;
-			$("#view_date").val()=date;
-			$("#auditorium").val()=aud;
-			$("#show_time").val()=s;
-			$("#bookInfo").submit;
+			$("#movie_code").val(mCode);
+			$("#movie_title").val(m);
+			$("#theater").val(th);
+			$("#view_date").val(date);
+			$("#auditorium").val(aud);
+			$("#show_time").val(sh);
+			$("#bookInfo").submit();
 		});
 	
 	});

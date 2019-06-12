@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
 import com.megabox.movie.MovieService;
+import com.megabox.seat.SeatService;
 
 /**
  * Servlet implementation class MovieController
@@ -19,12 +20,16 @@ import com.megabox.movie.MovieService;
 public class MovieController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private MovieService movieService;
+    /////
+    private SeatService seatService;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public MovieController() {
         super();
         movieService = new MovieService();
+        ////
+        seatService = new SeatService();
     }
 
 	/**
@@ -46,6 +51,10 @@ public class MovieController extends HttpServlet {
 			actionForward = movieService.searchShowTimeList(request, response);
 		}else if(command.equals("/boxoffice")) {
 			actionForward = movieService.boxofficeList(request, response);
+		}
+		//////rim0612
+		else if(command.equals("/movieSeat")) {
+			actionForward = seatService.selectList(request, response);
 		}
 		
 		

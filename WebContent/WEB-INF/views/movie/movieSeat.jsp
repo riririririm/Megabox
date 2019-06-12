@@ -10,17 +10,10 @@
 <style type="text/css">
 	p{
 		font-size: 20px;
+		margin:0;
 	}
-	.all_list{
-		height:550px;
-		background-color: #f2f2f2;
-	}
-	.form-div{
-	margin-top:20px;
-	background-color: #1b1b1b;
-	width: 100%;
-	height:150px;
-	align-items: center;
+	.btn{
+		padding:4px 8px;
 	}
 	.form-div >img{
 		padding-top: 20px;
@@ -37,7 +30,7 @@
 		margin-top: 150px;
 	}
 	.step1{
-		width:25%;		
+		width:100%;		
 		float: left;
 	}
 	.col-head{
@@ -47,97 +40,45 @@
 		background-color: #555;
 	}
 	.col-body {
-	height: 500px;
-	overflow: auto;
+		height: 500px;
+		overflow: auto;
 	}
-	.col-body>ul{
-		width: :100%;
+	.btn span.fa-check {    			
+		opacity: 0;				
 	}
-	.seat_btn{
-		padding_top:50px;
-		float:right;
+	.btn.active span.fa-check {				
+		opacity: 1;				
 	}
-	.emp{
-		width:212px;
+	
+	.person_screen {
+		border:1px solid #9999;
+		height:175px;
+		width:100%;
 	}
-	.steps_img{
-		padding-top:60px;
-		padding-left:100px;
+	
+	.number_of_person{
+		width:50%;
 		float:left;
+		border-right:1px solid #9999;
+		margin-top: 10px;
+	}
+	.t{
+		margin-bottom: 10px;
+	}
+	.tt{
+		float:left;
+		margin-left: 60px;
+	}
+	.number_of_radio{
+		margin-left:160px;
+		
 	}
 
-</style>
-<script type="text/javascript">
-	$(function() {
-		var mCode="";//movie_code
-		var m="";//movie_title
-		var th=""; //theater
-		var aud="";
-		var date=""; //date
-		var sh=""; //showtime
-		
-		$("#seat").click(function() {
-			//form의 value값들
-			$("#movie_code").val()=mCode;
-			$("#movie_title").val()=m;
-			$("#theater").val()=th;
-			$("#view_date").val()=date;
-			$("#auditorium").val()=aud;
-			$("#show_time").val()=s;
-			
-		});
-		
-		$(".movie").click(function() {
-			m = $(this).text().trim();
-			mCode = $(this).attr("title").trim();
-			alert(mCode);
-			$("#date-ul").css("visibility","hidden");
-			$("#show_time-ul").css("visibility","hidden");
-			
-		});
-		$(".theater").click(function() {
-			th = $(this).text().trim();
-			getDateList();
-			$("#date-ul").css("visibility","visible");
-			
-			
-		});
-		
-		function getDateList(){
-			$.post("./movieViewDate",{
-				movie_title: m,
-				theater: th
-			},function(data){
-				data = data.trim();
-				$("#date-list").html(data);
-			});
-		};
-		
-		
-		
-		$("#date-list").on("click",".date",function() {
-			date = $(this).text().trim();
-			$.post("./movieShowTime",{
-				movie_title: m,
-				theater: th,
-				view_date:date
-			},function(data){
-				data = data.trim();
-				$("#show_time-list").html(data);
-				$("#show_time-ul").css("visibility","visible");
-			});
-		});
-		
-		$("#show_time-list").on("click",".show_time",function() {
-			aud=$(this).attr("title");
-			sh = $(this).text().trim();
-			alert(aud); alert(sh);
-		});
-		
-		
 	
-	});
-</script>
+
+
+</style>
+
 </head>
 <body>
 
@@ -147,36 +88,69 @@
 		<div class="steps">
 			<div class="step1">
 				<div class="col-head">
-					<p>영화</p>
+					<p>인원/좌석</p>
 				</div>
 				<div class="col-body">
+					<div class="person_screen">
+						<div class="number_of_person">
+							<div class="t">
+								<div class="tt">일반</div>
+								<div class="number_of_radio" data-toggle="buttons">
+								<c:forEach var="i" begin="0" end="8" step="1">
+									<label class="rbtn btn btn-default">
+										<input type="radio" name=auditorium value="${i}">${i}
+										<span class="fa fa-check"></span>
+									</label>
+								</c:forEach>
+								</div>
+							</div>
+							<div class="t">	
+								<div class="tt">청소년</div>
+								<div class="number_of_radio" data-toggle="buttons">
+								<c:forEach var="i" begin="0" end="8" step="1">
+									<label class="rbtn btn btn-default">
+										<input type="radio" name=auditorium value="${i}">${i}
+										<span class="fa fa-check"></span>
+									</label>
+								</c:forEach>
+								</div>
+							</div>
+							<div class="t">	
+								<div class="tt">어린이</div>
+								<div class="number_of_radio" data-toggle="buttons">
+								<c:forEach var="i" begin="0" end="8" step="1">
+									<label class="rbtn btn btn-default">
+										<input type="radio" name=auditorium value="${i}">${i}
+										<span class="fa fa-check"></span>
+									</label>
+								</c:forEach>
+								</div>
+							</div>
+							<div class="t">	
+								<div class="tt">우대</div>
+								<div class="number_of_radio" data-toggle="buttons">
+								<c:forEach var="i" begin="0" end="8" step="1">
+									<label class="rbtn btn btn-default">
+										<input type="radio" name=auditorium value="${i}">${i}
+										<span class="fa fa-check"></span>
+									</label>
+								</c:forEach>
+								</div>
+							</div>
+						</div>
+							
+						<div class="section_of_screen">
+						
+						</div>
+					</div>
 				</div>
 			
-		
+			</div>
 		</div> 
 		<!-- end of steps -->
 		
 	</div>
 	<!-- end of all_list -->
-	<div class="form-div">
-		<div class="steps_img">
-		<span class="emp"><img src="../images/step_movie.png"></span>
-		<span class="emp"><img src="../images/step_theater.png"></span>
-		<span class="emp"><img src="../images/step_seat.png"></span>
-		<span class="emp"><img src="../images/step_pay.png"></span>
-		</div>
-		<img class="seat_btn" src="../images/seat_btn1.png" id="seat">
-	</div>
-		<form action="" method="post" id="bookInfo">
-			<input type="hidden" class="form-group" id="movie_code" name="movie_code">
-			<input type="hidden" class="form-group" id="movie_title" name="movie_title">
-			<input type="hidden" class="form-group" id="theater" name="theater">
-			<input type="hidden" class="form-group" id="view_date" name="view_date">
-			<input type="hidden" class="form-group" id="auditorium" name="auditorium">
-			<input type="hidden" class="form-group" id="show_time" name="show_time">
-			
-		</form>
-	
 	</div>
 	<!-- end of container -->
 	

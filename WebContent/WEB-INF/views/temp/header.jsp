@@ -68,7 +68,7 @@
   }
 
   .btn {
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     background-color: #503396;
     color: #f1f1f1;
     border-radius: 0;
@@ -165,7 +165,15 @@
 					<ul class="nav navbar-nav navbar-right">
 					<!-- href #부분에 각자 보여줄 페이지 링크 넣어주세요 -->
 						<li><a href="${pageContext.request.contextPath}/movie/boxoffice">영화</a></li>
-						<li><a href="${pageContext.request.contextPath}/movie/movieTimetableAdmin">상영시간표</a></li>
+						
+						<c:choose>
+							<c:when test="${sessionScope.member.id eq 'admin'}">
+								<li><a href="${pageContext.request.contextPath}/movie/movieTimetableAdmin">상영시간표</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath}/movie/movieTimetable">상영시간표</a></li>
+							</c:otherwise>
+						</c:choose>
 						<li><a href="${pageContext.request.contextPath}/store/storeList">스토어</a></li>
 						<li><a href="#tour">고객센터</a></li>
 						<li><a href="${pageContext.request.contextPath}/community/communityList">커뮤니티</a></li>
