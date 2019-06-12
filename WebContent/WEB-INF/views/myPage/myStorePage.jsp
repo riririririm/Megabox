@@ -110,7 +110,7 @@
 						<img src="../images/store.PNG">
 					</li>
 					<li>
-						<a href="./">
+						<a href="${pageContext.request.contextPath}/member/myPersonalPage">
 						<img src="../images/personal_info.PNG"></a>
 					</li>
 					<li>

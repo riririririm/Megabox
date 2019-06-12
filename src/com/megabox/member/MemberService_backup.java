@@ -205,46 +205,39 @@ public class MemberService implements Action{
 	}*/
 		return actionForward;
 	}
-	//비밀번호 확인
-	public ActionForward pwcheck(HttpServletRequest request, HttpServletResponse response) {
-		ActionForward actionForward = new ActionForward();
-		String path = ("../WEB-INF/views/member/myPersonalPage.jsp");
-		boolean check = true;
-		
-		String method = request.getMethod();
-		
-		if(method.equals("POST")) {
-			try {
-				HttpSession session = request.getSession();
-				MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-				String pw = request.getParameter("password");
-				
-				if(memberDTO.getId()!=null) {
-					if(pw.equals(memberDTO.getPw())){
-						request.setAttribute("check", 1);
-						request.setAttribute("pwCheck", "");
-					}else {
-						request.setAttribute("check", 0);
-						request.setAttribute("pwCheck", "비밀번호를 다시 입력해주세요");
-					}
-				}
-			}catch (Exception e) {
-				request.setAttribute("msg", "다시 로그인 해주세요");
-				request.setAttribute("path", "../index.do");
-				path = "../WEB-INF/views/common/result.jsp";
-				check = true;
-			}
-		}
-		actionForward.setCheck(check);
-		actionForward.setPath(path);
-		return actionForward;
-	}
 	
 	//개인정보 수정
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
-		
+		actionForward.setCheck(true);
+		actionForward.setPath("../WEB-INF/views/member/myPersonalPage.jsp");
+		Connection conn = null;
+		String method = request.getMethod();
+		if(method.equals("POST")) {
+			try {
+				HttpSession session = request.getSession();
+				MemberDTO memberDTO =(MemberDTO)session.getAttribute("member");
+				String pw = request.getParameter("password");
+				if(memberDTO.getId()!=null) {
+					//PW확인 메서드
+					if(pw.equals(memberDTO.getPw())) {
+						//로그인
+						request.setAttribute("check", 1);
+						request.setAttribute("fail", "");
+					}else {
+						request.setAttribute("fail", "비밀번호를 다시 입력해주세요");
+					}
+				}
+				
+			}catch (Exception e) {
+				request.setAttribute("msg", "Login Fail");
+				request.setAttribute("path", "../index.do");
+				actionForward.setCheck(true);
+				actionForward.setPath("../WEB-INF/views/common/result.jsp");
+				e.printStackTrace();
+			}
+		}
 		return actionForward;
 	}
 

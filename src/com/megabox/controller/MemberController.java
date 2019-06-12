@@ -45,6 +45,8 @@ public class MemberController extends HttpServlet {
 			actionForward = memberService.selectOne(request, response);
 		}else if(command.equals("/memberLogout")) {
 			actionForward = memberService.logout(request, response);
+		}else if(command.equals("/myPersonalPage")) {
+			actionForward = memberService.pwcheck(request, response);
 		}
 		
 		if(actionForward.isCheck()) {
