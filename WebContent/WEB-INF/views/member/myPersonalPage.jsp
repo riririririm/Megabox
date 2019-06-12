@@ -126,9 +126,9 @@
 			var email = '${member.email}';
 			$('#btn').click(function() {
 				if(pwck=='1'){
-					$.get("./", 
+					$.post("./myPersonalUpdate", 
 						{
-						
+							
 						}, function(data) {
 						
 
