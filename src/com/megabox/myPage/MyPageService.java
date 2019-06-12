@@ -110,7 +110,7 @@ public class MyPageService implements Action{
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}
 		}catch (Exception e) {
-			request.setAttribute("msg", "다시 로그인 해주세요");
+			request.setAttribute("message", "다시 로그인 해주세요");
 			request.setAttribute("path", "../index.do");
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/common/result.jsp");
@@ -144,7 +144,7 @@ public class MyPageService implements Action{
 				actionForward.setCheck(true);
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}else {
-				request.setAttribute("msg", "다시 시도해주세요");
+				request.setAttribute("message", "다시 시도해주세요");
 				request.setAttribute("path", "./myStorePage");
 				actionForward.setPath("../WEB-INF/views/common/result.jsp");
 				actionForward.setCheck(true);

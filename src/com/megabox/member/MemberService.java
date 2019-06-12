@@ -102,7 +102,7 @@ public class MemberService implements Action{
 			}else {
 				session = request.getSession();
 
-				request.setAttribute("msg", "Login Fail");
+				request.setAttribute("message", "Login Fail");
 				request.setAttribute("path", "../index.do");
 				check=true;
 				path="../WEB-INF/views/common/result.jsp";
@@ -165,7 +165,7 @@ public class MemberService implements Action{
 				check = false;
 				path = "../index.do";
 			}else {
-				request.setAttribute("msg", "Join Fail");
+				request.setAttribute("message", "Join Fail");
 				request.setAttribute("path", "./memberJoin");
 				path = "../WEB-INF/views/common/result.jsp";
 				check = true;
@@ -229,7 +229,7 @@ public class MemberService implements Action{
 					}
 				}
 			}catch (Exception e) {
-				request.setAttribute("msg", "다시 로그인 해주세요");
+				request.setAttribute("message", "다시 로그인 해주세요");
 				request.setAttribute("path", "../index.do");
 				path = "../WEB-INF/views/common/result.jsp";
 				check = true;

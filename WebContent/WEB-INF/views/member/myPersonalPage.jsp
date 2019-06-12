@@ -119,10 +119,23 @@
 	<jsp:include page="../temp/footer.jsp" />
 	<script type="text/javascript">
 			var pwck = $('.pwck').attr('title');
-			
-			if(pwck==1){
-				
-			}
+			var id = '${member.id}';
+			var pw = '${member.pw}';
+			var name = '${member.name}';
+			var phone = '${member.phone}';
+			var email = '${member.email}';
+			$('#btn').click(function() {
+				if(pwck=='1'){
+					$.get("./", 
+						{
+						
+						}, function(data) {
+						
+
+						});
+					
+				}
+			});
 	</script>
 </body>
 </html>
