@@ -5,15 +5,39 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class MemberDAO {
+	//비밀번호 수정
+	public int updatePw(Connection conn, String id, String pw, String newPw) throws Exception{
+		int result = 0;
+		String sql = "update member set pw = ? where pw = ? and id = (select id from member where id = ?)";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, newPw);
+		st.setString(2, pw);
+		st.setString(3, id);
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+	
+	//회원 탈퇴
+	public int delete(Connection conn, String id, String pw) throws Exception{
+		int result = 0;
+		String sql = "delete from member where id=? and pw =?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, id);
+		st.setString(2, pw);
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+
 	//개인정보 수정 
 	public int update(Connection conn, MemberDTO memberDTO)throws Exception{
 		int result=0;
-		String sql = "update member set phone=? and email=? and name=? where id=?";
+		String sql = "update member set phone=? , email=?  where id=?";
 		PreparedStatement st = conn.prepareStatement(sql);
 		st.setString(1, memberDTO.getPhone());
 		st.setString(2, memberDTO.getEmail());
-		st.setString(3, memberDTO.getName());
-		st.setString(4, memberDTO.getId());
+		st.setString(3, memberDTO.getId());
 		
 		result = st.executeUpdate();
 		st.close();

@@ -42,10 +42,10 @@ public class MemberService implements Action{
 				
 				if(new_pw.equals(new_pwck)) {
 					result = memberDAO.updatePw(conn, id, pw, new_pw);
-				} /*
-					 * else { request.setAttribute("message", "새로운 비밀번호가다름");
-					 * request.setAttribute("path","./myPersonalPage" ); }
-					 */
+				}else {
+					request.setAttribute("message", "새로운 비밀번호가다름");
+					request.setAttribute("path","./myPersonalPage" );
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -59,8 +59,8 @@ public class MemberService implements Action{
 			}
 			if(result>0) {
 				request.setAttribute("result", result);
-				path = "./myPersonalPage";
-				check = true;
+				path = "./myPseronalPage";
+				check = false;
 			}else {
 				request.setAttribute("message", "비밀번호 변경 실패");
 				request.setAttribute("path", "./myPersonalPage");
@@ -318,7 +318,6 @@ public class MemberService implements Action{
 		String id = memberDTO.getId();
 		if(method.equals("POST")) {
 			pw = request.getParameter("dropPw");
-			System.out.println(pw);
 			
 			try {
 				conn = DBConnector.getConnect();
