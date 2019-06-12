@@ -86,6 +86,7 @@
 		width: 160px;
 		height: 50px;
 		display: block;
+		
 	}
 	#flip_btn2 {
 		left : 500px;
@@ -104,6 +105,7 @@
 		line-height: 3.2em;
 		text-decoration: none;
 		color : #503396;
+		background-color: #d9d9d9;
 	}
 	
 	#release_movie {
@@ -250,6 +252,91 @@
 		float: right;
 	
 	}
+	.action_hidden {
+		display: none;
+	}
+	
+	/* 박스오피스 / 최신 개봉작 style */
+	#thumb_flip {
+		width: 100%;
+		height: 336px;
+		position: relative;
+	}
+	#movie_img {
+		width: 230px;
+		height: 336px;
+	}
+	.upper {
+		width: 100%;
+		height: 336px;
+		z-index: 2;
+		visibility: visible;
+		position: absolute;
+	}
+	.boxoffice_num{
+		width: 44px;
+		height: 39px;
+		position: absolute;
+		top: 10px;
+		left : 6px;
+		padding: 0;
+		margin: 0;
+	}
+	.lower {
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		position: absolute;
+		visibility: hidden;
+	}
+	#starScore {
+		width: 180px;
+		height: 30px;
+		position: absolute;
+		top: 110px;
+		left: 37px;
+	}
+	.back_wrap {
+		width: 212px;
+		padding : 9xp;
+		z-index: 1;
+		position: absolute;
+	}
+	.bg {
+		zoom:1;
+		opacity:.75;
+		width: 230px;
+		height: 336px;
+		display: block;
+		position: absolute;
+		top:7px;
+	}
+	.blank {
+		overflow: hidden;
+		display: block;
+	}
+	.blind {
+		overflow: hidden;
+	}
+	.front_info {
+		width: 230px;
+		height: 72px;
+	}
+	.movie_info {
+		width: 230px;
+		height: 66px;
+		padding: 0 13px 14px;
+	}
+	.film_btn_wrap {
+		width: 204px;
+		height: 0px;
+	}
+	.film_btn {
+		width: 97px;
+		height: 46px;
+		display: block;
+		background-color: #d9d9d9;
+	}
 </style>
 
 <script type="text/javascript">
@@ -259,13 +346,16 @@
 			$('#tab2').hide();
 			$("#box_office").css("background", "#d9d9d9");
 			$('#release_movie').css("background", "white");
+			$('#tab2').addClass("action_hidden");
+			$("#tab1").removeClass("action_hidden");
 		});
 		$('#release_movie').click(function() {
 			$('#tab1').hide();
 			$('#tab2').show();
 			$("#box_office").css("background", "white");
 			$('#release_movie').css("background", "#d9d9d9");
-			
+			$('#tab1').addClass("action_hidden");
+			$("#tab2").removeClass("action_hidden");
 		});
 		
 		
@@ -334,11 +424,47 @@
   							<a href = "#" id="box_office">박스 오피스</a>
   						</dt>
   						<dd id="tab1">
-  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/boxoffice" id="movie_all1">전체보기 </a></p>
+  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
   							<div id="movie_slide1">
   								<ul tabindex=0 id="movie_list1">
   									<li class="box_movie">
+  										<div id="thumb_flip">
+  											<div class="upper">
+  												<span class ="boxoffice_num"> 1 </span>
+  												<img src ="./images/cat4.jpg" id="movie_img">
+  											</div>
+  											<div class="lower">
+  												<div class="back_wrap">
+  													<div id ="starScore">
+  														<input type ="image" src="#" alt="별점 1, 괜히 봤어요"  title = "별점 1, 괜히 봤어요"> &nbsp;
+  													
+  														<input type = "hidden" name="score">
+  													</div>
+  													<p> 평점</p>
+  													<button type = "button"> 보고싶어 </button>
+  												</div>
+  												<span class="bg"></span>
+  												<a href ="#" class="blank" title="상세보기"> <span class="blind"> 상세보기 </span></a>
+  											</div>  <!-- lower end -->
   										
+  										</div>       <!-- thumb_flip end -->
+										<div class = "front_info">
+											<div class="movie_info">
+												<h3 class="film_box">
+													<a herf ="#" class="film_title"> 타이틀 </a>
+												</h3>
+												<div class="film_btn_wrap">
+													
+													<a href="#" id="film_btn" title="file_detail">상세정보</a>
+													<a href="#" id= "film_btn" title="file_book">예매하기</a>
+												</div>
+											
+											
+											
+											</div>
+										
+										</div>
+  							
   									</li>
   									<li class="box_movie">
   										
@@ -357,7 +483,7 @@
   							<a href="#" id="release_movie">최신 개봉작</a>
   						</dt>
   						<dd id="tab2">
-  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/releaseMovie" id="movie_all2">전체보기 </a></p>
+  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/releaseMovie" id="movie_all2">최신 개봉작 전체보기 </a></p>
   							<div id="movie_slide2">
   								<ul tabindex=0 id="movie_list2">
   									<li class="release_movie">

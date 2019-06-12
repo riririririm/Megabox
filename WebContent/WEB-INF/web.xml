@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <!-- 유라  -->
   <context-param>
     <param-name>view</param-name>
     <param-value>../WEB-INF/views</param-value>
@@ -13,8 +12,6 @@
     <servlet-name>community</servlet-name>
     <url-pattern>/community/*</url-pattern>
   </servlet-mapping>
-  
-  <!-- 수현 -->
   <servlet>
     <servlet-name>member</servlet-name>
     <servlet-class>com.megabox.controller.MemberController</servlet-class>
@@ -31,8 +28,6 @@
     <servlet-name>myPage</servlet-name>
     <url-pattern>/myPage/*</url-pattern>
   </servlet-mapping>
-  
-  <!-- 하림 -->
   <servlet>
     <servlet-name>movie</servlet-name>
     <servlet-class>com.megabox.controller.MovieController</servlet-class>
