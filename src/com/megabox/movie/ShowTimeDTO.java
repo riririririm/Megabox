@@ -5,6 +5,8 @@ public class ShowTimeDTO {
 	private int movie_num;
 	private String movie_code;
 	private String show_time;
+	private String auditorium;
+	
 	public int getNum() {
 		return num;
 	}
@@ -30,6 +32,13 @@ public class ShowTimeDTO {
 	public void setShow_time(String show_time) {
 		this.show_time = show_time;
 	}
+	public String getAuditorium() {
+		return auditorium;
+	}
+	public void setAuditorium(String auditorium) {
+		this.auditorium = auditorium;
+	}
+	
 	
 	
 }

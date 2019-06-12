@@ -29,10 +29,11 @@ public class MovieDAO  {
 		return result;
 	}
 	
-	public ArrayList<String> searchShowTimeList(String movie_title, String theater, String view_date, Connection con) throws Exception {
+	public ArrayList<AudiShowDTO> searchShowTimeList(String movie_title, String theater, String view_date, Connection con) throws Exception {
 		//선택한 영화, 극장, 날짜에 상영하는 시간
 		ArrayList<String> show_times = new ArrayList<String>();
-		String sql="select show_time from movie join showTime on movie.num= showTime.movie_num " + 
+		ArrayList<AudiShowDTO> aud = new ArrayList<AudiShowDTO>();
+		String sql="select movie.auditorium, show_time from movie join showTime on movie.num= showTime.movie_num " + 
 				"where movie_title=? and theater=? and view_date=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, movie_title);
@@ -41,10 +42,15 @@ public class MovieDAO  {
 		
 		ResultSet rs = st.executeQuery();
 		
+		AudiShowDTO dto = null;
 		while(rs.next()) {
-			show_times.add(rs.getString(1));
+			//show_times.add(rs.getString(1));
+			dto = new AudiShowDTO();
+			dto.setAuditorium(rs.getString(1));
+			dto.setSar(rs.getString(2));
+			aud.add(dto);
 		}
-		return show_times;
+		return aud;
 		
 	}
 
@@ -76,7 +82,7 @@ public class MovieDAO  {
 	
 	public ArrayList<String> searchDateList(String movie_title, String theater, Connection con) throws Exception{// 클릭한 영화의 상영일이 있는 날짜 찾기
 		ArrayList<String> dates = new ArrayList<String>();
-		String sql ="select to_char(view_date,'YYYY-MM-DD') from movie where movie_title=? and theater=?";
+		String sql ="select distinct to_char(view_date,'YYYY-MM-DD') vd from movie where movie_title=? and theater=? order by vd asc";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, movie_title);
 		st.setString(2, theater);
@@ -134,7 +140,7 @@ public class MovieDAO  {
 		//영화별 상영시간 리스트
 		ArrayList<ShowTimeDTO> ar = new ArrayList<ShowTimeDTO>();
 		//String sql= "select * from showTime where movie_code=?";
-		String sql= "select * from showTime where movie_num=?";
+		String sql= "select * from showTime where movie_num=? order by show_time asc";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1, num);
 		ResultSet rs = st.executeQuery();
@@ -144,6 +150,7 @@ public class MovieDAO  {
 			showTimeDTO = new ShowTimeDTO();
 			showTimeDTO.setMovie_code(rs.getString("movie_code"));
 			showTimeDTO.setShow_time(rs.getString("show_time"));
+			showTimeDTO.setAuditorium(rs.getString("auditorium"));
 			
 			ar.add(showTimeDTO);
 		}
@@ -151,8 +158,18 @@ public class MovieDAO  {
 		st.close();
 		return ar;
 	}
-
-
+	
+	public String searchMovieCode(String movie_title, Connection con) throws Exception {
+		String sql= "select movie_code from movie where movie_title=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, movie_title);
+		ResultSet rs = st.executeQuery();
+		
+		rs.next();
+		
+		String movie_code = rs.getString("movie_code");
+		return movie_code;
+	}
 	
 	public MovieDTO selectOne() {
 		// 영화상영 정보
@@ -185,11 +202,12 @@ public class MovieDAO  {
 		//상영시간 DB등록
 		int result=0;
 		
-		String sql = "insert into showTime values(show_time_seq.nextval,?,?,?)";
+		String sql = "insert into showTime values(show_time_seq.nextval,?,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1, showTimeDTO.getMovie_num());
 		st.setString(2, showTimeDTO.getMovie_code());
 		st.setString(3, showTimeDTO.getShow_time());
+		st.setString(4, showTimeDTO.getAuditorium());
 			
 		result=st.executeUpdate();
 		

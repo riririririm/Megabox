@@ -28,19 +28,21 @@ public class MovieService implements Action{
 		
 		Connection con=null;
 		ArrayList<String> show_times = new ArrayList<String>();
-		
+		//
+		ArrayList<AudiShowDTO> aud = new ArrayList<AudiShowDTO>();
 		try {
 			con = DBConnector.getConnect();
 			String movie_title = request.getParameter("movie_title");
 			String theater = request.getParameter("theater");
 			String view_date = request.getParameter("view_date");
 			
-			show_times = movieDAO.searchShowTimeList(movie_title, theater,view_date,con);
+			//show_times = movieDAO.searchShowTimeList(movie_title, theater,view_date,con);
+			aud= movieDAO.searchShowTimeList(movie_title, theater,view_date,con);
 			System.out.println("////////////////////"+show_times.size());
 			System.out.println(movie_title);
 			System.out.println(theater);
 			System.out.println(view_date);
-			request.setAttribute("show_times", show_times);
+			request.setAttribute("show_times", aud);
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/common/showTimeList.jsp");
 			
@@ -142,20 +144,24 @@ public class MovieService implements Action{
 		ArrayList<ArrayList<ShowTimeDTO>>ssar = new ArrayList<ArrayList<ShowTimeDTO>>();
 		ArrayList<String> all_dates = new ArrayList<String>();
 		ArrayList<TheaterDTO> theaters = new ArrayList<TheaterDTO>();
+		ArrayList<String> movie_codes = new ArrayList<String>();
+		
 		
 		try {
 			con = DBConnector.getConnect();
 			tar = movieDAO.selectMovieTitleList(con);
 			mar= movieDAO.selectList(con); //상영중인 영화리스트 가져오기
-			for(int i=0;i<mar.size();i++) {
+			for(int i=0;i<tar.size();i++) {
 				//각 영화의 상영시간리스트 가져오기
 				//sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);	
+				movie_codes.add(movieDAO.searchMovieCode(tar.get(i), con));
 				sar= movieDAO.selectShowTimeList(mar.get(i).getNum(),con);	
 				ssar.add(sar);
 			}
 			theaters = theaterDAO.selectList(con);//극장리스트
 			all_dates = movieDAO.calcDateList(); // 날짜리스트 
 			
+			request.setAttribute("movie_codes", movie_codes);
 			request.setAttribute("movieTitle", tar);
 			request.setAttribute("movie", mar);
 			request.setAttribute("theater", theaters);
@@ -225,6 +231,7 @@ public class MovieService implements Action{
 					showTimeDTO.setMovie_num(movie_num);
 					showTimeDTO.setMovie_code(movieDTO.getMovie_code());
 					showTimeDTO.setShow_time(show_times[i]);
+					showTimeDTO.setAuditorium(movieDTO.getAuditorium());
 					result2 = movieDAO.insertShowTime(showTimeDTO, con);
 				}
 				

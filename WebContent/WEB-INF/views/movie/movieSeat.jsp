@@ -76,6 +76,16 @@
 		var date=""; //date
 		var sh=""; //showtime
 		
+		$("#seat").click(function() {
+			//form의 value값들
+			$("#movie_code").val()=mCode;
+			$("#movie_title").val()=m;
+			$("#theater").val()=th;
+			$("#view_date").val()=date;
+			$("#auditorium").val()=aud;
+			$("#show_time").val()=s;
+			
+		});
 		
 		$(".movie").click(function() {
 			m = $(this).text().trim();
@@ -125,16 +135,6 @@
 		});
 		
 		
-		$("#seat").click(function() {
-			//form의 value값들
-			$("#movie_code").val()=mCode;
-			$("#movie_title").val()=m;
-			$("#theater").val()=th;
-			$("#view_date").val()=date;
-			$("#auditorium").val()=aud;
-			$("#show_time").val()=s;
-			$("#bookInfo").submit;
-		});
 	
 	});
 </script>
@@ -150,67 +150,8 @@
 					<p>영화</p>
 				</div>
 				<div class="col-body">
-					<!-- 영화선택  or 선택되어 있게 -->
-					<div class="movie-list">
-						<ul>
-							<c:forEach items="${movieTitle}" var="dto" varStatus="i">
-								<!-- <li ><span class="movie">${dto}</span></li>   -->
-								<c:forEach items="${movie_codes}" var="m" varStatus="j">
-									<c:if test="${i.index eq j.index }">
-										<li ><span class="movie" title="${m}">${dto}</span></li>
-									</c:if>
-								</c:forEach>
-							</c:forEach>
-						</ul>
-					</div>
 				</div>
-			</div>
-			<!---------step1 영화 ---------->
 			
-			<div class="step1">
-				<div class="col-head">
-					<p>극장</p>
-				</div>
-				<div class="col-body">
-					<div class="movie-list">
-						<ul>
-							<c:forEach items="${theater}" var="dto">
-								<li class="theater">${dto.theater_name}</li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!----------step2 극장---------->
-			
-			
-			<div class="step1">
-				<div class="col-head">
-					<p>날짜</p>
-				</div>
-				<div class="col-body">
-					<div class="movie-list" id="date-ul">
-						<ul id="date-list">
-							
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!----------step3 날짜---------->
-			
-			<div class="step1">
-				<div class="col-head">
-					<p>시간</p>
-				</div>
-				<div class="col-body">
-					<div class="movie-list" id="show_time-ul">
-						<ul id="show_time-list">
-							
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!----------step4 시간---------->
 		
 		</div> 
 		<!-- end of steps -->
@@ -226,7 +167,7 @@
 		</div>
 		<img class="seat_btn" src="../images/seat_btn1.png" id="seat">
 	</div>
-		<form action="./movieSeat" method="post" id="bookInfo">
+		<form action="" method="post" id="bookInfo">
 			<input type="hidden" class="form-group" id="movie_code" name="movie_code">
 			<input type="hidden" class="form-group" id="movie_title" name="movie_title">
 			<input type="hidden" class="form-group" id="theater" name="theater">
