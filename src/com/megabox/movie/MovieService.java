@@ -21,8 +21,17 @@ public class MovieService implements Action{
 		movieDAO = new MovieDAO();
 		theaterDAO =new TheaterDAO();
 	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+	//유라
+	public ActionForward boxofficeList(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		actionForward.setCheck(true);
+		actionForward.setPath("../WEB-INF/views/movie/boxoffice.jsp");
+		return actionForward;
+	}
 	
 	
+	/////////////////////////////////////////////////////////////////////////////////////////
 	public ActionForward searchShowTimeList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		

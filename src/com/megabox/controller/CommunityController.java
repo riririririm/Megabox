@@ -10,51 +10,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
-import com.megabox.movie.MovieService;
+import com.megabox.community.CommunityDAO;
+import com.megabox.community.CommunityService;
 
 /**
- * Servlet implementation class MovieController
+ * Servlet implementation class CommController
  */
-@WebServlet("/MovieController")
-public class MovieController extends HttpServlet {
+@WebServlet("/CommController")
+public class CommunityController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private MovieService movieService;
+       private CommunityService communityService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieController() {
+    public CommunityController() {
         super();
-        movieService = new MovieService();
+        communityService= new CommunityService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ActionForward actionForward = new ActionForward();
 		String command = request.getPathInfo();
+		System.out.println(command);
+		ActionForward actionForward = null;
 		
-		if(command.equals("/movieReg")) {
-			actionForward = movieService.insert(request, response);
-		}else if(command.equals("/movieTimetableAdmin")) {
-			actionForward = movieService.selectList2(request, response);
-		}else if(command.equals("/movieTimetable")) {
-			actionForward = movieService.selectList(request, response);
-		}else if(command.equals("/movieViewDate")) {
-			actionForward = movieService.searchDateList(request, response);
-		}else if(command.equals("/movieShowTime")) {
-			actionForward = movieService.searchShowTimeList(request, response);
-		}else if(command.equals("/boxoffice")) {
-			actionForward = movieService.boxofficeList(request, response);
+		if(command.equals("/communityList")) {
+			actionForward = communityService.selectList(request, response);
+		} else if(command.equals("/communityWrite")) {
+			actionForward = communityService.insert(request, response);
+		} else if(command.equals("/communityUpdate")) {
+			actionForward = communityService.update(request, response);
+		} else if(command.equals("/communityDelete")) {
+			actionForward = communityService.delete(request, response);
 		}
 		
-		
+		//check 가 true이면
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);
-		}else {
+			// forward로 전송
+		} else {
 			response.sendRedirect(actionForward.getPath());
 		}
+		
+		
+	
 	}
 
 	/**
