@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
-import com.megabox.member.MemberService;
+import com.megabox.myPage.MyPageService;
 
 /**
- * Servlet implementation class MemberController
+ * Servlet implementation class MyPageController
  */
-@WebServlet("/MemberController")
-public class MemberController extends HttpServlet {
+@WebServlet("/MyPageController")
+public class MyPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-	private MemberService memberService;
-    public MemberController() {
+	private MyPageService myPageService;
+    public MyPageController() {
         super();
-        memberService = new MemberService();
+        myPageService = new MyPageService();
         // TODO Auto-generated constructor stub
     }
 
@@ -34,19 +34,17 @@ public class MemberController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();
-		ActionForward actionForward = null;
-		if(command.equals("/memberCheck")) {
-			actionForward = memberService.memberCheck(request, response);
-		}else if(command.equals("/memberJoin")) {
-			actionForward = memberService.insert(request, response);
-		}else if(command.equals("/memberDupl")){
-			actionForward = memberService.idCheck(request, response);
-		}else if(command.equals("/memberLogin")) {
-			actionForward = memberService.selectOne(request, response);
-		}else if(command.equals("/memberLogout")) {
-			actionForward = memberService.logout(request, response);
-		}else if(command.equals("/myPersonalPage")) {
-			actionForward = memberService.pwcheck(request, response);
+		ActionForward actionForward = new ActionForward();
+		if(command.equals("/myPage")) {
+			actionForward = myPageService.myPageMain(request, response);
+		}else if(command.equals("/bookPage")) {
+			actionForward = myPageService.bookPage(request, response);
+		}else if(command.equals("/myStorePage")) {
+			actionForward = myPageService.selectList(request, response);
+		}else if(command.equals("/myQnA")) {
+			actionForward = myPageService.myQnA(request, response);
+		}else if(command.equals("/storeCancel")) {
+			actionForward = myPageService.update(request, response);
 		}
 		
 		if(actionForward.isCheck()) {

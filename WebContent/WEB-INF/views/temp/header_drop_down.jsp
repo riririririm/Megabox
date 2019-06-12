@@ -59,7 +59,7 @@
 			<div class="member_drop">
 				<c:if test="${sessionScope.member ne null }">
 					<h3>${member.id}</h3>
-					<a href="${pageContext.request.contextPath}/myPage/myPage">MyPage</a>
+					<a href="${pageContext.request.contextPath}/myPage/bookPage">예약관리</a>
 					<a href="<%=application.getContextPath()%>/member/memberLogout">Logout</a>
 				</c:if>
 				<c:if test="${sessionScope.member eq null}">

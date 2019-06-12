@@ -15,18 +15,18 @@ import com.megabox.util.DBConnector;
 public class MemberService implements Action{
 
 	MemberDAO memberDAO;
-	
+
 	public MemberService() {
 		memberDAO = new MemberDAO();
 	}
-	
+
 	public ActionForward logout(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		request.getSession().invalidate();
 		actionForward.setCheck(false);
 		actionForward.setPath("../index.do");
 		return actionForward;
-		
+
 	}
 	public ActionForward idCheck(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -58,7 +58,7 @@ public class MemberService implements Action{
 		actionForward.setPath("../WEB-INF/views/member/memberCheck.jsp");
 		return actionForward;
 	}
-	
+
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
@@ -72,7 +72,7 @@ public class MemberService implements Action{
 		String path = "../index.do";
 		boolean check = true;
 		HttpSession session=null;
-		
+
 		if(method.equals("POST")) {
 			Connection conn = null;
 			MemberDTO memberDTO = null;
@@ -93,7 +93,7 @@ public class MemberService implements Action{
 					e.printStackTrace();
 				}
 			}
-			
+
 			if(memberDTO!=null) {
 				session = request.getSession();
 				session.setAttribute("member", memberDTO);
@@ -101,13 +101,13 @@ public class MemberService implements Action{
 				check = false;
 			}else {
 				session = request.getSession();
-			
+
 				request.setAttribute("msg", "Login Fail");
 				request.setAttribute("path", "../index.do");
 				check=true;
 				path="../WEB-INF/views/common/result.jsp";
 			}
-			
+
 			String ckbox = request.getParameter("remember");
 			String id = request.getParameter("id");
 			if(ckbox!=null) {
@@ -169,19 +169,83 @@ public class MemberService implements Action{
 				request.setAttribute("path", "./memberJoin");
 				path = "../WEB-INF/views/common/result.jsp";
 				check = true;
-				
+
 			}
 		}
 		actionForward.setCheck(check);
 		actionForward.setPath(path);
-		
+
 		return actionForward;
 	}
-
+	public ActionForward update2(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		actionForward.setCheck(true);
+		actionForward.setPath("../WEB-INF/views/member/myPersonalPage.jsp");
+		/*if(memberDTO2!=null) {
+		//개인정보 수정 메서드
+		String phone1 = request.getParameter("p1");
+		String phone2 = request.getParameter("p2");
+		String phone3 = request.getParameter("p3");
+		String phone = phone1+"-"+phone2+"-"+phone3;
+		String email = request.getParameter("email");
+		System.out.println(phone);
+		System.out.println(email);
+		System.out.println(name);
+		System.out.println(id);
+		MemberDTO memberDTOck = new MemberDTO();
+		memberDTOck.setId(id);
+		memberDTOck.setPhone(phone);
+		memberDTOck.setEmail(email);
+		memberDTOck.setName(name);
+		int result = memberDAO.update(conn, memberDTOck);
+		if(result>0) {
+			actionForward.setPath("../WEB-INF/views/member/myPersonalPage.jsp");
+			actionForward.setCheck(true);
+		}
+	}*/
+		return actionForward;
+	}
+	//비밀번호 확인
+	public ActionForward pwcheck(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = ("../WEB-INF/views/member/myPersonalPage.jsp");
+		boolean check = true;
+		
+		String method = request.getMethod();
+		
+		if(method.equals("POST")) {
+			try {
+				HttpSession session = request.getSession();
+				MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+				String pw = request.getParameter("password");
+				
+				if(memberDTO.getId()!=null) {
+					if(pw.equals(memberDTO.getPw())){
+						request.setAttribute("check", 1);
+						request.setAttribute("pwCheck", "");
+					}else {
+						request.setAttribute("check", 0);
+						request.setAttribute("pwCheck", "비밀번호를 다시 입력해주세요");
+					}
+				}
+			}catch (Exception e) {
+				request.setAttribute("msg", "다시 로그인 해주세요");
+				request.setAttribute("path", "../index.do");
+				path = "../WEB-INF/views/common/result.jsp";
+				check = true;
+			}
+		}
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
+	
+	//개인정보 수정
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionForward actionForward = new ActionForward();
+		
+		return actionForward;
 	}
 
 	@Override
