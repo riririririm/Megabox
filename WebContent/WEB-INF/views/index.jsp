@@ -12,96 +12,65 @@
 
 <style type="text/css">
 
-
   	.container {
-		width: 100%;
-		padding:0;
+		width: 100%; padding:0;
 	}
 	#contents_wrap {
 		width:100%;
-	
 	}
 	#myCarousel {
 		display: block;
 	}
 	.carousel-inner {
-		display: block;
-		height:651px;
-		position: absolute;
+		display: block;= height:651px;= position: absolute;
 	}
 	.carousel-inner img {
-		width : 1600px;
-		height: 651px;
-		position: absolute;
+		width : 1600px; height: 651px; position: absolute;
 	}
 	.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
 	height : 651px;
 	}
-	
-	
-	
 	.carousel-control {
-		width : 15%;
-		display: block;
-		left:0;	
-		height: 651px;
-		margin-top: 51px;
-		
+		width : 15%; display: block; left:0; height: 651px; margin-top: 51px;
 	}
 	#myCarousel { 
-		width: 100%;
-		height: 651px;
-		float: none;
-		margin-top: 51px;
+		width: 100%; height: 651px; float: none; margin-top: 51px;
 	}
 
 	#section1 {
-		width:100%;
-		height: 701px;
-		padding : 70px 0px 80px 0px;
+		width:100%; height: 701px; padding : 70px 0px 80px 0px;
 	}
 	#flip_wrapper {
-		width : 984px;
-		height: 565px;
-		margin: 0 auto;
+		width : 984px; height: 565px; margin: 0 auto;
 		white-space: nowrap;
     	word-wrap: break-word;
     	display: block;
     	
 	}
 	#flip_box { 
-	 	width : 984px;
-	 	height : 565px;
+	 	width : 984px; height : 565px;
 	 	}
-	
 	#flip_dl {
-		height: 565px;
-		padding : 0;
-		margin: 0;
+		height: 565px;= padding : 0; margin: 0;
 		list-style: none;
 		position: relative;
 	}
 	
 	#flip_btn1 {
-		left : 340px;
-		position: absolute;
-		width: 160px;
-		height: 50px;
-		display: block;
+		left : 340px; position: absolute; display: block;
+		width: 160px; height: 50px;
 		
 	}
 	#flip_btn2 {
 		left : 500px;
 		position: absolute;
-		width: 160px;
-		height: 50px;
+		width: 160px; height: 50px;
 		display: block;
 	
 	}
 	#box_office {
 		display: block;
-		width: 100%;
-		height: 100%;
+		width: 100%; height: 100%;
 		border : 1px solid gray;
 		text-align: center;
 		line-height: 3.2em;
@@ -121,10 +90,7 @@
 		color : #503396;
 	}
 	#tab1 {
-		width: 984px;
-		height: 485px;
-		position: absolute;
-		top :80px;
+		width: 984px; height: 485px; position: absolute; top :80px;
 	}
 	#tab2{
 		width: 984px;
@@ -134,8 +100,7 @@
 		display: none;      /* ---------숨겨둠--------*/
 	}
 	.text-right {
-		text-align: right;
-		margin-right: 10px;
+		text-align: right; margin-right: 10px;
 	}
 	#movie_all1 {
 		text-decoration: none;
@@ -143,20 +108,12 @@
 	#movie_all2 {
 		text-decoration: none;
 	}
-	
 	#movie_slide1 {
-		width: 984px;
-		height: 485px;
-		position: relative;
-		overflow: hidden;
+		width: 984px; height: 485px; position: relative; overflow: hidden;
 	}
 	#movie_slide2 {
-		width: 984px;
-		height: 485px;
-		position: relative;
-		overflow: hidden;
+		width: 984px; height: 485px; position: relative; overflow: hidden;
 	}
-	
 	#movie_list1 { 	/* ul */
 		list-style: none;
 		width: 1968px;
@@ -193,26 +150,18 @@
 	}
 	
 	#section2 {
-		width: 100%;
-		height: 408px;
-		padding: 0 0 80px;
+		width: 100%; height: 408px; padding: 0 0 80px;
 	}
 	
 	#section2_wrap {
-		width: 970px;
-		height: 328px;
-		margin: 0 auto;
+		width: 970px; height: 328px; margin: 0 auto;
 	}
 	
 	#main_notice {
-		width: 460px;
-		height: 65px;
-		float: left;	
-		border-bottom: 1px solid gray;
+		width: 460px; height: 65px; float: left; border-bottom: 1px solid gray;
 	}
 	#main_notice > h3{
-		height: 65px;
-		margin: 0;
+		height: 65px; margin: 0;
 	}
 	#notice_list {
 		width: 460px;
@@ -222,8 +171,7 @@
 		line-height:1;
 	}	
 	#notice_list > ul {
-		list-style: none;
-		padding: 0;
+		list-style: none; padding: 0;
 	}
 	.list_tab {
 		padding:11px 0px;
@@ -240,37 +188,29 @@
 		border-bottom: 1px solid gray;
 	}
 	#main_qna > h3{
-		height: 65px;
-		margin: 0;
+		height: 65px; margin: 0;
 	}
 	#main_banner {
-		width: 970px;
-		height: 232px;
-		margin: 0 auto;
+		width: 970px; height: 232px; margin: 0 auto;
 	}
 	#plus {
-		width: 20px;
-		height: 20px;
-		float: right;
+		width: 20px; height: 20px; float: right;
 	
 	}
 	.action_hidden {
 		display: none;
 	}
 	
-	/* 박스오피스 / 최신 개봉작 style */
-	.api_img {
-		width: 230px;
-		height: 336px;
+	/* ========= 박스오피스 / 최신 개봉작 style =========== */
+	
+	.api_img1 {
+		width: 230px; height: 336px;
 	}
 	#thumb_flip {
-		width: 100%;
-		height: 336px;
-		position: relative;
+		width: 100%; height: 336px; position: relative;
 	}
-	#movie_img {
-		width: 230px;
-		height: 336px;
+	#film_img1 {
+		width: 230px; height: 336px;
 	}
 	.upper {
 		width: 100%;
@@ -318,70 +258,73 @@
 		top:7px;
 	}
 	.blank {
-		overflow: hidden;
-		display: block;
+		overflow: hidden; display: block;
 	}
 	.blind {
 		overflow: hidden;
 	}
 	.front_info {
-		width: 230px;
-		height: 72px;
+		width: 230px; height: 72px;
 	}
 	.movie_info {
-		width: 230px;
-		height: 66px;
-		padding: 0 13px 14px;
+		width: 230px; height: 66px; padding: 0 13px 14px;
 	}
 	.film_btn_wrap {
-		width: 204px;
-		height: 0px;
+		width: 204px; height: 0px; margin-top: 20px;
 	}
 	.film_btn {
-		width: 97px;
+		width: 91px;
 		height: 46px;
 		display: block;
 		background-color: #d9d9d9;
+		float: left;
+		margin-left: 6px;
+		text-decoration: none;
+		text-align: center;
+		line-height: 3em;
+		
 	}
+	/*------------- modal style -----------------*/
+	.modal-content {
+		width: 968px; height: 100%;
+	
+	}
+	
+	.fadeIn {
+		width: 100%; height: 100%;
+	}
+	.modal_wrapper {
+		width: 968px; height: 100%; margin: 0 auto; padding: 90px 0 55px;
+	}
+	.modal_contents{
+		width: 100%; padding: 65px 40px 5px; background-color: white;
+	}
+	#modal_detail {
+		width: 888px; height: 100%;
+	}
+	#popupbox {
+		width: 868px; height: 376px; margin-bottom: 60px;
+	}
+	.left_wrap{
+		width: 230px; height: 376px; float: left;
+	}
+	.left_wrap > img {
+		width: 230px; height: 336px;
+	}
+	.right_wrap {
+		width: 623px; height: 327.5px; float: right;
+	}
+	.modal_title_wrap {
+		width: 623px; height: 68px;
+
+	}
+	
+	
+	
+	
 </style>
 
-<script type="text/javascript">
-	$(function() {
-		$('#box_office').click(function() {
-			$('#tab1').show();
-			$('#tab2').hide();
-			$("#box_office").css("background", "#d9d9d9");
-			$('#release_movie').css("background", "white");
-			$('#tab2').addClass("action_hidden");
-			$("#tab1").removeClass("action_hidden");
-		});
-		$('#release_movie').click(function() {
-			$('#tab1').hide();
-			$('#tab2').show();
-			$("#box_office").css("background", "white");
-			$('#release_movie').css("background", "#d9d9d9");
-			$('#tab1').addClass("action_hidden");
-			$("#tab2").removeClass("action_hidden");
-		});
-		
-		/* =========== movie API ========= */
-		$.getJSON("http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?collection=kmdb_new&title=%EC%96%B4%EB%B2%A4%EC%A0%80%EC%8A%A4&ServiceKey=19TKUUT86TYFU6699SQ4", function(data) {
-			data.Data.forEach(function(d) {
-				d.Result.forEach(function(r) {
-					var img = '<img src="'+r.posters+'" class="api_img">';
-					var title = r.title;
-					$('#movie_img').append(img);
-					$('.film_title').append(title);
-				});
-			});
-		});
-		
-	});
-	
 
-
-
-</script>
 </head>
 <body>
 <!-- 헤더 -->
@@ -444,11 +387,70 @@
   							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
   							<div id="movie_slide1">
   								<ul tabindex=0 id="movie_list1">
+  								
+  									<c:forEach begin="1" end="4" var="i">
   									<li class="box_movie">
   										<div id="thumb_flip">
   											<div class="upper">
-  												<span class ="boxoffice_num"> 1 </span>
-  												<div id="movie_img"> </div>
+  												<span class ="boxoffice_num"> ${i } </span>		<!-- number -->
+  												
+  											
+  												<div class="film_img1" id="box_poster${i }"> </div>           <!----- 영화 포스터 ------>
+  												
+  											</div>
+  												
+  											<div class="lower">
+  												<div class="back_wrap">
+  													<div id ="starScore">
+  														<input type ="image" src="#" alt="별점 1, 괜히 봤어요"  title = "별점 1, 괜히 봤어요"> &nbsp;
+  													
+  														<input type = "hidden" name="score">
+  													</div>
+  													<p> 평점</p>
+  													<button type = "button"> 보고싶어 </button>
+  												</div>
+  												<span class="bg"></span>
+  												<a href ="#" class="blank" title="상세보기"> <span class="blind"> 상세보기 </span></a>
+  											</div>  <!-- lower end -->
+  										
+  										</div>       <!-- thumb_flip end -->
+										<div class = "front_info">
+											<div class="movie_info">
+												<h3 class="film_box">
+													<a href ="#" class="film_title1" id="box_title${i }"> </a>    <!---- 영화 타이틀 ---->
+												</h3>
+								<!---------------- 버튼  ------------------>
+												<div class="film_btn_wrap">		
+													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal">상세정보</button>    
+													<button class="film_btn" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
+												</div>
+		
+											</div>
+										
+										</div>
+  							
+  									</li>
+									</c:forEach>
+
+										<!-- forEach -->
+  								</ul>
+  							
+  							</div>
+  						</dd>
+  			<!-------------- 최신 개봉작 ----------------->
+  						<dt id="flip_btn2">
+  							<a href="#" id="release_movie">최신 개봉작</a>
+  						</dt>
+  						<dd id="tab2">
+  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/releaseMovie" id="movie_all2">최신 개봉작 전체보기 </a></p>
+  							<div id="movie_slide2">
+  								<ul tabindex=0 id="movie_list2">
+  								<c:forEach begin="1" end="4" var="i">
+  									<li class="release_movie">
+  										<div id="thumb_flip">
+  											<div class="upper">
+  												<span class ="boxoffice_num"> ${i } </span>		<!-- number -->
+  												<div class="film_img2"> </div>           <!----- 영화 포스터 ------>
   											</div>
   											<div class="lower">
   												<div class="back_wrap">
@@ -468,64 +470,31 @@
 										<div class = "front_info">
 											<div class="movie_info">
 												<h3 class="film_box">
-													<a herf ="#" class="film_title"> </a>
+													<a href ="#" class="film_title2"> </a>    <!---- 영화 타이틀 ---->
 												</h3>
 												<div class="film_btn_wrap">
 													
-													<a href="#" id="film_btn" title="file_detail">상세정보</a>
-													<a href="#" id= "film_btn" title="file_book">예매하기</a>
+													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal">상세정보</button>     
+													<button class= "film_btn" title="film_book">예매하기</button>
 												</div>
-											
-											
-											
+				
 											</div>
-										
 										</div>
-  							
-  									</li>
-  									<li class="box_movie">
   										
   									</li>
-  									<li class="box_movie">
-  										
-  									</li>
-  									<li class="box_movie">
-  										
-  									</li>
-  								</ul>
-  							
-  							</div>
-  						</dd>
-  						<dt id="flip_btn2">
-  							<a href="#" id="release_movie">최신 개봉작</a>
-  						</dt>
-  						<dd id="tab2">
-  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/releaseMovie" id="movie_all2">최신 개봉작 전체보기 </a></p>
-  							<div id="movie_slide2">
-  								<ul tabindex=0 id="movie_list2">
-  									<li class="release_movie">
-  										
-  									</li>
-  									<li class="release_movie">
-  										
-  									</li>
-  									<li class="release_movie">
-  										
-  									</li>
-  									<li class="release_movie">
-  										
-  									</li>
+									</c:forEach>
   								</ul>
   							
   							</div>
   						  					
-  					</dl>
+  					</dl> 		<!------------------- 최신 개봉작 end --------------------->
   				</div>		<!---- flip_box end ---->
 
   			</div>		<!---- flip_wrapper end ---->
 
     	</div>		<!-- section1 end -->
     	
+    			
     	<div id="section2">
     		<div id="section2_wrap">
     			<div id= "main_notice">
@@ -570,18 +539,113 @@
     		<h1>배너 넣을지 말지</h1>
     	
     	</div>
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    </div>	<!-- container end -->
 
+    </div>	<!-- container end -->
+	<!------------------------ 상세정보 Modal ------------------------------->
+	<div class="modal fade" id="myModal" role="dialog">
+			<!-- Modal content-->
+
+				<div class="fadeIn">
+					<div class="modal_wrapper">
+						<div class="modal_content">
+							<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+							<div id="modal_detail">
+								<div id="popupbox">
+									<div class="left_wrap">
+										<img src="">
+									</div>
+									<div class="right_wrap">
+										<div class="modal_title_wrap">
+											<h2>
+												<span id="modal_title"> title </span>
+											</h2>
+										</div>
+										<div class="modal_text_wrap">
+										
+										</div>
+									
+									</div>
+								
+								</div>
+							
+							
+							
+							
+							</div>
+						
+						
+						</div>
+					
+					</div>
+					
+			
+				
+					
+				
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" title ="${dto.num }" class="btn btn-default" data-dismiss="modal" id="updateBtn">Update</button>
+					<button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
 
 	
 <!-- 풋터 -->
 <jsp:include page="./temp/footer.jsp"/>
+
+
+<script type="text/javascript">
+	$(function() {
+		$('#box_office').click(function() {
+			$('#tab1').show();
+			$('#tab2').hide();
+			$("#box_office").css("background", "#d9d9d9");
+			$('#release_movie').css("background", "white");
+			$('#tab2').addClass("action_hidden");
+			$("#tab1").removeClass("action_hidden");
+		});
+		$('#release_movie').click(function() {
+			$('#tab1').hide();
+			$('#tab2').show();
+			$("#box_office").css("background", "white");
+			$('#release_movie').css("background", "#d9d9d9");
+			$('#tab1').addClass("action_hidden");
+			$("#tab2").removeClass("action_hidden");
+		});
+		
+		/* =========== 박스오피스 API ========= */
+		
+		$.getJSON("http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?collection=kmdb_new&sort=repRlsDate&1&releaseDte=20190626&ServiceKey=19TKUUT86TYFU6699SQ4", function(data) {
+			var num=1;
+			data.Data.forEach(function(d) {
+				d.Result.forEach(function(r) {
+					var n = r.posters.indexOf("jpg")+3;
+					var url = r.posters.substring(0,n);
+		
+				
+					
+					var img = '<img src="'+url+'" class="api_img1">';
+					var title = r.title;
+					$('#box_poster'+num).append(img);
+					$('#box_title'+num).append(title);
+					num=num+1;
+					
+				});
+			});
+		});
+		
+	});
+	
+
+
+
+</script>
+
 </body>
 </html>
