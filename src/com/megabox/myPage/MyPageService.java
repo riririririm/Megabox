@@ -52,6 +52,8 @@ public class MyPageService implements Action{
 		ActionForward actionForward = new ActionForward();
 		String path = "../WEB-INF/views/myPage/myQnA.jsp";
 		boolean check = true;
+		
+		
 		actionForward.setPath(path);
 		actionForward.setCheck(check);
 		return actionForward;

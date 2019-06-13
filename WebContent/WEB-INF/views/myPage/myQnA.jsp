@@ -93,9 +93,9 @@
 					<li><a
 						href="${pageContext.request.contextPath}/myPage/bookPage"> <img
 							src="../images/book.PNG"></a></li>
-					<li><a href="./myStorePage"></a> <img
-						src="../images/store.PNG"></li>
-					<li><img src="../images/personal_info.PNG"></li>
+					<li><a href="./myStorePage"> <img
+						src="../images/store.PNG"></a></li>
+					<li><a href="../member/myPersonalPage"><img src="../images/personal_info.PNG"></a></li>
 					<li>
 						<a href="./myQnA">
 						<img src="../images/qna.PNG" style="margin-right: 0px;"></a>
@@ -116,12 +116,10 @@
 							<option>전체</option>
 							<option>미답변</option>
 							<option>답변완료</option>
-							<option>답변완료(메일+SMS)</option>
-							<option>답변완료(메일)</option>
-							<option>답변완료(SMS)</option>
 						</select>
 						<input placeholder="검색어를 입력하세요" type="text">
 					</div>
+					<form >
 					<table class="qna_content table">
 						<tr>
 							<td>NO</td>
@@ -133,6 +131,7 @@
 							<td colspan="8" style="padding-top: 130px;">조회된 문의내역이 없습니다.</td>
 						</tr>
 					</table>
+					</form>
 				</div>
 			</div>
 		</div>

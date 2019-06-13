@@ -32,22 +32,30 @@ public class MemberService implements Action{
 		String method = request.getMethod();
 		HttpSession session = request.getSession();
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		//기본 PW받음
+		String realPw = memberDTO.getPw();
+		String pw = null;
 		if(method.equals("POST")) {
 			try {
 				conn = DBConnector.getConnect();
-				String id = memberDTO.getId();
+				
+				//새로운 PW받음
 				String new_pw = request.getParameter("new_pw");
+				//새로운 PWCheck받음
 				String new_pwck = request.getParameter("new_pwck");
-				String pw = request.getParameter("pw");
+				//확인용 PW받음
+				pw= request.getParameter("pw");
+				
 				
 				if(new_pw.equals(new_pwck)) {
-					result = memberDAO.updatePw(conn, id, pw, new_pw);
-				} /*
-					 * else { request.setAttribute("message", "새로운 비밀번호가다름");
-					 * request.setAttribute("path","./myPersonalPage" ); }
-					 */
+					memberDTO.setPw(new_pw);
+					result = memberDAO.updatePw(conn,memberDTO, pw);
+				} 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
+				 request.setAttribute("message", "새로운 비밀번호가다름");
+				 request.setAttribute("path","./myPersonalPage" );
+				 
 				e.printStackTrace();
 			}finally {
 				try {
@@ -58,10 +66,10 @@ public class MemberService implements Action{
 				}
 			}
 			if(result>0) {
-				request.setAttribute("result", result);
 				path = "./myPersonalPage";
-				check = true;
+				check = false;
 			}else {
+				memberDTO.setPw(realPw);
 				request.setAttribute("message", "비밀번호 변경 실패");
 				request.setAttribute("path", "./myPersonalPage");
 			}
@@ -243,6 +251,8 @@ public class MemberService implements Action{
 				MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 				String pw = request.getParameter("pw");
 				
+				System.out.println(pw);
+				
 				if(memberDTO.getId()!=null) {
 					if(pw.equals(memberDTO.getPw())){
 						request.setAttribute("result", 1);
@@ -269,7 +279,12 @@ public class MemberService implements Action{
 		ActionForward actionForward = new ActionForward();
 		String path = "../WEB-INF/views/common/result.jsp";
 		boolean check = true;
-		String phone = request.getParameter("phone");
+		//핸드폰 번호 짜른거 합침
+		String phone1 = request.getParameter("phone1");
+		String phone2 = request.getParameter("phone2");
+		String phone3 = request.getParameter("phone3");
+		String phone = phone1+"-"+phone2+"-"+phone3;
+		///
 		String email = request.getParameter("email");
 		HttpSession session = request.getSession();
 		MemberDTO memberDTO2 = (MemberDTO)session.getAttribute("member");

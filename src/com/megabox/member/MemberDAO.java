@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 
 public class MemberDAO {
 	//비밀번호 수정
-	public int updatePw(Connection conn, String id, String pw, String newPw) throws Exception{
+	public int updatePw(Connection conn, MemberDTO memberDTO, String pw) throws Exception{
 		int result = 0;
 		String sql = "update member set pw = ? where pw = ? and id = (select id from member where id = ?)";
 		PreparedStatement st = conn.prepareStatement(sql);
-		st.setString(1, newPw);
+		st.setString(1, memberDTO.getPw());
 		st.setString(2, pw);
-		st.setString(3, id);
+		st.setString(3, memberDTO.getId());
 		result = st.executeUpdate();
 		st.close();
 		return result;

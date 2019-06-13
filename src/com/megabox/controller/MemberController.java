@@ -54,7 +54,6 @@ public class MemberController extends HttpServlet {
 		}else if(command.equals("/myPwChange")) {
 			actionForward = memberService.myPwChange(request, response);
 		}
-		System.out.println(actionForward);
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);
