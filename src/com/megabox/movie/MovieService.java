@@ -172,11 +172,11 @@ public class MovieService implements Action{
 			
 			request.setAttribute("movie_codes", movie_codes);
 			request.setAttribute("movieTitle", tar);
-			request.setAttribute("movie", mar);
+			//request.setAttribute("movie", mar);
 			request.setAttribute("theater", theaters);
-			request.setAttribute("all_dates", all_dates);
+			//request.setAttribute("all_dates", all_dates);
 			
-			request.setAttribute("showtime", ssar);
+			//request.setAttribute("showtime", ssar);
 			
 			System.out.println(request.getParameter("movie_title"));
 			System.out.println(request.getParameter("theater"));
