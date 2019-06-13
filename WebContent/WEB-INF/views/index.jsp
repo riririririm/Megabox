@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="./temp/bootstrap.jsp"/>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <style type="text/css">
 
@@ -257,6 +259,10 @@
 	}
 	
 	/* 박스오피스 / 최신 개봉작 style */
+	.api_img {
+		width: 230px;
+		height: 336px;
+	}
 	#thumb_flip {
 		width: 100%;
 		height: 336px;
@@ -358,9 +364,20 @@
 			$("#tab2").removeClass("action_hidden");
 		});
 		
+		/* =========== movie API ========= */
+		$.getJSON("http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?collection=kmdb_new&title=%EC%96%B4%EB%B2%A4%EC%A0%80%EC%8A%A4&ServiceKey=19TKUUT86TYFU6699SQ4", function(data) {
+			data.Data.forEach(function(d) {
+				d.Result.forEach(function(r) {
+					var img = '<img src="'+r.posters+'" class="api_img">';
+					var title = r.title;
+					$('#movie_img').append(img);
+					$('.film_title').append(title);
+				});
+			});
+		});
 		
 	});
-
+	
 
 
 
@@ -431,7 +448,7 @@
   										<div id="thumb_flip">
   											<div class="upper">
   												<span class ="boxoffice_num"> 1 </span>
-  												<img src ="./images/cat4.jpg" id="movie_img">
+  												<div id="movie_img"> </div>
   											</div>
   											<div class="lower">
   												<div class="back_wrap">
@@ -451,7 +468,7 @@
 										<div class = "front_info">
 											<div class="movie_info">
 												<h3 class="film_box">
-													<a herf ="#" class="film_title"> 타이틀 </a>
+													<a herf ="#" class="film_title"> </a>
 												</h3>
 												<div class="film_btn_wrap">
 													
