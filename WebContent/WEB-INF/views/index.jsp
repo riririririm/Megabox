@@ -9,11 +9,9 @@
 <jsp:include page="./temp/bootstrap.jsp"/>
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
 <style type="text/css">
-
   	.container {
-		width: 100%; padding:0;
+		width: 100%; padding:0; 
 	}
 	#contents_wrap {
 		width:100%;
@@ -36,7 +34,6 @@
 	#myCarousel { 
 		width: 100%; height: 651px; float: none; margin-top: 51px;
 	}
-
 	#section1 {
 		width:100%; height: 701px; padding : 70px 0px 80px 0px;
 	}
@@ -44,7 +41,6 @@
 		width : 984px; height: 565px; margin: 0 auto;
 		white-space: nowrap; word-wrap: break-word;
     	display: block;
-    	
 	}
 	#flip_box { 
 	 	width : 984px; height : 565px;
@@ -54,17 +50,14 @@
 		list-style: none;
 		position: relative;
 	}
-	
 	#flip_btn1 {
 		left : 340px; position: absolute; display: block;
 		width: 160px; height: 50px;
-		
 	}
 	#flip_btn2 {
 		left : 500px; position: absolute;
 		width: 160px; height: 50px;
 		display: block;
-	
 	}
 	#box_office {
 		width: 100%; height: 100%;
@@ -72,7 +65,6 @@
 		color : #503396; text-align: center; line-height: 3.2em; text-decoration: none;
 		display: block;
 	}
-	
 	#release_movie {
 		width: 100%; height: 100%; border : 1px solid gray;
 		text-align: center; line-height: 3.2em; text-decoration: none;
@@ -122,15 +114,12 @@
 		background: #fff; border: 1px solid gray;
 		margin: 7px; float: left; display: block;
 	}
-	
 	#section2 {
 		width: 100%; height: 408px; padding: 0 0 80px;
 	}
-	
 	#section2_wrap {
 		width: 970px; height: 328px; margin: 0 auto;
 	}
-	
 	#main_notice {
 		width: 460px; height: 65px; float: left; border-bottom: 1px solid gray;
 	}
@@ -150,7 +139,6 @@
 	.notice_detail {
 		text-decoration: none;
 	}
-	
 	#main_qna {
 		width: 460px; height: 65px;
 		float: left; margin-left: 50px; border-bottom: 1px solid gray;
@@ -163,14 +151,11 @@
 	}
 	#plus {
 		width: 20px; height: 20px; float: right;
-	
 	}
 	.action_hidden {
 		display: none;
 	}
-	
 	/* ========= 박스오피스 / 최신 개봉작 style =========== */
-	
 	.api_img1 {
 		width: 230px; height: 336px;
 	}
@@ -228,7 +213,6 @@
 		float: left; margin-left: 6px;
 		text-decoration: none; text-align: center;
 		line-height: 3em;
-		
 	}
 	/*------------- modal style -----------------*/
 	.modal-dialog{
@@ -241,7 +225,7 @@
 		background-clip: border-box; border-radius: 0px;
 	}
 	.close {
-		position: absolute; top: 52px; right : 0px;
+		position: absolute; top: -38px; right : 0px;
     	width: 38px !important; height: 38px !important; margin: 0 !important;
     	border: 1px solid #cdcdcd !important; border-bottom:0px;
     	opacity: 1;
@@ -249,48 +233,143 @@
 	button.close {
 		background: white;
 	}
-	
-	
-	
-	
-	
 	.modal_wrapper {
 		width: 968px; height: 100%; margin: 0 auto; padding: 90px 0 55px;
 	}
 	.modal_contents{
 		width: 100%; padding: 65px 40px 5px; background-color: white;
 	}
-	#modal_detail {
-		width: 888px; height: 100%;
+	.modal_detail {
+		width: 888px; height: 376px;
 	}
-	#popupbox {
-		width: 868px; height: 376px; margin-bottom: 60px;
+	.popupbox1 {
+		width: 888px; height: 376px; margin-bottom: 60px;
 	}
 	.left_wrap{
 		width: 230px; height: 376px; float: left;
 	}
-	.left_wrap > img {
+	.left_wrap > img{
 		width: 230px; height: 336px;
+	}
+	h2, h3 {
+		margin: 0;
 	}
 	.right_wrap {
 		width: 623px; height: 327.5px; float: right;
 	}
 	.modal_title_wrap {
 		width: 623px; height: 68px;
-
+		border-bottom: 1px solid #e5e5e5;
 	}
+	.modal_text_wrap {
+		width: 623px; height: 204.5px; padding-bottom: 19px;
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.reservation_wrap {
+		width: 623px; height: 42px; margin-top: 9px;
+	}
+	.left_p {
+		width: 181px; height: 42px; padding-right: 20px;
+		position: relative; float: left;
+	}
+	.divider {
+		width: 1px; height: 20px; background: #e1e1e1;
+		position: absolute; display: block; right :0; top :10px;
+		display: block;
+	}
+	.right_p {
+		width: 181px; height: 42px; padding-left: 20px;
+		position: relative; float: left;
+	}
+	.modalBtn_book {
+		width: 121px; height: 40px; padding: 1px 6px;
+		float:right; display: block;
+	}
+	.modal_info_wrap {
+		margin-top: 11px; list-style: none; padding: 0;
+	}
+	.madal_raing {
+		width: 623px; height: 44px;
+	}
+	.popupbox2 {
+		width:888px; height : 174px;
+		margin-bottom: 60px;
+	}
+	#summary {
+		height: 140px;
+	}
+	.popupbox3 {
+		width:888px; height : 1090px;
+		margin-bottom: 60px;
+	}
+	.modal_review_wrap {
+		width: 888px; height: 123px; margin-bottom: 30px;
+	}
+	.review_write {
+		width: 888px; height: 123px;
+	}
+	.review_id {
+		width: 888px; height: 20px; margin: 7px 0 10px;
+	}
+	.review_form {
+		width: 888px; height: 86px;
+	}
+	.review_input {
+		width: 885px; height: 84px; border: 1px solid #e5e5e5;
+	}
+	.review_rate {
+		width: 188px; height: 69.5px; float:left; 
+	}
+	.write_textarea {
+		width: 585px; height: 84px; float: left;
+	}
+	.writeBtn {
+		width : 110px; height : 84px; padding:1px 6px;
+		border: none;
+	}
+	.review_list_wrap {
+		width: 888px; height: 864px;
+	}
+	.review_list_wrap >ul {
+		list-style: none; float : right; display:block;
+		width: 200px; height: 13px; padding-right: 6px; margin-bottom: 15px;
+	}
+	.review_list_wrap >ul >li {
+		float: right; padding-left: 10px; border-left: 1px; margin-left: 10px''
+	}
+	.review_list_wrap >ul >li >a {
+		text-decoration: none;
+	}
+	.review_list {
+		width: 888px; height: 789px; 
+		border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;
+	}
+	.review_row {
+		width: 888px; height: 138px;
+	}
+	.review_cell {
+		width: 443px; height: 137px; padding:20px 50px;
+		border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;
+	}
+	.cell_content {
+		width: 314px; height: 97px;
+	}
+	.cell_member_id {
+		width: 314px; height: 20px; margin-bottom: 1px;
+	}
+	.cell_data {
+		width: 314px; height: 17px;
+	}
+	.cell_content > p {
+		width: 314px; height: 20px; margin-bottom: 35px;
 	
-	
-	
-	
+	}
 </style>
-
 
 </head>
 <body>
 <!-- 헤더 -->
 <jsp:include page="./temp/header.jsp"/>
-	
 	
 <!-- 컨테이너 -->
 		<!---------- Contents Start ---------->
@@ -323,7 +402,7 @@
      						<img src="/Test/images/main5.jpg">
     					</div>
   					</div>   
-			</div>  <!-- carousel end -->
+			</div>  <!------------ carousel end -------------->
 			
 		    <!-- Left and right controls -->
     		<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -336,7 +415,6 @@
     		</a>
     </div>    <!-- contents_wrap end -->
     
-    
     	<div id="section1">
   			<div id="flip_wrapper"> 
   				<div id= "flip_box">
@@ -348,14 +426,13 @@
   							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
   							<div id="movie_slide1">
   								<ul tabindex=0 id="movie_list1">
-  								
+  									<!-------------- forEach -------------->
   									<c:forEach begin="1" end="4" var="i">
   									<li class="box_movie">
   										<div id="thumb_flip">
   											<div class="upper">
   												<span class ="boxoffice_num"> ${i } </span>		<!-- number -->
-  												
-  											
+
   												<div class="film_img1" id="box_poster${i }"> </div>           <!----- 영화 포스터 ------>
   												
   											</div>
@@ -382,18 +459,14 @@
 												</h3>
 								<!---------------- 버튼  ------------------>
 												<div class="film_btn_wrap">		
-													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal">상세정보</button>    
+													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
 													<button class="film_btn" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
 												</div>
-		
 											</div>
-										
 										</div>
   							
   									</li>
-									</c:forEach>
-
-										<!-- forEach -->
+									</c:forEach>         
   								</ul>
   							
   							</div>
@@ -435,7 +508,7 @@
 												</h3>
 												<div class="film_btn_wrap">
 													
-													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal">상세정보</button>     
+													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal${i}">상세정보</button>     
 													<button class= "film_btn" title="film_book">예매하기</button>
 												</div>
 				
@@ -503,36 +576,118 @@
 
     </div>	<!-- container end -->
 	<!------------------------ 상세정보 Modal ------------------------------->
-		<div class="modal fade" id="myModal" role="dialog">
+	<c:forEach begin="1" end="4" var="modal">
+	
+	<div class="modal fade" id="myModal${modal }" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
-				<div id="modal_detail">
-					<div id="popupbox">
-						<div class="left_wrap">
-							<img src="">
+				<div class="modal_detail">
+					<div class="popupbox1">
+						<div class="left_wrap" id="modal_img${modal }">
+							<!---------------- 영화 포스터 ------------------->
 						</div>
 						<div class="right_wrap">
 							<div class="modal_title_wrap">
 								<h2>
-									<span id="modal_title"> title </span>
+									<span id="modal_title${modal }"> </span>
 								</h2>
 							</div>
 							<div class="modal_text_wrap">
-										
-							</div>
-									
+								<div class="reservation_wrap">
+									<p class="left_p">
+										<span class="smallStar">
+											<span class="fill">	명 참여</span>							
+										</span>
+									<strong class="averageScore"></strong>
+									<span class="divider"></span>
+									</p>
+									<p class="right_p"> 예매율
+										<strong>1</strong> 위 
+										<span> %</span>
+									</p>
+									<button type="button" class="modalBtn_book">예매하기</button>
+								</div>
+								<ul class="modal_info_wrap">
+									<li><strong>타입 : </strong></li>
+									<li><strong>개봉일 : </strong></li>
+									<li><strong>감독 : </strong></li>
+									<li><strong>출연진 : </strong></li>
+									<li><strong>장르 : </strong></li>
+								</ul>
+							</div>          <!------------- modal_text_wrap end -------------->
+							<div class="modal_rating"> 
+							</div>		
+						</div> 				<!--------------- right_wrap end --------------->
+					</div> 						<!------------- popupbox1 end --------------->
+					<div class="popupbox2">
+						<h3>줄거리</h3>
+						<div id="summary">
 						</div>
+					<div class="popupbox3">
+						<h3>한줄평</h3>
+						<span>(0)</span>
+					<div class="modal_review_wrap">
+						<div class="review_write">
+							<div class="review_id">							
+							</div>						
+							<form id="review_form">
+								<div class="review_input">
+									<div class="review_rate">
+									</div>
+									<div class="review_area">
+										<textarea class="write_textarea"> </textarea>					
+									</div>
+									<div class="review_btn">
+										<button type="submit" class="writeBtn">등록</button>
+									
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>			<!------------ modal_review_wrap end----------->
+					<div class="review_list_wrap">
+						<ul>
+							<li><a>최신순</a></li>
+							<li><a>추천순</a></li>
+							<li><a>평점순</a></li>
+						</ul>
+						<div class="review_list">
+							<div class="review_row">
+								<div class="review_cell">
+									<div class="cell_content">
+										<div class="cell_member_id">
+											<strong>id</strong>
+										</div>
+										<div class="cell_data">
+											<span>2019</span>
+											<div class="cell_star">
+											
+											</div>
+										</div>
+										<p>
+											<span>review content</span>
+										</p>
+									</div>
 								
+								
+								</div>
+							
+							</div>
+						
+						</div>
 					</div>
-				
+					
+					
+				</div>
 				</div>
 			</div>
 			<button type="button" class="close" class= "modal_close" data-dismiss="modal">&times;</button>
 
-			</div>
-
 		</div>
+
+	</div>
+	</c:forEach>
 	
 
 	
@@ -568,12 +723,16 @@
 					var n = r.posters.indexOf("jpg")+3;
 					var url = r.posters.substring(0,n);
 		
-				
-					
 					var img = '<img src="'+url+'" class="api_img1">';
 					var title = r.title;
+					var modal_img = '<img src="'+url+'" class="modal_img1">';
+					var modal_title = r.title;
+						
 					$('#box_poster'+num).append(img);
 					$('#box_title'+num).append(title);
+					$('#modal_img'+num).append(modal_img);
+					$('#modal_title'+num).append(title);
+					
 					num=num+1;
 					
 				});
