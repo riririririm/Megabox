@@ -22,13 +22,13 @@
 		display: block;
 	}
 	.carousel-inner {
-		display: block;= height:651px;= position: absolute;
+		display: block; height:651px; position: absolute;
 	}
 	.carousel-inner img {
 		width : 1600px; height: 651px; position: absolute;
 	}
 	.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
-	height : 651px;
+		height : 651px;
 	}
 	.carousel-control {
 		width : 15%; display: block; left:0; height: 651px; margin-top: 51px;
@@ -42,8 +42,7 @@
 	}
 	#flip_wrapper {
 		width : 984px; height: 565px; margin: 0 auto;
-		white-space: nowrap;
-    	word-wrap: break-word;
+		white-space: nowrap; word-wrap: break-word;
     	display: block;
     	
 	}
@@ -51,7 +50,7 @@
 	 	width : 984px; height : 565px;
 	 	}
 	#flip_dl {
-		height: 565px;= padding : 0; margin: 0;
+		height: 565px; padding : 0; margin: 0;
 		list-style: none;
 		position: relative;
 	}
@@ -62,41 +61,30 @@
 		
 	}
 	#flip_btn2 {
-		left : 500px;
-		position: absolute;
+		left : 500px; position: absolute;
 		width: 160px; height: 50px;
 		display: block;
 	
 	}
 	#box_office {
-		display: block;
 		width: 100%; height: 100%;
-		border : 1px solid gray;
-		text-align: center;
-		line-height: 3.2em;
-		text-decoration: none;
-		color : #503396;
-		background-color: #d9d9d9;
+		border : 1px solid gray; background-color: #d9d9d9;
+		color : #503396; text-align: center; line-height: 3.2em; text-decoration: none;
+		display: block;
 	}
 	
 	#release_movie {
-		display: block;
-		width: 100%;
-		height: 100%;
-		border : 1px solid gray;
-		text-align: center;
-		line-height: 3.2em;
-		text-decoration: none;
+		width: 100%; height: 100%; border : 1px solid gray;
+		text-align: center; line-height: 3.2em; text-decoration: none;
 		color : #503396;
+		display: block;
 	}
 	#tab1 {
 		width: 984px; height: 485px; position: absolute; top :80px;
 	}
 	#tab2{
-		width: 984px;
-		height: 485px;
-		position: absolute;
-		top :80px;
+		width: 984px; height: 485px;
+		position: absolute; top :80px;
 		display: none;      /* ---------숨겨둠--------*/
 	}
 	.text-right {
@@ -116,37 +104,23 @@
 	}
 	#movie_list1 { 	/* ul */
 		list-style: none;
-		width: 1968px;
-		height:472px;
-		margin-left: 0px;
-		padding: 0;
+		width: 1968px; height:472px; margin-left: 0px; padding: 0;
 		
 	}
 	#movie_list2 { 	/* ul */
 		list-style: none;
-		width: 1968px;
-		height:472px;
-		margin-left: 0px;
-		padding: 0;
+		width: 1968px; height:472px; margin-left: 0px; padding: 0;
 		
 	}
 	.box_movie {
-		width: 232px;
-		height: 458px;
-		background: #fff;
-		border: 1px solid gray;
-		margin: 7px;
-		float: left;
-		display: block;
+		width: 232px; height: 458px;
+		background: #fff; border: 1px solid gray;
+		margin: 7px; float: left; display: block;
 	}
 	.release_movie {
-		width: 232px;
-		height: 458px;
-		background: #fff;
-		border: 1px solid gray;
-		margin: 7px;
-		float: left;
-		display: block;
+		width: 232px; height: 458px;
+		background: #fff; border: 1px solid gray;
+		margin: 7px; float: left; display: block;
 	}
 	
 	#section2 {
@@ -164,11 +138,8 @@
 		height: 65px; margin: 0;
 	}
 	#notice_list {
-		width: 460px;
-		height: 235px;
-		padding: 0;
-		margin : 0;
-		line-height:1;
+		width: 460px; height: 235px;
+		padding: 0; margin : 0; line-height:1;
 	}	
 	#notice_list > ul {
 		list-style: none; padding: 0;
@@ -181,11 +152,8 @@
 	}
 	
 	#main_qna {
-		width: 460px;
-		height: 65px;
-		float: left;	
-		margin-left: 50px;
-		border-bottom: 1px solid gray;
+		width: 460px; height: 65px;
+		float: left; margin-left: 50px; border-bottom: 1px solid gray;
 	}
 	#main_qna > h3{
 		height: 65px; margin: 0;
@@ -213,49 +181,32 @@
 		width: 230px; height: 336px;
 	}
 	.upper {
-		width: 100%;
-		height: 336px;
-		z-index: 2;
+		width: 100%; height: 336px;
+		z-index: 2; position: absolute;
 		visibility: visible;
-		position: absolute;
 	}
 	.boxoffice_num{
-		width: 44px;
-		height: 39px;
-		position: absolute;
-		top: 10px;
-		left : 6px;
-		padding: 0;
-		margin: 0;
+		width: 44px; height: 39px;
+		position: absolute; top: 10px;= left : 6px;
+		padding: 0;= margin: 0;
 	}
 	.lower {
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-		position: absolute;
+		width: 100%; height: 100%;
+		z-index: 1; position: absolute;
 		visibility: hidden;
 	}
 	#starScore {
-		width: 180px;
-		height: 30px;
-		position: absolute;
-		top: 110px;
-		left: 37px;
+		width: 180px; height: 30px;
+		position: absolute; top: 110px; left: 37px;
 	}
 	.back_wrap {
-		width: 212px;
-		padding : 9xp;
-		z-index: 1;
-		position: absolute;
+		width: 212px; padding : 9xp;
+		z-index: 1; position: absolute;
 	}
 	.bg {
-		zoom:1;
-		opacity:.75;
-		width: 230px;
-		height: 336px;
-		display: block;
-		position: absolute;
-		top:7px;
+		width: 230px; height: 336px; display: block; 
+		zoom:1; opacity:.75;
+		position: absolute; top:7px;
 	}
 	.blank {
 		overflow: hidden; display: block;
@@ -273,26 +224,36 @@
 		width: 204px; height: 0px; margin-top: 20px;
 	}
 	.film_btn {
-		width: 91px;
-		height: 46px;
-		display: block;
-		background-color: #d9d9d9;
-		float: left;
-		margin-left: 6px;
-		text-decoration: none;
-		text-align: center;
+		width: 91px; height: 46px; display: block; background-color: #d9d9d9;
+		float: left; margin-left: 6px;
+		text-decoration: none; text-align: center;
 		line-height: 3em;
 		
 	}
 	/*------------- modal style -----------------*/
+	.modal-dialog{
+		margin: 0 auto; width:968px; height: 2000px;
+		padding: 90px 0 55px;
+	}
 	.modal-content {
-		width: 968px; height: 100%;
-	
+		width: 968px; height: 100%; margin: 0 auto; 
+		padding : 65px 40px 5px;
+		background-clip: border-box; border-radius: 0px;
+	}
+	.close {
+		position: absolute; top: 52px; right : 0px;
+    	width: 38px !important; height: 38px !important; margin: 0 !important;
+    	border: 1px solid #cdcdcd !important; border-bottom:0px;
+    	opacity: 1;
+	}
+	button.close {
+		background: white;
 	}
 	
-	.fadeIn {
-		width: 100%; height: 100%;
-	}
+	
+	
+	
+	
 	.modal_wrapper {
 		width: 968px; height: 100%; margin: 0 auto; padding: 90px 0 55px;
 	}
@@ -542,58 +503,37 @@
 
     </div>	<!-- container end -->
 	<!------------------------ 상세정보 Modal ------------------------------->
-	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
 			<!-- Modal content-->
-
-				<div class="fadeIn">
-					<div class="modal_wrapper">
-						<div class="modal_content">
-							<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<div class="modal-content">
+				<div id="modal_detail">
+					<div id="popupbox">
+						<div class="left_wrap">
+							<img src="">
 						</div>
-							<div id="modal_detail">
-								<div id="popupbox">
-									<div class="left_wrap">
-										<img src="">
-									</div>
-									<div class="right_wrap">
-										<div class="modal_title_wrap">
-											<h2>
-												<span id="modal_title"> title </span>
-											</h2>
-										</div>
-										<div class="modal_text_wrap">
-										
-										</div>
-									
-									</div>
-								
-								</div>
-							
-							
-							
-							
+						<div class="right_wrap">
+							<div class="modal_title_wrap">
+								<h2>
+									<span id="modal_title"> title </span>
+								</h2>
 							</div>
-						
-						
+							<div class="modal_text_wrap">
+										
+							</div>
+									
 						</div>
-					
+								
 					</div>
-					
-			
 				
-					
-				
-					
 				</div>
-				<div class="modal-footer">
-					<button type="button" title ="${dto.num }" class="btn btn-default" data-dismiss="modal" id="updateBtn">Update</button>
-					<button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
+			</div>
+			<button type="button" class="close" class= "modal_close" data-dismiss="modal">&times;</button>
+
 			</div>
 
 		</div>
-	</div>
+	
 
 	
 <!-- 풋터 -->
