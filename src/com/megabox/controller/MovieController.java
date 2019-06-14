@@ -55,6 +55,9 @@ public class MovieController extends HttpServlet {
 		//////rim0612
 		else if(command.equals("/movieSeat")) {
 			actionForward = seatService.selectList(request, response);
+		}else if(command.equals("/movieReadyPay")) {
+			System.out.println("controller");
+			actionForward =seatService.insert(request, response);
 		}
 		
 		

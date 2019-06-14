@@ -158,52 +158,88 @@
 <script type="text/javascript">
 	$(function() {
 		var seat_num="";
-		var seat_count=0;
+		var seat_nums =[];
 		var adult=0;
-		var teen=$("#teen").val();
-		var children=$("#children").val();
-		var other=$("#other").val()*1;
+		var teen=0;
+		var children=0;
+		var other=0;
 		
-		$(".snum_btn").click(function() {
+	
+		$(".num_of_adult input:radio").change(function() {
+		    adult = $(this).val()*1;
+		    initSeat();
+		});
+		$(".num_of_teen input:radio").change(function() {
+		    teen = $(this).val()*1;
+		    initSeat();
+		});
+		$(".num_of_children input:radio").change(function() {
+			children = $(this).val()*1;
+		    initSeat();
+		});
+		$(".num_of_other input:radio").change(function() {
+			other = $(this).val()*1;
+		    initSeat();
+		});
+		
+		function getSeatCount(){ //인원수(좌석수) 계산
 			seat_count=adult+teen+children+other;
-			alert(adult);alert(teen);alert(children);alert(other);
-			
+		
+		}
+		function initSeat(){ //인원 재선택시 좌석 선택한거 초기화
+			seat_nums=[];
+			seat_num=0;
+			seat_count=0;
+		    getSeatCount();
+		    $(".snum_btn").css("background-image",'url("../images/seat.png")');
+		}
+		
+		function alertMsg(){
+			alert("선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?");
+		}
+		$(".snum_btn").click(function() {
 			if(seat_count>0){
 				seat_num=$(this).attr("title");
-				$(this).css("background-image",'url("../images/seat_selected.png")');	
+				seat_nums.push(seat_num);
 				seat_count--;
+				$(this).css("background-image",'url("../images/seat_selected.png")');	
 			}else{
-				alert("좌석을 모두 선택하셨습니다.");
+				alert("좌석 선택이 완료되었습니다.");
+				$(".seats").text(seat_nums);
+				alert(seat_nums);
 			}
+		});
+		
+		
+		var mtitle, mCode, theater,auditorium,show_time,view_date;
+		
+		$("#go_pay").click(function(){
+			mCode= $(".mtitle").attr("id").trim();
+			mtitle= $(".mtitle").text().trim();
+			theater= $(".theater").attr("title").trim();
+			auditorium= $(".auditorium").attr("title").trim();
+			view_date= $(".vs").attr("id").trim();
+			show_time= $(".vs").attr("title").trim(); 
 			
+			//form의 value값들	
+			$("#movie_code").val(mCode);		
+			$("#movie_title").val(mtitle);
+			$("#theater").val(theater);
+			$("#view_date").val(view_date);
+			$("#auditorium").val(auditorium);
+			$("#show_time").val(show_time);
+			$("#adult_count").val(adult);			//성인 좌석 선택 수 --10000
+			$("#teen_count").val(teen); 			//청소년 좌석 선택 수--9000
+			$("#children_count").val(children);	//어린이 좌석 선택 수  --8000
+			$("#other_count").val(other); 		//우대 좌석 선택 수--7000
+			
+			for(var i=0;i<seat_nums.length;i++){
+				$("#bookInfo").append('<input type="hidden" class="form-group" name="seat_no" value="'+seat_nums[i]+'">');
+			}  
+			$("#bookInfo").submit();
+		
 		});
-		$(".num_of_adult input:radio").change(function() {
-		    adult = $(this).val();
-		    alert(adult);
-		});
-		/* $(".adult_label").on("click",".adult",function(){
-			$(this).attr("checked",true);
-			adult= $(this).val()*1;
-			alert(adult);
-		}); */
-		/*  $(".adult").click(function() {
-			adult= $(this).val()*1;
-			$(this).
-			alert(adult); 
-		});
-		$(".teen").click(function() {
-			teen= $(this).val()*1;			
-			alert(teen);
-		});
-		$(".children").click(function() {
-			children= $(this).val()*1;
-			alert(children);
-
-		});
-		$(".other").click(function() {
-			other= $(this).val()*1;
-			alert(other);
-		});  */
+		
 	});
 </script>
 </head>
@@ -239,37 +275,50 @@
 							<div class="t">	
 								<div class="tt">청소년</div>
 								<div class="number_of_radio">
+									<div class="num_of_teen" data-toggle="buttons">
 									<c:forEach var="i" begin="0" end="8" step="1">
-										<button class="teen btn" value="${i }">${i }</button>
+  										<label class="btn btn-primary">
+  											<input type="radio" class="teen" name="teen" value="${i }">${i } 
+  										</label>
 									</c:forEach>
+									</div>
 								</div>
 							</div>
 							<div class="t">	
 								<div class="tt">어린이</div>
 								<div class="number_of_radio">
+									<div class="num_of_children" data-toggle="buttons">
 									<c:forEach var="i" begin="0" end="8" step="1">
-										<button class="children btn" value="${i }">${i }</button>
+  										<label class="btn btn-primary">
+  											<input type="radio" class="children" name="children" value="${i }">${i } 
+  										</label>
 									</c:forEach>
+									</div>
 								</div>
 							</div>
 							<div class="t">	
 								<div class="tt">우대</div>
 								<div class="number_of_radio">
+									<div class="num_of_other" data-toggle="buttons">
 									<c:forEach var="i" begin="0" end="8" step="1">
-										<button class="other btn" value="${i }">${i }</button>
+  										<label class="btn btn-primary">
+  											<input type="radio" class="other" name="other" value="${i }">${i } 
+  										</label>
 									</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>
 							
 						<div class="section_of_screen">
 							<div class="info_header">
-								<p style="font-weight:bold; font-size:25px;">${bookDto.movie_title}</p>
-								<span class="sp theater">[${bookDto.theater}]</span>
-								<span class="sp auditorium">${bookDto.auditorium}</span>
+								<p style="font-weight:bold; font-size:25px;" class="mtitle" id="${bookDto.movie_code}">${bookDto.movie_title}</p>
+								<span class="sp theater" title="${bookDto.theater}">[${bookDto.theater}]</span>
+								<span class="sp auditorium" title="${bookDto.auditorium}">${bookDto.auditorium}</span>
 							</div>
 							<div class="info_body">
-								<p style="font-weight:300; font-size:15px;">${bookDto.view_date} ${bookDto.show_time}</p>
+								<p style="font-weight:300; font-size:15px;" class="vs" id="${bookDto.view_date}" title="${bookDto.show_time}">${bookDto.view_date} ${bookDto.show_time}</p>
+								<p style="font-weight:300; font-size:15px;">좌석:<span class="seats"></span></p>
 							</div>
 						</div>
 					</div>
@@ -285,7 +334,8 @@
 											<td class="td_font">${i}</td>
 											<c:forEach var="j" begin="1" end="17">
 												<td>
-													<button class="btn btn2 snum_btn" title="${i}${j}" id="${i}${j}" value="${i}${j}">${j}</button>
+													<button class="btn btn2 snum_btn" title="${i}${j}" id="${i}${j}" value="${i}${j}">${j}</button> 
+													
 												</td>
 											</c:forEach>
 										</tr>
@@ -316,6 +366,19 @@
 	<!-- end of all_list -->
 	</div>
 	<!-- end of container -->
+	
+	<form action="./movieReadyPay" method="post" id="bookInfo">
+		<input type="hidden" class="form-group" id="movie_code" name="movie_code">
+		<input type="hidden" class="form-group" id="movie_title" name="movie_title">
+		<input type="hidden" class="form-group" id="theater" name="theater">
+		<input type="hidden" class="form-group" id="view_date" name="view_date">
+		<input type="hidden" class="form-group" id="auditorium" name="auditorium">
+		<input type="hidden" class="form-group" id="show_time" name="show_time">
+		<input type="hidden" class="form-group" id="adult_count" name="adult_count">
+		<input type="hidden" class="form-group" id="teen_count" name="teen_count">
+		<input type="hidden" class="form-group" id="children_count" name="children_count">
+		<input type="hidden" class="form-group" id="other_count" name="other_count">
+	</form>
 	
 	<jsp:include page="../temp/footer.jsp"/>
 

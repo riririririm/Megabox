@@ -162,7 +162,7 @@ public class MovieService implements Action{
 			mar= movieDAO.selectList(con); //상영중인 영화리스트 가져오기
 			for(int i=0;i<tar.size();i++) {
 				//각 영화의 상영시간리스트 가져오기
-				//sar= movieDAO.selectShowTimeList(mar.get(i).getMovie_code(),con);	
+				//sar= movieDAO.selectShowTim  eList(mar.get(i).getMovie_code(),con);	
 				movie_codes.add(movieDAO.searchMovieCode(tar.get(i), con));
 				sar= movieDAO.selectShowTimeList(mar.get(i).getNum(),con);	
 				ssar.add(sar);

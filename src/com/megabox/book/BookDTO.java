@@ -10,7 +10,7 @@ public class BookDTO {
 	private String theater;
 	private String auditorium;
 	private int seat_count;
-	private int seat_num;
+	//private int seat_num;
 	private Date book_date;
 	private String show_time;
 	private String view_date;
@@ -60,12 +60,12 @@ public class BookDTO {
 	public void setSeat_count(int seat_count) {
 		this.seat_count = seat_count;
 	}
-	public int getSeat_num() {
-		return seat_num;
-	}
-	public void setSeat_num(int seat_num) {
-		this.seat_num = seat_num;
-	}
+//	public int getSeat_num() {
+//		return seat_num;
+//	}
+//	public void setSeat_num(int seat_num) {
+//		this.seat_num = seat_num;
+//	}
 	public Date getBook_date() {
 		return book_date;
 	}
