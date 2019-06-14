@@ -17,7 +17,6 @@ public class SearchMakePage_2 {
 		this.search.setCommunityKind(communityKind);
 		this.search.setSearch(search);
 	}
-	
 	//row
 	public SearchRow makeRow() {
 		int startRow = (curPage-1)*perPage+1;

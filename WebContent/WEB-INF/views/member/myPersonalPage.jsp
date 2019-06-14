@@ -212,9 +212,6 @@ table{
 	<jsp:include page="../temp/footer.jsp" />
 	<script type="text/javascript">
 
-	
-	
-	
 	//onsubmit -> return pwChange 비밀번호확인 function
 	function pwChange(){
 		var pw1 = $('#changePW').val();
@@ -297,14 +294,3 @@ table{
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

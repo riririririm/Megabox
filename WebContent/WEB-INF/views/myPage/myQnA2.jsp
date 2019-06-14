@@ -108,7 +108,7 @@
 						<li>고객센터에서 남겨주신 문의내역을 모두 확인하실 수 있습니다.</li>
 						<li>문의하시기 전에 FAQ를 확인하시면 궁금점을 더욱빠르게 해결하실 수 있습니다.</li>
 					</ul>
-					<form action="./myQnA">
+					<form action="./myQnA?kind=${pager.search.kind}&search=${pager.search.search}">
 						<div>
 							<select name="kind" id="select">
 								<option value="all">전체</option>

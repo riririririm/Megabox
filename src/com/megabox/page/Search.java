@@ -1,24 +1,23 @@
 package com.megabox.page;
 
+import java.util.Map;
+
 public class Search {
 	private String kind;
 	private String search;
 	private String communityKind;
 	
+	
 	public String getKind() {
+		/*
+		 * if(this.kind==null) { // null이면 전체가 보여줬으면 좋겠다 return ""; }else
+		 * if(kind.equals("no")) { return "and state='0'"; }else if(kind.equals("ok")) {
+		 * this.kind="and state='1'"; }else { this.kind=""; }
+		 */
 		return kind;
 	}
 	public void setKind(String kind) {
-		if(kind==null) {
-			this.kind="title";
-		}else if(kind.equals("w")) {
-			this.kind="writer";
-		}else if(kind.equals("c")) {
-			this.kind="contents";
-		}else {
-			this.kind="title";
-		}
-		
+		this.kind = kind;
 	}
 
 	public String getCommunityKind() {
