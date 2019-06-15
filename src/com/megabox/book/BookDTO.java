@@ -3,7 +3,7 @@ package com.megabox.book;
 import java.sql.Date;
 
 public class BookDTO {
-	private int book_num;
+	private int book_num; //book_seq
 	private String id;
 	private String movie_code;
 	private String movie_title;
@@ -11,11 +11,11 @@ public class BookDTO {
 	private String auditorium;
 	private int seat_count;
 	//private int seat_num;
-	private Date book_date;
+	private Date book_date; //sysdate
 	private String show_time;
 	private String view_date;
-	private Date cancel_date;
-	private int state;
+	private Date cancel_date; //null -> 취소시 sysdate
+	private int state; //예매된 좌석 1 예매 안된좌석이0
 	private int price;
 	public int getBook_num() {
 		return book_num;
