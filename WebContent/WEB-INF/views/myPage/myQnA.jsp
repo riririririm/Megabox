@@ -134,11 +134,18 @@
 							</tr>
 						</c:if>
 						<c:if test="${qnaList ne null}">
-							<c:forEach items="${qnaList}" var="qna">
-							<tr>
-								<td>${qna.num}</td>
+							<c:forEach items="${qnaList}" var="qna" >
+							<tr>	
+								<td>${i.index} ${qna.num}
+								</td>
 								<td>${qna.title}</td>
-								<td>${qna.state}</td>
+								<c:if test="${qna.state eq 0}">
+									<td>미답변</td>
+								</c:if>
+								
+								<c:if test="${qna.state eq 1}">
+									<td>답변완료</td>
+								</c:if>
 								<td>${qna.reg_date}</td>
 							</tr>
 							</c:forEach>

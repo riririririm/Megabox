@@ -33,6 +33,8 @@ public class MyPageService implements Action{
 		store_historyDAO = new Store_historyDAO();
 		qnaDAO = new QnaDAO();
 	}
+	
+
 	//QnAList
 	public ActionForward qnaList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -47,7 +49,6 @@ public class MyPageService implements Action{
 		}
 		String kind = request.getParameter("kind");
 		String search = request.getParameter("search");
-		System.out.println(kind);
 		QnaSearchMakePage qnaSearchMakePage = new QnaSearchMakePage(curPage, kind, search);
 		SearchRow searchRow = qnaSearchMakePage.makeRow(); //페이지에서 첫번째와 마지막번호를 나타내기 위해서 선언
 		Connection conn = null;
@@ -65,6 +66,7 @@ public class MyPageService implements Action{
 				SearchPager searchPager = qnaSearchMakePage.makePage(totalCount);
 				request.setAttribute("pager", searchPager);
 				request.setAttribute("qnaList", ar);
+				request.setAttribute("total", totalCount);
 			}
 		}catch (Exception e) {
 			path = "../index.do";

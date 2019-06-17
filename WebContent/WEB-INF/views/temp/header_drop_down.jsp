@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +77,9 @@
 								<button>LOGIN</button>
 								<input type="checkbox" id="remember" name="remember">ID기억
 							</div>
-								
+							<%-- <div>
+							<jsp:include page="/WEB-INF/views/myPage/kakaoLoginTest.jsp"></jsp:include>	
+							</div> --%>
 						</form>
 					</div>
 					<div>
