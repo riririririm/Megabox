@@ -1,5 +1,6 @@
 package com.megabox.seat;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,21 +13,24 @@ import com.megabox.action.ActionForward;
 import com.megabox.book.BookDTO;
 import com.megabox.member.MemberDTO;
 import com.megabox.movie.MovieDTO;
+import com.megabox.util.DBConnector;
 
 public class SeatService implements Action {
+	private SeatDAO seatDAO;
+	
+	public SeatService() {
+		// TODO Auto-generated constructor stub
+		seatDAO = new SeatDAO();
+	}
 
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 		// 영화관 좌석표 보이기
 		ActionForward actionForward = new ActionForward();
 		String command = request.getMethod();
-		ArrayList<String> seatInit= new ArrayList<String>();
-		int alpha=65;
-		for(int i=1;i<13;i++) {
-			seatInit.add(((char)alpha)+"");
-			alpha++;
-		}
-		
+		ArrayList<String> seatInit= seatDAO.initSeat(); 
+		ArrayList<Integer> seatStatus = null;
+			
 		request.setAttribute("seatInit", seatInit);
 		
 		BookDTO bookDTO = new BookDTO();
@@ -37,9 +41,22 @@ public class SeatService implements Action {
 		bookDTO.setView_date(request.getParameter("view_date"));
 		bookDTO.setShow_time(request.getParameter("show_time"));
 		
+		System.out.println(bookDTO.getTheater());
+		System.out.println(bookDTO.getAuditorium());
+		System.out.println(bookDTO.getView_date());
+		System.out.println(bookDTO.getShow_time());
 		request.setAttribute("bookDto", bookDTO);
 		
-		
+		Connection con =null;
+		try {
+			con=DBConnector.getConnect();
+			seatStatus =seatDAO.selectStateList(bookDTO,con);
+			request.setAttribute("seatStatus", seatStatus);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//int result
 		
 		
 		actionForward.setCheck(true);

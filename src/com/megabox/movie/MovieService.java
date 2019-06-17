@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
+import com.megabox.seat.SeatDAO;
+import com.megabox.seat.SeatDTO;
 import com.megabox.theater.TheaterDAO;
 import com.megabox.theater.TheaterDTO;
 import com.megabox.util.DBConnector;
@@ -16,10 +18,12 @@ import com.megabox.util.DBConnector;
 public class MovieService implements Action{
 	private MovieDAO movieDAO;
 	private TheaterDAO theaterDAO;
+	private SeatDAO seatDAO;
 	
 	public MovieService() {
 		movieDAO = new MovieDAO();
 		theaterDAO =new TheaterDAO();
+		seatDAO = new SeatDAO();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//유라
@@ -219,7 +223,9 @@ public class MovieService implements Action{
 		if(method.equals("POST")) {
 			Connection con=null;
 			MovieDTO movieDTO = new MovieDTO();
-			int result1, result2=0;
+			SeatDTO seatDTO = new SeatDTO();
+			ArrayList<String> seatRows = new ArrayList<String>();
+			int result1=0; int result2=0; int result3=0;
 			
 			try {
 				con = DBConnector.getConnect();
@@ -234,6 +240,11 @@ public class MovieService implements Action{
 				
 				result1 = movieDAO.insert(movieDTO, con);
 				
+				seatDTO.setTheater(movieDTO.getTheater());
+				seatDTO.setAuditorium(movieDTO.getAuditorium());
+				seatDTO.setView_date(movieDTO.getView_date());
+				seatRows = seatDAO.initSeat();
+				
 				int movie_num = movieDAO.getNum(con)-1;
 				ShowTimeDTO showTimeDTO=new ShowTimeDTO();
 				for(int i=0;i<show_times.length;i++) {
@@ -242,10 +253,19 @@ public class MovieService implements Action{
 					showTimeDTO.setShow_time(show_times[i]);
 					showTimeDTO.setAuditorium(movieDTO.getAuditorium());
 					result2 = movieDAO.insertShowTime(showTimeDTO, con);
+					
+					//
+					seatDTO.setShow_time(show_times[i]);
+					for(int j=0;j<seatRows.size();j++) {
+						for(int k=1;k<11;k++) {
+							seatDTO.setSeat_num(seatRows.get(j)+k);
+							result3= seatDAO.insert(seatDTO, con);
+						}
+					}
 				}
 				
 				
-				if(result1>0 && result2>0) {
+				if(result1>0 && result2>0 && result3>0) {
 					//영화 상영시간표 등록 성공시
 					request.setAttribute("message", "영화 상영정보를 등록했습니다.");
 					request.setAttribute("path", "./movieTimetableAdmin");

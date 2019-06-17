@@ -1,5 +1,7 @@
 package com.megabox.seat;
 
+import java.sql.Date;
+
 public class SeatDTO {
 	private int num;
 	private int book_num;
@@ -7,6 +9,9 @@ public class SeatDTO {
 	private String auditorium;
 	private String seat_num;
 	private int state;
+	private String view_date;
+	private String show_time;
+	
 	public int getNum() {
 		return num;
 	}
@@ -42,6 +47,18 @@ public class SeatDTO {
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	public String getView_date() {
+		return view_date;
+	}
+	public void setView_date(String view_date) {
+		this.view_date = view_date;
+	}
+	public String getShow_time() {
+		return show_time;
+	}
+	public void setShow_time(String show_time) {
+		this.show_time = show_time;
 	}
 	
 	

@@ -24,6 +24,16 @@
 		font-size:12px;
 		background-image: url("../images/seat.png");
 	}
+	.btn2_1{
+		padding:4px 4px;
+		width:25px;
+		height:25px;
+		border: 1px solid white;
+		font-weight:bold;
+		font-size:12px;
+		background-image: url("../images/seat_booked.png");
+		background-position: center;
+	}
 	.form-div >img{
 		padding-top: 20px;
 		padding-right: 20px;
@@ -111,10 +121,12 @@
 		text-align: center;
 		border-left: 1px solid #9999;
     	border-bottom: 1px solid #9999;
+    	padding-top: 80px;
 	}
 	.tb_seat{
-		width:60%;
-		margin: 20px 0px 0px 183px;
+		width:40%;
+		margin: 0 auto;
+		
 		
 	}
 	.td_font{
@@ -124,14 +136,14 @@
 	.seat_info_wrapper{
 		float: right;
 		width:20%;
-		height:450px;
+		height:430px;
 		border: 1px solid #9999;
 		margin-top: 10px;
 		padding:20px;
 	}
 	#go_pay{
-		margin-top: 185px;
-		margin-left: 80px;
+		margin-top: 160px;
+		margin-left: 90px;
 	}
 	.mtop{
 		font-size: 13px;
@@ -191,7 +203,13 @@
 			seat_num=0;
 			seat_count=0;
 		    getSeatCount();
-		    $(".snum_btn").css("background-image",'url("../images/seat.png")');
+		   /*  for(int i=0;i<8;i++){
+		    	for(int j=0;j<10;j++){
+		    		if($(".snum_btn")})
+				    $(".snum_btn").css("background-image",'url("../images/seat.png")');
+		    		
+		    	}
+		    } */
 		}
 		
 		function alertMsg(){
@@ -329,13 +347,20 @@
 							<div class="screen">SCREEN</div>
 							<div class="seat_wrap">
 								<table class="tb_seat">
-									<c:forEach items="${seatInit}" var="i">
+									<c:forEach items="${seatInit}" var="ch" varStatus="i">
 										<tr>
-											<td class="td_font">${i}</td>
-											<c:forEach var="j" begin="1" end="17">
+											<td class="td_font">${ch}</td>
+											<c:forEach var="j" begin="0" end="9">
 												<td>
-													<button class="btn btn2 snum_btn" title="${i}${j}" id="${i}${j}" value="${i}${j}">${j}</button> 
-													
+												<%-- ${seatStatus[i.index*10+j]}  --%>
+												<c:choose>
+													<c:when test="${seatStatus[i.index*10+j] eq 1 }">
+														<button class="btn btn2 snum_btn" title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}">${j+1}</button> 
+													</c:when>
+													<c:when test="${seatStatus[i.index*10+j] eq 0 }">
+														<button class="btn btn2_1 snum_btn" title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}"></button> 
+													</c:when>
+												</c:choose>
 												</td>
 											</c:forEach>
 										</tr>

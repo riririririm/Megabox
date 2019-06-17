@@ -71,6 +71,8 @@ public class BookService implements Action{
 					seatDTO.setBook_num(book_num);
 					seatDTO.setTheater(bookDTO.getTheater());
 					seatDTO.setAuditorium(bookDTO.getAuditorium());
+					seatDTO.setView_date(bookDTO.getView_date());
+					seatDTO.setShow_time(bookDTO.getShow_time());
 					seatDTO.setSeat_num(seats[i]);
 					result2= seatDAO.update(seatDTO,con);
 				}
