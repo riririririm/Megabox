@@ -509,6 +509,7 @@
   											</div>  <!-- lower end -->
   										
   										</div>       <!-- thumb_flip end -->
+  										
 										<div class = "front_info">
 											<div class="movie_info">
 												<h3 class="film_box">
@@ -754,6 +755,8 @@
 					var modal_release = r.repRlsDate;
 					var movie_type = r.genre;
 					var plot = r.plot;
+					var movie_code = r.movieSeq;
+					
 						r.director.forEach(function(dir) {
 							var director = dir.directorNm;
 						
@@ -765,7 +768,7 @@
 					$('#director'+num).append(director);	// 모달 감독
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
-					
+					$
 					
 					num=num+1;
 					
