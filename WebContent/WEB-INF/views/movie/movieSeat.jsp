@@ -199,18 +199,23 @@
 		
 		}
 		function initSeat(){ //인원 재선택시 좌석 선택한거 초기화
-			seat_nums=[];
+			 seat_nums=[];
 			seat_num=0;
 			seat_count=0;
-		    getSeatCount();
-		    $(".snum_btn").css("background-image",'url("../images/seat.png")');
-		   /*  for(int i=0;i<8;i++){
-		    	for(int j=0;j<10;j++){
-		    		if($(".snum_btn")})
-				    $(".snum_btn").css("background-image",'url("../images/seat.png")');
-		    		
+			getSeatCount();
+			
+			
+		     $(".snum_btn").css("background-image",'url("../images/seat.png")');  
+		    /* var alpha='A';
+		    for(var i=0;i<8;i++){
+		    	for(var j=0;j<10;j++){
+		    		if($("#"+)+alpha)
+		    		 $(".snum_btn").css("background-image",'url("../images/seat.png")');
 		    	}
 		    } */
+		    
+		    /* location.reload(); */
+		   
 		}
 		
 		function alertMsg(){
@@ -225,7 +230,7 @@
 			}else{
 				alert("좌석 선택이 완료되었습니다.");
 				$(".seats").text(seat_nums);
-				alert(seat_nums);
+				//alert(seat_nums);
 			}
 		});
 		
@@ -359,7 +364,7 @@
 														<button class="btn btn2 snum_btn" title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}">${j+1}</button> 
 													</c:when>
 													<c:when test="${seatStatus[i.index*10+j] eq 0 }">
-														<button class="btn btn2_1 snum_btn" title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}"></button> 
+														<button class="btn btn2_1 " title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}"></button> 
 													</c:when>
 												</c:choose>
 												</td>

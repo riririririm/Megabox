@@ -297,7 +297,7 @@
 		var store_period;
 		var store_count;
 		var store_price;
-		
+		var result="";
 		//상품명 클릭시 모달창 뜨기
 		$(".alink").click(function() {
 			store_num= $(this).attr("title");
@@ -370,14 +370,23 @@
        	     	store_period: store_period
        	     	
         		}, function(data){
-        	         
+        	         result="success";
         	});
         	
         	} else {
         		var msg = '결제에 실패하였습니다.';
         		msg += '에러내용 : ' + rsp.error_msg;
+        		result="fail";
         	}
-        	alert(msg);
+        	
+        /* 	if(result=="success"){
+        		//window.location.href="../index.do"
+        		
+        	}else{
+        		alert(msg);
+        	} */
+    		location.reload();
+    		alert(msg);
         	}); 
         	
 		});

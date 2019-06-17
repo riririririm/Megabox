@@ -80,7 +80,7 @@
 		$(".movie").click(function() {
 			m = $(this).text().trim();
 			mCode = $(this).attr("title").trim();
-			alert(mCode);
+			//alert(mCode);
 			$("#date-ul").css("visibility","hidden");
 			$("#show_time-ul").css("visibility","hidden");
 			
@@ -121,7 +121,7 @@
 		$("#show_time-list").on("click",".show_time",function() {
 			aud=$(this).attr("title");
 			sh = $(this).text().trim();
-			alert(aud); alert(sh);
+			//alert(aud); alert(sh);
 		});
 		
 		

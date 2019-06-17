@@ -297,19 +297,19 @@
   				<!-- Wrapper for slides -->
   					<div class="carousel-inner">
     					<div class="item active">
-      						<img src="/Test/images/main1.jpg">
+      						<img src="/Megabox/images/main1.jpg">
       					</div>
     					<div class="item">
-     						<img src="/Test/images/main2.jpg">
+     						<img src="/Megabox/images/main2.jpg">
     					</div>
     					<div class="item">
-     						<img src="/Test/images/main3.jpg">
+     						<img src="/Megabox/images/main3.jpg">
     					</div>
     					<div class="item">
-     						<img src="/Test/images/main4.jpg">
+     						<img src="/Megabox/images/main4.jpg">
     					</div>
     					<div class="item">
-     						<img src="/Test/images/main5.jpg">
+     						<img src="/Megabox/images/main5.jpg">
     					</div>
   					</div>   
 			</div>  <!-- carousel end -->
