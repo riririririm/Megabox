@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,11 @@
 <title>Insert title here</title>
 <jsp:include page="../temp/bootstrap.jsp" />
 <style type="text/css">
-	.container {
+.container {
 	width: 100%;
-	height: 1500px; padding : 3% 0 0 0; position : relative;
+	height:1000px;
+	padding: 3% 0 0 0;
+	position: relative;
 	overflow: hidden;
 	padding: 3% 0 0 0;
 	position: relative;
@@ -56,24 +59,20 @@
 	border: 1px solid #ddd;
 }
 
-.myQnA h4{
+.myQnA h4 {
 	margin: 50px 0px 30px 0px;
 	letter-spacing: 2px;
 }
-.qna_content{
-	margin-top:100px;
+
+.qna_content {
+	margin-top: 100px;
 	border-collapse: collapse;
 	border-top: 3px solid #503396;
 	border-bottom: 1px solid #e1e1e1;
 }
-
-.qna_content tr:last-child{
-	text-align: center;
-	height: 300px;
-}
-
 </style>
 </head>
+
 <body>
 	<jsp:include page="../temp/header.jsp" />
 	<div class="container">
@@ -93,13 +92,12 @@
 					<li><a
 						href="${pageContext.request.contextPath}/myPage/bookPage"> <img
 							src="../images/book.PNG"></a></li>
-					<li><a href="./myStorePage"></a> <img
-						src="../images/store.PNG"></li>
-					<li><img src="../images/personal_info.PNG"></li>
-					<li>
-						<a href="./myQnA">
-						<img src="../images/qna.PNG" style="margin-right: 0px;"></a>
-					</li>
+					<li><a href="./myStorePage"> <img
+							src="../images/store.PNG"></a></li>
+					<li><a href="../member/myPersonalPage"><img
+							src="../images/personal_info.PNG"></a></li>
+					<li><a href="./myQnA"> <img src="../images/qna.PNG"
+							style="margin-right: 0px;"></a></li>
 				</ul>
 			</div>
 			<div class="reset"></div>
@@ -110,18 +108,17 @@
 						<li>고객센터에서 남겨주신 문의내역을 모두 확인하실 수 있습니다.</li>
 						<li>문의하시기 전에 FAQ를 확인하시면 궁금점을 더욱빠르게 해결하실 수 있습니다.</li>
 					</ul>
-					<div>
-						<button>1:1문의</button>
-						<select>
-							<option>전체</option>
-							<option>미답변</option>
-							<option>답변완료</option>
-							<option>답변완료(메일+SMS)</option>
-							<option>답변완료(메일)</option>
-							<option>답변완료(SMS)</option>
-						</select>
-						<input placeholder="검색어를 입력하세요" type="text">
-					</div>
+					<form action="./myQnA">
+						<div>
+							<select name="kind" id="select">
+								<option value="all">전체</option>
+								<option value="no">미답변</option>
+								<option value="ok">답변완료</option>
+							</select> <input placeholder="검색어를 입력하세요" type="text" name="search"
+								id="search">
+							<button id="btn">검색</button>
+						</div>
+					</form>
 					<table class="qna_content table">
 						<tr>
 							<td>NO</td>
@@ -129,14 +126,63 @@
 							<td>답변상태</td>
 							<td>등록일</td>
 						</tr>
-						<tr>
-							<td colspan="8" style="padding-top: 130px;">조회된 문의내역이 없습니다.</td>
-						</tr>
+						<c:if test="${qnaList eq null}">
+							<tr>
+								<td colspan="8" style="padding-top: 130px; text-align: center; height: 300px;">
+								조회된 문의내역이 없습니다.</td>
+							
+							</tr>
+						</c:if>
+						<c:if test="${qnaList ne null}">
+							<c:forEach items="${qnaList}" var="qna" >
+							<tr>	
+								<td>${i.index} ${qna.num}
+								</td>
+								<td>${qna.title}</td>
+								<c:if test="${qna.state eq 0}">
+									<td>미답변</td>
+								</c:if>
+								
+								<c:if test="${qna.state eq 1}">
+									<td>답변완료</td>
+								</c:if>
+								<td>${qna.reg_date}</td>
+							</tr>
+							</c:forEach>
+						</c:if>
 					</table>
+					<!-- 페이지 나누는 부분 -->
+					<c:if test="${qnaList ne null}">
+						<div>
+							<ul class="pager">
+								<c:if test="${pager.curBlock gt 1}">
+								<li class="previous">
+									<a href="./myQnA?curPage=${pager.startNum-1}&kind=${pager.search.kind}&search=${pager.search.search}">Previous</a>
+								</li>
+								</c:if>
+								<li>
+									<ul class="pagination">
+										<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i" step="1">
+											<li><a href="./myQnA?curPage=${i}&kind=${pager.search.kind}&search=${pager.search.search}">${i}</a></li>
+										</c:forEach>
+									</ul>
+								</li>
+								<c:if test="${pager.curBlock lt pager.totalBlock}">
+								<li class="next">
+									<a href="./myQnA?curPage=${pager.lastNum+1}&kind=${pager.search.kind}&search=${pager.search.search}">Next</a>
+								</li>
+								</c:if>
+							</ul>
+						</div>
+					</c:if>
+					<!-- 페이지 나누는 부분 -->
 				</div>
 			</div>
 		</div>
 	</div>
 	<jsp:include page="../temp/footer.jsp" />
+	<script type="text/javascript">
+		
+	</script>
 </body>
 </html>

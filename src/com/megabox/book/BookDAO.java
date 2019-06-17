@@ -23,7 +23,7 @@ public class BookDAO {
 		rs.close();
 		st.close();
 		
-		return result;
+		return result-1;
 		
 	}
 	public int insert(BookDTO bookDTO, Connection con) throws Exception {

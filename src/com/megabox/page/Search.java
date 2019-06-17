@@ -1,24 +1,17 @@
 package com.megabox.page;
 
+
 public class Search {
 	private String kind;
 	private String search;
 	private String communityKind;
 	
+	
 	public String getKind() {
 		return kind;
 	}
 	public void setKind(String kind) {
-		if(kind==null) {
-			this.kind="title";
-		}else if(kind.equals("w")) {
-			this.kind="writer";
-		}else if(kind.equals("c")) {
-			this.kind="contents";
-		}else {
-			this.kind="title";
-		}
-		
+		this.kind = kind;
 	}
 
 	public String getCommunityKind() {

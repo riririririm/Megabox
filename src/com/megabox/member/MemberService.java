@@ -12,6 +12,7 @@ import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
 import com.megabox.util.DBConnector;
 
+
 public class MemberService implements Action{
 
 	MemberDAO memberDAO;
@@ -19,7 +20,65 @@ public class MemberService implements Action{
 	public MemberService() {
 		memberDAO = new MemberDAO();
 	}
-
+	
+	//비밀번호 바꿈
+	public ActionForward myPwChange(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/common/result.jsp";
+		boolean check = true;
+		
+		int result = 0;
+		Connection conn = null;
+		String method = request.getMethod();
+		HttpSession session = request.getSession();
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		//기본 PW받음
+		String realPw = memberDTO.getPw();
+		String pw = null;
+		if(method.equals("POST")) {
+			try {
+				conn = DBConnector.getConnect();
+				
+				//새로운 PW받음
+				String new_pw = request.getParameter("new_pw");
+				//새로운 PWCheck받음
+				String new_pwck = request.getParameter("new_pwck");
+				//확인용 PW받음
+				pw= request.getParameter("pw");
+				
+				
+				if(new_pw.equals(new_pwck)) {
+					memberDTO.setPw(new_pw);
+					result = memberDAO.updatePw(conn,memberDTO, pw);
+				} 
+			} catch (Exception e) {
+				
+				 request.setAttribute("message", "새로운 비밀번호가다름");
+				 request.setAttribute("path","./myPersonalPage" );
+				 
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(result>0) {
+				path = "./myPersonalPage";
+				check = false;
+			}else {
+				memberDTO.setPw(realPw);
+				request.setAttribute("message", "비밀번호 변경 실패");
+				request.setAttribute("path", "./myPersonalPage");
+			}
+			
+		}
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
 	public ActionForward logout(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		request.getSession().invalidate();
@@ -102,7 +161,7 @@ public class MemberService implements Action{
 			}else {
 				session = request.getSession();
 
-				request.setAttribute("msg", "Login Fail");
+				request.setAttribute("message", "Login Fail");
 				request.setAttribute("path", "../index.do");
 				check=true;
 				path="../WEB-INF/views/common/result.jsp";
@@ -177,34 +236,7 @@ public class MemberService implements Action{
 
 		return actionForward;
 	}
-	public ActionForward update2(HttpServletRequest request, HttpServletResponse response) {
-		ActionForward actionForward = new ActionForward();
-		actionForward.setCheck(true);
-		actionForward.setPath("../WEB-INF/views/member/myPersonalPage.jsp");
-		/*if(memberDTO2!=null) {
-		//개인정보 수정 메서드
-		String phone1 = request.getParameter("p1");
-		String phone2 = request.getParameter("p2");
-		String phone3 = request.getParameter("p3");
-		String phone = phone1+"-"+phone2+"-"+phone3;
-		String email = request.getParameter("email");
-		System.out.println(phone);
-		System.out.println(email);
-		System.out.println(name);
-		System.out.println(id);
-		MemberDTO memberDTOck = new MemberDTO();
-		memberDTOck.setId(id);
-		memberDTOck.setPhone(phone);
-		memberDTOck.setEmail(email);
-		memberDTOck.setName(name);
-		int result = memberDAO.update(conn, memberDTOck);
-		if(result>0) {
-			actionForward.setPath("../WEB-INF/views/member/myPersonalPage.jsp");
-			actionForward.setCheck(true);
-		}
-	}*/
-		return actionForward;
-	}
+
 	//비밀번호 확인
 	public ActionForward pwcheck(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -217,41 +249,114 @@ public class MemberService implements Action{
 			try {
 				HttpSession session = request.getSession();
 				MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-				String pw = request.getParameter("password");
+				String pw = request.getParameter("pw");
+				
+				System.out.println(pw);
 				
 				if(memberDTO.getId()!=null) {
 					if(pw.equals(memberDTO.getPw())){
-						request.setAttribute("check", 1);
-						request.setAttribute("pwCheck", "");
+						request.setAttribute("result", 1);
 					}else {
-						request.setAttribute("check", 0);
-						request.setAttribute("pwCheck", "비밀번호를 다시 입력해주세요");
+						request.setAttribute("result", 0);
 					}
+					
+					path = "../WEB-INF/views/common/result2.jsp";
 				}
 			}catch (Exception e) {
-				request.setAttribute("msg", "다시 로그인 해주세요");
-				request.setAttribute("path", "../index.do");
-				path = "../WEB-INF/views/common/result.jsp";
-				check = true;
+				request.setAttribute("result", 0);
+				path = "../WEB-INF/views/common/result2.jsp";
 			}
 		}
 		actionForward.setCheck(check);
 		actionForward.setPath(path);
 		return actionForward;
 	}
+
 	
 	//개인정보 수정
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/common/result.jsp";
+		boolean check = true;
+		//핸드폰 번호 짜른거 합침
+		String phone1 = request.getParameter("phone1");
+		String phone2 = request.getParameter("phone2");
+		String phone3 = request.getParameter("phone3");
+		String phone = phone1+"-"+phone2+"-"+phone3;
+		///
+		String email = request.getParameter("email");
+		HttpSession session = request.getSession();
+		MemberDTO memberDTO2 = (MemberDTO)session.getAttribute("member");
+		Connection conn = null;
+		MemberDTO memberDTO = null;
+		int result = 0;
+		try {
+			conn = DBConnector.getConnect();
+			memberDTO = new MemberDTO();
+			memberDTO.setId(memberDTO2.getId());
+			memberDTO.setPhone(phone);
+			memberDTO.setEmail(email);
+			result = memberDAO.update(conn, memberDTO);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(result>0) {
+			memberDTO2.setPhone(memberDTO.getPhone());
+			memberDTO2.setEmail(memberDTO.getEmail());
+			path = "./myPersonalPage";
+			check = false;
+		}else {
+			request.setAttribute("message", "수정실패");
+			request.setAttribute("path", "./myPersonalPage");
+		}
 		
+		actionForward.setPath(path);
+		actionForward.setCheck(check);
 		return actionForward;
 	}
 
+	//회원 탈퇴
 	@Override
 	public ActionForward delete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/common/result.jsp";
+		boolean check = true;
+		String method = request.getMethod();
+		Connection conn = null;
+		HttpSession session = request.getSession();
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		int result = 0;
+		String pw = null;
+		String id = memberDTO.getId();
+		if(method.equals("POST")) {
+			pw = request.getParameter("dropPw");
+			System.out.println(pw);
+			
+			try {
+				conn = DBConnector.getConnect();
+				if(pw!=null) {
+					result = memberDAO.delete(conn, id, pw);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(result>0) {
+			session.invalidate();
+			request.setAttribute("result", result);
+			path = "../index.do";
+			check = false;
+		}else {
+			request.setAttribute("message", "회원 탈퇴 실패");
+			request.setAttribute("path", "./myPersonalPage");
+		}
+		actionForward.setPath(path);
+		actionForward.setCheck(check);
+		return actionForward;
 	}
 
 }

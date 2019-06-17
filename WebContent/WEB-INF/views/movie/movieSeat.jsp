@@ -203,6 +203,7 @@
 			seat_num=0;
 			seat_count=0;
 		    getSeatCount();
+		    $(".snum_btn").css("background-image",'url("../images/seat.png")');
 		   /*  for(int i=0;i<8;i++){
 		    	for(int j=0;j<10;j++){
 		    		if($(".snum_btn")})
