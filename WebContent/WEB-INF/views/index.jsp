@@ -332,13 +332,14 @@
 	}
 	.review_list_wrap >ul {
 		list-style: none; float : right; display:block;
-		width: 200px; height: 13px; padding-right: 6px; margin-bottom: 15px;
+		width: 300px; height: 13px; padding-right: 6px; margin-bottom: 15px;
 	}
 	.review_list_wrap >ul >li {
-		float: right; padding-left: 10px; border-left: 1px; margin-left: 10px''
+		display : block;
+		float: right !important; padding-left: 10px; border-left: 1px; margin-left: 10px;
 	}
 	.review_list_wrap >ul >li >a {
-		text-decoration: none;
+		text-decoration: none; display: block;
 	}
 	.review_list {
 		width: 888px; height: 789px; 
