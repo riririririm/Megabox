@@ -331,26 +331,29 @@
 		width: 888px; height: 864px;
 	}
 	.review_list_wrap >ul {
-		list-style: none; float : right; display:block;
-		width: 300px; height: 13px; padding-right: 6px; margin-bottom: 15px;
+		list-style: none; display:block;
+		width: 300px; height: 13px; padding-right: 6px; margin-bottom: 15px; right:0;
 	}
 	.review_list_wrap >ul >li {
-		display : block;
 		float: right !important; padding-left: 10px; border-left: 1px; margin-left: 10px;
 	}
 	.review_list_wrap >ul >li >a {
-		text-decoration: none; display: block;
+		text-decoration: none;
 	}
 	.review_list {
-		width: 888px; height: 789px; 
-		border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;
+		width: 888px; height: 789px;
+		border-top: 1px solid #e5e5e5;
 	}
 	.review_row {
 		width: 888px; height: 138px;
 	}
+	.review_cell:first-child {
+		border-right: 1px solid #e5e5e5;
+	}
 	.review_cell {
-		width: 443px; height: 137px; padding:20px 50px;
-		border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;
+		width: 50%; height: 100%; padding:20px 50px; display : table-cell;
+		border-bottom: 1px solid #e5e5e5; overflow: hidden; float: left;
+		
 	}
 	.cell_content {
 		width: 314px; height: 97px;
@@ -610,11 +613,10 @@
 									<button type="button" class="modalBtn_book">예매하기</button>
 								</div>
 								<ul class="modal_info_wrap">
-									<li><strong>타입 : </strong></li>
-									<li><strong>개봉일 : </strong></li>
-									<li><strong>감독 : </strong></li>
-									<li><strong>출연진 : </strong></li>
-									<li><strong>장르 : </strong></li>
+									<li id="modal_release${modal }"><strong>개봉일 : </strong></li>
+									<li id="director${modal }"><strong>감독 : </strong></li>
+									<li id="actors${modal }"><strong>출연진 : </strong></li>
+									<li id="movie_type${modal}"><strong>장르 : </strong></li>
 								</ul>
 							</div>          <!------------- modal_text_wrap end -------------->
 							<div class="modal_rating"> 
@@ -654,6 +656,7 @@
 							<li><a>평점순</a></li>
 						</ul>
 						<div class="review_list">
+							<c:forEach begin="1" end="5">
 							<div class="review_row">
 								<div class="review_cell">
 									<div class="cell_content">
@@ -670,11 +673,26 @@
 											<span>review content</span>
 										</p>
 									</div>
-								
-								
+								</div> 		<!------------ review_cell end ----------->	
+								<div class="review_cell">
+									<div class="cell_content">
+										<div class="cell_member_id">
+											<strong>id</strong>
+										</div>
+										<div class="cell_data">
+											<span>2019</span>
+											<div class="cell_star">
+											
+											</div>
+										</div>
+										<p>
+											<span>review content</span>
+										</p>
+									</div>
 								</div>
-							
-							</div>
+														
+							</div>			<!----------- review_row end ------------>
+							</c:forEach>
 						
 						</div>
 					</div>
@@ -687,6 +705,7 @@
 
 		</div>
 
+	</div>
 	</div>
 	</c:forEach>
 	
@@ -728,19 +747,31 @@
 					var title = r.title;
 					var modal_img = '<img src="'+url+'" class="modal_img1">';
 					var modal_title = r.title;
+					var modal_release = r.repRlsDate;
+					var movie_type = r.genre;
+
+						r.director.forEach(function(dir) {
+							var director = dir.directorNm;
 						
-					$('#box_poster'+num).append(img);
-					$('#box_title'+num).append(title);
-					$('#modal_img'+num).append(modal_img);
-					$('#modal_title'+num).append(title);
+					$('#box_poster'+num).append(img);	// 포스터 이미지
+					$('#box_title'+num).append(title);	// 메인 타이틀
+					$('#modal_img'+num).append(modal_img); 	// 모달 포스터 이미지
+					$('#modal_title'+num).append(title);	// 모달 영화타이틀
+					$('#modal_release' +num).append(modal_release);	// 모달 개봉일
+					$('#director'+num).append(director);	// 모달 감독
+
+					$('#movie_type'+num).append(movie_type); // 모달 장르
+					
 					
 					num=num+1;
 					
-				});
-			});
-		});
+					});	//director
+	
+				});		// Result
+			});		// Data
+		});		//Json
 		
-	});
+	});		// function
 	
 
 
