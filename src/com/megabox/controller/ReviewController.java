@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class JsonControlloer
+ * Servlet implementation class ReviewController
  */
-@WebServlet("/JsonControlloer")
-public class JsonControlloer extends HttpServlet {
+@WebServlet("/ReviewController")
+public class ReviewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JsonControlloer() {
+    public ReviewController() {
         super();
         // TODO Auto-generated constructor stub
     }

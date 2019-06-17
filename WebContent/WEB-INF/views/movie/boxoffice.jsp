@@ -147,22 +147,11 @@
 					<div id="util_wrap">
 					</div>
 					<ul id="movie_list">
+					<c:forEach begin="1" end="24">
 						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
-						<li class="item"> </li>
+					
 
+					</c:forEach>
 					</ul>
 				</div>
 			

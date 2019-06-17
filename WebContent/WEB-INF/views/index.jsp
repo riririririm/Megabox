@@ -170,10 +170,15 @@
 		z-index: 2; position: absolute;
 		visibility: visible;
 	}
+	.film_box {
+		margin-top: 20px; margin-left:10px; overflow: hidden;
+	}
+	
+	
 	.boxoffice_num{
-		width: 44px; height: 39px;
-		position: absolute; top: 10px;= left : 6px;
-		padding: 0;= margin: 0;
+		width: 44px; height: 39px; position: absolute; top: 8px; 
+		padding: 0; margin: 0; line-height:2.3em; font-size :1.2em;
+		background-color: hsl(180, 100%, 30%, 0.8); color: white; text-align: center;
 	}
 	.lower {
 		width: 100%; height: 100%;
@@ -205,14 +210,16 @@
 	.movie_info {
 		width: 230px; height: 66px; padding: 0 13px 14px;
 	}
+	
 	.film_btn_wrap {
 		width: 204px; height: 0px; margin-top: 20px;
 	}
+
+	
 	.film_btn {
 		width: 91px; height: 46px; display: block; background-color: #d9d9d9;
-		float: left; margin-left: 6px;
+		float: left; margin-left: 6px; border: 1px solid white;
 		text-decoration: none; text-align: center;
-		line-height: 3em;
 	}
 	/*------------- modal style -----------------*/
 	.modal-dialog{
@@ -250,9 +257,6 @@
 	}
 	.left_wrap > img{
 		width: 230px; height: 336px;
-	}
-	h2, h3 {
-		margin: 0;
 	}
 	.right_wrap {
 		width: 623px; height: 327.5px; float: right;
@@ -424,7 +428,7 @@
   				<div id= "flip_box">
   					<dl id= "flip_dl">
   						<dt id = "flip_btn1">
-  							<a href = "#" id="box_office">박스 오피스</a>
+  							<a href = "#boxOffice" id="box_office">박스 오피스</a>
   						</dt>
   						<dd id="tab1">
   							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
@@ -435,7 +439,7 @@
   									<li class="box_movie">
   										<div id="thumb_flip">
   											<div class="upper">
-  												<span class ="boxoffice_num"> ${i } </span>		<!-- number -->
+  												<span class ="boxoffice_num"><strong> ${i }</strong> </span>		<!-- number -->
 
   												<div class="film_img1" id="box_poster${i }"> </div>           <!----- 영화 포스터 ------>
   												
@@ -459,12 +463,12 @@
 										<div class = "front_info">
 											<div class="movie_info">
 												<h3 class="film_box">
-													<a href ="#" class="film_title1" id="box_title${i }"> </a>    <!---- 영화 타이틀 ---->
+													<a href ="#myModal${i }" data-toggle="modal" class="film_title1 film_title" id="box_title${i }"> </a>    <!---- 영화 타이틀 ---->
 												</h3>
 								<!---------------- 버튼  ------------------>
 												<div class="film_btn_wrap">		
-													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
-													<button class="film_btn" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
+													<button class="film_btn btn btn-primary" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
+													<button class="film_btn btn btn-primary" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
 												</div>
 											</div>
 										</div>
@@ -477,7 +481,7 @@
   						</dd>
   			<!-------------- 최신 개봉작 ----------------->
   						<dt id="flip_btn2">
-  							<a href="#" id="release_movie">최신 개봉작</a>
+  							<a href="#releseMovie" id="release_movie">최신 개봉작</a>
   						</dt>
   						<dd id="tab2">
   							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/releaseMovie" id="movie_all2">최신 개봉작 전체보기 </a></p>
@@ -487,7 +491,7 @@
   									<li class="release_movie">
   										<div id="thumb_flip">
   											<div class="upper">
-  												<span class ="boxoffice_num"> ${i } </span>		<!-- number -->
+  												<span class ="boxoffice_num"><strong>${i }</strong> </span>		<!-- number -->
   												<div class="film_img2"> </div>           <!----- 영화 포스터 ------>
   											</div>
   											<div class="lower">
@@ -508,12 +512,12 @@
 										<div class = "front_info">
 											<div class="movie_info">
 												<h3 class="film_box">
-													<a href ="#" class="film_title2"> </a>    <!---- 영화 타이틀 ---->
+													<a href ="#" class="film_title2 film_title"> </a>    <!---- 영화 타이틀 ---->
 												</h3>
 												<div class="film_btn_wrap">
 													
-													<button class="film_btn" title="film_detail" data-toggle="modal" data-target="#myModal${i}">상세정보</button>     
-													<button class= "film_btn" title="film_book">예매하기</button>
+													<button class="film_btn btn btn-primary" title="film_detail" data-toggle="modal" data-target="#myModal${i}">상세정보</button>     
+													<button class= "film_btn btn btn-primary" title="film_book">예매하기</button>
 												</div>
 				
 											</div>
@@ -625,16 +629,16 @@
 					</div> 						<!------------- popupbox1 end --------------->
 					<div class="popupbox2">
 						<h3>줄거리</h3>
+						<p id="plot${modal}"></p>
 						<div id="summary">
 						</div>
 					<div class="popupbox3">
-						<h3>한줄평</h3>
-						<span>(0)</span>
+						<h3>한줄평</h3> <span>(0)</span>
 					<div class="modal_review_wrap">
 						<div class="review_write">
 							<div class="review_id">							
 							</div>						
-							<form id="review_form">
+							<form class="review_form">
 								<div class="review_input">
 									<div class="review_rate">
 									</div>
@@ -749,7 +753,7 @@
 					var modal_title = r.title;
 					var modal_release = r.repRlsDate;
 					var movie_type = r.genre;
-
+					var plot = r.plot;
 						r.director.forEach(function(dir) {
 							var director = dir.directorNm;
 						
@@ -759,8 +763,8 @@
 					$('#modal_title'+num).append(title);	// 모달 영화타이틀
 					$('#modal_release' +num).append(modal_release);	// 모달 개봉일
 					$('#director'+num).append(director);	// 모달 감독
-
 					$('#movie_type'+num).append(movie_type); // 모달 장르
+					$('#plot'+num).append(plot);
 					
 					
 					num=num+1;
@@ -769,6 +773,22 @@
 	
 				});		// Result
 			});		// Data
+			
+		/*	
+			data.Data.forEach(function(d) {
+				d.Result.forEach(function(r) {
+					r.actor.forEach(function(act) {
+						num=1;
+						var actors = act.actorNm;
+						
+						$('#actors'+num).append(actors);
+						num=num+1;
+					});
+				});
+			});
+			
+			*/
+			
 		});		//Json
 		
 	});		// function
