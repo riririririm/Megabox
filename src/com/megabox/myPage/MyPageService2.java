@@ -41,14 +41,13 @@ public class MyPageService implements Action{
 		bookDAO = new BookDAO();
 	}
 
-	
-	//BookPage
-	public ActionForward bookPage(HttpServletRequest request, HttpServletResponse response) {
+	//bookCancel
+	public ActionForward bookCancel(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		String path = "../WEB-INF/views/myPage/bookPage.jsp";
 		boolean check = true;
-		//예약 확인하는 부분//
 		int curPage=1;
+
 		try {
 			curPage = Integer.parseInt(request.getParameter("curPage"));
 		} catch (Exception e) {
@@ -56,44 +55,53 @@ public class MyPageService implements Action{
 		}
 		StoreSearchMakePage storeSearchMakePage = new StoreSearchMakePage(curPage);
 		SearchRow searchRow = storeSearchMakePage.makeRow(); //행과 열이 만들어 지는 부분
-		ArrayList<BookDTO> ar = null;
-		//예약 확인하는 부분//
-		
-		//예약 취소확인하는 부분//
-		int curPage2=1;
-		try {
-			curPage2 = Integer.parseInt(request.getParameter("curPage2"));
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		StoreSearchMakePage storeSearchMakePage2 = new StoreSearchMakePage(curPage2);
-		SearchRow searchRow2 = storeSearchMakePage2.makeRow(); //행과 열이 만들어 지는 부분
-		//예약 취소확인하는 부분//
-		System.out.println(searchRow2.getStartRow());
 		Connection conn = null;
+		ArrayList<BookDTO> ar = null; //취소하는거 받는 변수명
 		
-		ArrayList<BookDTO> ar2 = null; //취소하는거 받는 변수명
 		try {
 			HttpSession session = request.getSession();
 			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 			String id = memberDTO.getId();
 			conn = DBConnector.getConnect();
-			//예약 확인하는 부분//
+			int bookCancelCount = bookDAO.bookCancelCount(conn, id);
+			SearchPager searchPager = storeSearchMakePage.makePage(bookCancelCount); //예약취소 페이저
+			ar = bookDAO.bookCancelList(conn, id, searchRow);
+			request.setAttribute("bookCancelList", ar);
+			request.setAttribute("cancelPager", searchPager);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		actionForward.setPath(path);
+		actionForward.setCheck(check);
+		return actionForward;
+	}
+	//BookPage
+	public ActionForward bookPage(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/myPage/bookPage.jsp";
+		boolean check = true;
+		int curPage=1;
+
+		try {
+			curPage = Integer.parseInt(request.getParameter("curPage"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		StoreSearchMakePage storeSearchMakePage = new StoreSearchMakePage(curPage);
+		SearchRow searchRow = storeSearchMakePage.makeRow(); //행과 열이 만들어 지는 부분
+		Connection conn = null;
+		ArrayList<BookDTO> ar = null;
+		try {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			String id = memberDTO.getId();
+			conn = DBConnector.getConnect();
 			int bookTotalCount = bookDAO.bookTotalCount(conn, id);
 			SearchPager searchPager = storeSearchMakePage.makePage(bookTotalCount); //예약상태 페이저
 			ar = bookDAO.bookList(conn, id, searchRow);
 			request.setAttribute("bookList", ar);
 			request.setAttribute("pager", searchPager);
-			//예약 확인하는 부분//
-			
-			//예약 취소확인하는 부분//
-			int bookCancelCount = bookDAO.bookCancelCount(conn, id);
-			SearchPager searchPager2 = storeSearchMakePage2.makePage(bookCancelCount);
-			ar2 = bookDAO.bookCancelList(conn, id, searchRow2);
-			request.setAttribute("bookCancelList", ar2);
-		
-			request.setAttribute("cancelPager", searchPager2);
-			//예약 취소확인하는 부분//
 			
 		} catch (Exception e) {
 			request.setAttribute("message", "다시 로그인 해주세요");

@@ -10,7 +10,16 @@ import com.megabox.book.BookDTO;
 
 
 public class SeatDAO {
-	
+	//예매 취소하고나서 좌석 state =1로 바꾸는 sql문
+	public int updateSeat(Connection conn, int book_num)throws Exception{
+		int result = 0;
+		String sql = "update seat set book_num=null, state=1 where book_num=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setInt(1, book_num);
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
 	public ArrayList<Integer> selectStateList(BookDTO bookDTO, Connection con) throws Exception{
 		ArrayList<Integer> seatStatus = new ArrayList<Integer>();
 		String sql="select state from seat where theater=? and auditorium=? and view_date=? and show_time=?";
