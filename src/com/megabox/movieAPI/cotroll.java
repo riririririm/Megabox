@@ -1,6 +1,5 @@
 package com.megabox.movieAPI;
 
-import com.megabox.movie.MovieDTO;
 
 public class cotroll {
 	public static void main(String[] args) {

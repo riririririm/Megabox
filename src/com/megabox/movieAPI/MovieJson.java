@@ -15,10 +15,10 @@ import org.json.simple.parser.JSONParser;
 public class MovieJson {
 	final static String serviceKey = "19TKUUT86TYFU6699SQ4";
 	
-	public List<MovieApiDTO> getMovieApiDTO(String collection, String sort, String releaseDte) {
+	public MovieApiDTO getMovieApiDTO(String collection, String sort, String releaseDte) {
 		MovieApiDTO movieApiDTO = null;
 		String urlStr = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?" + "collection="+collection + "&sort=" +sort+ "&1&releaseDte="+ releaseDte + "&ServiceKey=" + serviceKey +"&_type=json"; 		
-		ArrayList<MovieApiDTO> ar = new ArrayList<MovieApiDTO>();
+		
 		
 		
 		try {
@@ -65,7 +65,7 @@ public class MovieJson {
 				
 				movieApiDTO.setMovie_code(obj2.get("DOCID").toString());
 				movieApiDTO.setMovie_title(obj2.get("title").toString());
-				ar.add(movieApiDTO);
+			
 			}
 	
 	
@@ -75,7 +75,7 @@ public class MovieJson {
 		}
 	
 		
-		return ar;
+		return movieApiDTO;
 		
 		
 	}
