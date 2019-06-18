@@ -33,29 +33,7 @@ public class MovieService implements Action{
 		ActionForward actionForward = new ActionForward();
 		String path = "../WEB-INF/views/movie/movieSelect.jsp";
 		boolean check = true;
-		String method = request.getMethod();
 		
-		if(method.equals("post")) {
-			Connection conn = null;
-			MovieDTO movieDTO= new MovieDTO();
-			SeatDTO seatDTO = new SeatDTO();
-			ArrayList<String> seatRows = new ArrayList<String>();
-			int result1=0; int result2=0; int result3=0;
-			
-			try {
-				conn = DBConnector.getConnect();
-				movieDTO.setMovie_code(request.getParameter("movie_code"));
-				movieDTO.setMovie_title(request.getParameter("movie_title"));
-				movieDTO.setMovie_kind(request.getParameter("movie_kind"));
-				movieDTO.setTheater(request.getParameter("theater"));
-				movieDTO.setAuditorium(request.getParameter("auditorium"));
-				movieDTO.setView_date(request.getParameter("view_date"));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
 		
 		
 		actionForward.setCheck(check);

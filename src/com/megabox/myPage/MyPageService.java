@@ -69,7 +69,6 @@ public class MyPageService implements Action{
 		StoreSearchMakePage storeSearchMakePage2 = new StoreSearchMakePage(curPage2);
 		SearchRow searchRow2 = storeSearchMakePage2.makeRow(); //행과 열이 만들어 지는 부분
 		//예약 취소확인하는 부분//
-		System.out.println(searchRow2.getStartRow());
 		Connection conn = null;
 		
 		ArrayList<BookDTO> ar2 = null; //취소하는거 받는 변수명

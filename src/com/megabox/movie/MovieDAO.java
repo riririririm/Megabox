@@ -14,6 +14,29 @@ import java.util.Locale;
 
 public class MovieDAO  {
 	
+	////////////////////////////////////////////////
+	//수현 0618 movie update
+	public MovieDTO movieSelect(Connection conn, int num)throws Exception{
+		MovieDTO movieDTO = null;
+		String sql = "select * from movie where num=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setInt(1, num);
+		ResultSet rs = st.executeQuery();
+		if(rs.next()) {
+			movieDTO = new MovieDTO();
+			movieDTO.setMovie_code(rs.getString("movie_code"));
+			movieDTO.setMovie_title(rs.getString("movie_title"));
+			movieDTO.setMovie_kind(rs.getString("movie_kind"));
+			movieDTO.setTheater(rs.getString("theater"));
+			movieDTO.setAuditorium(rs.getString("auditorium"));
+			movieDTO.setView_date(rs.getString("view_date"));
+		}
+		rs.close();
+		st.close();
+		return movieDTO;
+	}
+	/////////////////////////////////////////////////
+	
 	public int getNum(Connection con) throws Exception { //영화db의 인덱스번호
 		int result=0;
 		String sql="select movie_seq.nextval from dual";

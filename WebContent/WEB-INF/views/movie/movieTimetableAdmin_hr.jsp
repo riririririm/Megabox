@@ -13,14 +13,6 @@
 		margin-top: 50px;
 	}
 </style>
-<script type="text/javascript">
-	$(function() {
-		$('.movieSelect').click(function() {
-			var num = $(this).attr('title');
-			location.href="./movieSelect?num="+num;
-		});
-	});
-</script>
 </head>
 <body>
 
@@ -36,8 +28,8 @@
 				<td>극장</td>
 				<td>상영관</td>
 				<td>상영일</td>
-				<td>상영시간</td>	
-				<td></td>	
+				<td>상영시간</td>		
+				
 			</tr>
 
 			<c:forEach items="${movie}" var="dto" varStatus="i">
@@ -58,7 +50,7 @@
 							</c:if>
 						</c:forEach>
 					</td>
-					<td><button class="movieSelect" title="${dto.num}">수정</button></td>
+					
 				</tr>
 			</c:forEach>
 		</table>

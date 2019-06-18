@@ -126,7 +126,7 @@
 							<td>답변상태</td>
 							<td>등록일</td>
 						</tr>
-						<c:if test="${qnaList eq null}">
+						<c:if test="${qnaList.size() eq 0}">
 							<tr>
 								<td colspan="8" style="padding-top: 130px; text-align: center; height: 300px;">
 								조회된 문의내역이 없습니다.</td>
@@ -152,7 +152,7 @@
 						</c:if>
 					</table>
 					<!-- 페이지 나누는 부분 -->
-					<c:if test="${qnaList ne null}">
+					<c:if test="${qnaList.size() ne 0}">
 						<div>
 							<ul class="pager">
 								<c:if test="${pager.curBlock gt 1}">

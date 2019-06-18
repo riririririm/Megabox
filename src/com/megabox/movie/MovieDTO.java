@@ -1,6 +1,5 @@
 package com.megabox.movie;
 
-import java.sql.Date;
 
 public class MovieDTO {
 	private int num;

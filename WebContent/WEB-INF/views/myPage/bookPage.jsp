@@ -209,7 +209,7 @@
 								</c:if>
 							</table>
 							<!-- 페이지 처리 부분 -->
-							<c:if test="${buyList.size() ne 0}">
+							<c:if test="${bookList.size() ne 0}">
 								<div>
 									<ul class="pager">
 										<c:if test="${pager.curBlock gt 1}">
@@ -249,7 +249,7 @@
 									<tr>
 										<td colspan="8"
 											style="padding-top: 130px; text-align: center; height: 300px;">최근
-											예매 내역이 없습니다.</td>
+											예매 취소내역이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${bookCancelList ne null}">
