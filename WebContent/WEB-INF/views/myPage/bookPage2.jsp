@@ -81,21 +81,6 @@
     color: #555 !important;
    border: 1px solid #ddd;
   } 
-  
-  .modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-}
-
-.modal {
-        text-align: center;
-}
-
-#home{
-    border: 1px solid;
-    padding-top: 30px;
-    padding-bottom: 30px;}
 </style>
 </head>
 <body>
@@ -138,6 +123,8 @@
 							<li class="nav-item">
 								<a class="nav-link active" data-toggle="tab" href="#reserve" style="width: 120px;">예매 내역</a></li>
 							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#pass" style="width: 120px;">지난 내역</a></li>
+							<li class="nav-item">
 								<a class="nav-link" data-toggle="tab" href="#cancel" style="width: 120px;">취소 내역</a></li>
 						</ul>
 					</div>
@@ -170,13 +157,28 @@
 										<td>${book.theater}<br>${book.auditorium}</td>
 										<td>${book.view_date} <br>${book.show_time}</td>
 										<td>${book.book_date}</td>
-										<td><button type="button" title="${book.book_num}" style="margin-left: 10px" id="btn_modal" data-toggle="modal"class="btn_book" data-target="#myModal">취소</button>
+										<td><button>취소</button></td>
 									</tr>
 									</c:forEach>
 								</c:if>
 							</table>
 						</div>
 						<!-- 예매내역 end-->
+						<!-- pass start-->
+						<div id="pass" class=" tab-pane fade">
+							<table class="book_content table">
+								<tr>
+									<td>NO</td>
+									<td>예매번호</td>
+									<td>영화명</td>
+									<td>영화관</td>
+									<td>상영일시</td>
+									<td>예매일</td>
+									<td>예매취소</td>
+								</tr>
+							</table>
+						</div>
+						<!-- pass end-->
 						<!-- cancel start-->
 						<div id="cancel" class="tab-pane fade">
 							<table class="book_content table">
@@ -272,39 +274,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- modal창 띄우기 -->
-	<div id="myModal" class="modal fade" role="dialog" style="margin: auto;width: 517px;height: 500px;">
-	<div class="modal-diaglod">
-		<!-- Modal Content -->
-		<div class="modal-content" style="width:500px">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">영화예매취소</h4>
-			</div><!-- modal-header -->
-			<div class="modal-body">
-				<p class="m_text" >영화예매 취소를 하시겠습니까?</p>
-				<div style="margin-top: 50px">
-					<button type="button" id ="cancelBook" class="btn btn-default" title="" data-dismiss="modal">확인</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				</div>
-			</div>
-		</div>
-		<!-- modal-content -->
-	</div>
-	</div>
 	<jsp:include page="../temp/footer.jsp" />
-	<script type="text/javascript">
-		$('.btn_book').click(function() { //영화 취소버튼
-			var cancel = $(this).attr('title');
-			$('#cancelBook').attr('title', cancel);
-		});
-		$('#cancelBook').click(function(){
-			book_num = $('#cancelBook').attr('title');
-			$.get("./bookCancel?book_num="+book_num, function(data){
-				
-			});
-			location.reload();
-		});
-	</script>
 </body>
 </html>

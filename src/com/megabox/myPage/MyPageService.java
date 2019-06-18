@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.ast.ThrowStatement;
+
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
+import com.megabox.book.BookDAO;
+import com.megabox.book.BookDTO;
 import com.megabox.member.MemberDTO;
 import com.megabox.page.QnaSearchMakePage;
 import com.megabox.page.SearchPager;
@@ -20,21 +24,70 @@ import com.megabox.qna.QnaDTO;
 import com.megabox.store.Store_historyDAO;
 import com.megabox.store.Store_historyDTO;
 import com.megabox.util.DBConnector;
-import com.sun.java_cup.internal.runtime.Scanner;
-import com.sun.java_cup.internal.runtime.Symbol;
 
 
 
 public class MyPageService implements Action{
 	Store_historyDAO store_historyDAO = null;
 	QnaDAO qnaDAO = null;
+	BookDAO bookDAO = null;
 	public MyPageService() {
 		// TODO Auto-generated constructor stub
 		store_historyDAO = new Store_historyDAO();
 		qnaDAO = new QnaDAO();
+		bookDAO = new BookDAO();
 	}
 	
-
+	//BookDelete 
+	public ActionForward bookDelete(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward= new ActionForward();
+		String path = "../WEB-INF/views/myPage/myQnA.jsp";
+		boolean check = true;
+		Connection conn = null;
+		int result = 0;
+		try {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			String id = memberDTO.getId();
+			int book_num = Integer.parseInt(request.getParameter("book_num"));
+			conn = DBConnector.getConnect();
+			conn.setAutoCommit(false);//자동으로 commit되는 것을 막는다.  true면 자동 commit
+			result = bookDAO.bookDelete(conn, id, book_num);
+			if(result<1) {//삭제가 안되었을 때
+				throw new Exception(); //예외 발생해서 catch문 안으로 가게 하는 부분
+			}
+			result = bookDAO.bookDelete(conn, id, book_num); //이거라고 생각하고
+			if(result<1) {
+				throw new Exception();
+			}
+			
+			conn.commit(); //두개 다 끝나고 성공하면 commit시킨다.
+		} catch (Exception e) {
+			try {
+				conn.rollback(); //마지막commit으로 돌린다. 
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+				try {
+					conn.setAutoCommit(true); //기본상태로 되돌려준다. 
+					conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}//
+			}
+			
+			request.setAttribute("message", "다시 로그인 해주세요");
+			request.setAttribute("path", "../index.do");
+			path = "../WEB-INF/views/common/result.jsp";
+			e.printStackTrace();
+		}
+		
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
 	//QnAList
 	public ActionForward qnaList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -91,12 +144,28 @@ public class MyPageService implements Action{
 		return actionForward;
 	}
 
+	
 	//BookPage
 	public ActionForward bookPage(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		String path = "../WEB-INF/views/myPage/bookPage.jsp";
 		boolean check = true;
-
+		
+		Connection conn = null;
+		ArrayList<BookDTO> ar = null;
+		try {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			String id = memberDTO.getId();
+			conn = DBConnector.getConnect();
+			ar = bookDAO.bookList(conn, id);
+			request.setAttribute("bookList", ar);
+		} catch (Exception e) {
+			request.setAttribute("message", "다시 로그인 해주세요");
+			request.setAttribute("path", "../index.do");
+			path = "../WEB-INF/views/common/result.jsp";
+			e.printStackTrace();
+		}
 
 		actionForward.setPath(path);
 		actionForward.setCheck(check);
@@ -158,7 +227,7 @@ public class MyPageService implements Action{
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}
 		}catch (Exception e) {
-			request.setAttribute("msg", "다시 로그인 해주세요");
+			request.setAttribute("message", "다시 로그인 해주세요");
 			request.setAttribute("path", "../index.do");
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/common/result.jsp");
@@ -192,7 +261,7 @@ public class MyPageService implements Action{
 				actionForward.setCheck(true);
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}else {
-				request.setAttribute("msg", "다시 시도해주세요");
+				request.setAttribute("message", "다시 시도해주세요");
 				request.setAttribute("path", "./myStorePage");
 				actionForward.setPath("../WEB-INF/views/common/result.jsp");
 				actionForward.setCheck(true);
