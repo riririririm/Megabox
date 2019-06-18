@@ -41,7 +41,12 @@ public class StoreController extends HttpServlet {
 			actionForward = storeService.selectList(request, response);
 		}else if(command.equals("/storePurchase")) {
 			actionForward = storeService.insertStoreHistory(request, response);
+		}else if(command.equals("/myModal")) {
+			actionForward=storeService.settingAttributes(request,response);
+		}else if(command.equals("/myModal2")) {
+			actionForward=storeService.settingAttributes2(request,response);
 		}
+		
 		
 
 		if(actionForward.isCheck()) {

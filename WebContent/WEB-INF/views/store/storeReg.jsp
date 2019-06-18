@@ -11,18 +11,24 @@
 	.container{
 		width:60%;
 		margin-top: 40px;
+		min-height: 1000px;
 	}
 	.store_noTheater{
 		width:150px;
 	}
 	
 </style>
+<script type="text/javascript">
+	$(function() {
+		
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="../temp/header.jsp"/>
 	<div class="container">
 	<h2>상품등록페이지</h2>
-	<form id="store" action="./storeReg" method="post">
+	<form id="store" action="./storeReg" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="store_category">카테고리:</label> 
 			<select class="form-group" id="store_category" name="store_category">
@@ -71,6 +77,10 @@
 		<div class="form-group">
 			<label for="store_price">스토어 판매가:</label> 
 			<input type="text" class="form-control" id="store_price" name="store_price" placeholder="상품 가격을 입력하세요">
+		</div>
+		<div class="form-group" id="addFile">
+			<label for="store_price">스토어 이미지:</label> 
+			<input type="file" class="form-control" id="file" name="file">
 		</div>
 		<button type="submit" class="btn btn-default">Submit</button>
 	</form>

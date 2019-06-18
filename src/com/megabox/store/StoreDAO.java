@@ -9,21 +9,36 @@ import java.util.ArrayList;
 import com.megabox.util.DBConnector;
 
 public class StoreDAO {
+	//0618
+	public int getNum(Connection con) throws Exception {
+		int result=0;
+		
+		String sql ="select store_num_seq.nextval from dual";
+		PreparedStatement st =con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		result=rs.getInt(1);
+		
+		rs.close();
+		st.close();
+		return result;
+	}
 
 	//insert
 	public int insert(StoreDTO storeDTO, Connection con) throws Exception {
 		int result=0;
 		
-		String sql = "insert into store values (store_num_seq.nextval,?,?,?,?,?,?,?)";
+		String sql = "insert into store values (?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, storeDTO.getStore_category());
-		st.setString(2, storeDTO.getStore_name());
-		st.setString(3, storeDTO.getStore_theater());
-		st.setInt(4, storeDTO.getStore_period());
-		st.setInt(5, storeDTO.getStore_count());
-		st.setString(6, storeDTO.getStore_cancel());
-		st.setInt(7, storeDTO.getStore_price());
+		st.setInt(1, storeDTO.getStore_num());
+		st.setString(2, storeDTO.getStore_category());
+		st.setString(3, storeDTO.getStore_name());
+		st.setString(4, storeDTO.getStore_theater());
+		st.setInt(5, storeDTO.getStore_period());
+		st.setInt(6, storeDTO.getStore_count());
+		st.setString(7, storeDTO.getStore_cancel());
+		st.setInt(8, storeDTO.getStore_price());
 		
 		result = st.executeUpdate();
 		st.close();
@@ -45,6 +60,8 @@ public class StoreDAO {
 		if(rs.next())
 			store_num = rs.getInt("store_num");
 		
+		rs.close();
+		st.close();
 		return store_num;
 	}
 	
@@ -52,10 +69,9 @@ public class StoreDAO {
 	
 	
 	//selectList
-	public ArrayList<StoreDTO> selectList() throws Exception{
+	public ArrayList<StoreDTO> selectList(Connection con) throws Exception{
 		ArrayList<StoreDTO> ar=new ArrayList<StoreDTO>();
-		
-		Connection con = DBConnector.getConnect();
+	
 		String sql="select * from store";
 		PreparedStatement st = con.prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
@@ -74,15 +90,15 @@ public class StoreDAO {
 			storeDTO.setStore_price(rs.getInt("store_price"));
 			ar.add(storeDTO);
 			}
-		DBConnector.disConnect(rs, st, con);
+		rs.close();
+		st.close();
 		return ar;
 	}
 	
 	//selectListByCategory
-	public ArrayList<StoreDTO> selectListByCategory(String category) throws Exception {
+	public ArrayList<StoreDTO> selectListByCategory(String category, Connection con) throws Exception {
 		ArrayList<StoreDTO> ar=new ArrayList<StoreDTO>();
-		
-		Connection con = DBConnector.getConnect();
+	
 		String sql="select * from store where store_category=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, category);
@@ -102,7 +118,8 @@ public class StoreDAO {
 			storeDTO.setStore_price(rs.getInt("store_price"));
 			ar.add(storeDTO);
 			}
-		DBConnector.disConnect(rs, st, con);
+		rs.close();
+		st.close();
 		return ar;
 	}
 	

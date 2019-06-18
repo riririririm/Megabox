@@ -27,6 +27,8 @@ public class NoTheaterDAO {
 		return ar;
 	}
 	
+	
+	
 	public int insert(NoTheaterDTO noTheaterDTO, Connection con) throws Exception {
 		int result=0;
 		String sql = "insert into noTheater values(noTheater_seq.nextval, ?,?)";

@@ -15,7 +15,7 @@
 <style type="text/css">
 .container {
 	width: 100%;
-	height: 2500px;
+	height: 2000px;
 	padding-top: 50px;
 	padding-left: 0px;
 	padding-right: 0px;
@@ -80,7 +80,6 @@
 	border: 1px solid #9999;
 	text-decoration: none;
 	color: #333;
-	margin-bottom:30px;
 }
 .ticket_list img{
 	width: 200px;
@@ -125,7 +124,7 @@
   	border-top: 2px solid #503396;
   }
   .modal2-body{
-  	/* min-height:500px; */
+  	min-height:500px;
   	width:100%;
   	padding:20px;
   	border-top: 2px solid #503396;
@@ -139,25 +138,25 @@
   .left{
   	float:left;
   	width:45%;
-  	min-height:501px;
+  	min-height:560px;
   	text-align:center;
-  	 border-right: 1px solid #9999;
+  	border-right: 1px solid #e5e5e5;
   	
   }
   .right{
   	float:right;
   	width:55%;
-  	/* min-height:560px; */
+  	min-height:560px;
   }
   .row2{
   	margin: 0px;
   	padding: 25px 40px 20px 30px;
   	color:black;
-  	border-bottom: 1px solid #9999;
+  	border: 1px solid #9999;
   	
   }
-  .row2:last-child{
-  	border: none;
+  .row2_cont{
+  
   }
   .btn_buy{
   	width:204px;
@@ -298,37 +297,21 @@
 		var store_period;
 		var store_count;
 		var store_price;
-		
 		var result="";
 		//상품명 클릭시 모달창 뜨기
 		$(".alink").click(function() {
-			/* store_num= $(this).attr("title");
+			store_num= $(this).attr("title");
 			store_name = $("#name"+store_num).text().trim();
 			store_category = $("#cate"+store_num).text().trim();
 			store_period = $("#per"+store_num).text().trim();
 			//store_count= $("#count"+store_num).text();
 			store_price= $("#price"+store_num).text().trim();
 			$(".modal-title").text(store_category);
-			$(".right_title").text(store_name); */
-			var form_name=$(this).attr("title");
-			var queryString = $("form[name="+form_name+"]").serialize() ;
-			
-			$.ajax({
-				url:"./myModal",
-				type:"POST",
-				data: queryString,
-				success: function(res) {
-					$("#myModalCont").html(res);
-					$("#myModal").modal("show"); 
-				},
-				error:function(request, status, error) {
-		            console.log("ajax call went wrong:" + request.responseText);
-		        }
-			});
+			$(".right_title").text(store_name);
 		});
 		
 		//구매하기 버튼 눌렀을때
-		/*$(".btn_buy").click(function() {
+		$(".btn_buy").click(function() {
 			$("#s_title").text(store_name);
 			var str="";
 			if(store_category=="메가티켓"){
@@ -340,7 +323,7 @@
 			}
 			$(".s_dd").text(str);
 			$("#store_balance").text(store_price);
-		}); */
+		}); 
 		
 		//kakaopay
 		$("#check_module").click(function () {
@@ -443,41 +426,26 @@
 				<div class="ticket_list">
 					<ul>
 						<c:forEach items ="${megaTicket}" var="dto" varStatus="i">
-						<form name="megaTicket_form${i.index}" id="megaTicket_form${i.index}">
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="megaTicket_form${i.index}">
+						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">
 						<li>
-							 <div class="tt">
-							 <c:forEach items="${images}" var="img">
-							 	<c:if test="${dto.store_num eq img.num }">
-									<img alt="" src="../storeUpload/${img.oname}" >
-									<input type="hidden" id="store_img" name="store_img" value="${img.oname}">
-								</c:if>
-							 </c:forEach>
-							 
+							<div class="tt">
+								<img alt="" src="../images/ticket${i.count}.jpg" >
 								<div class="ticket_info" id="name${dto.store_num}">
 									${dto.store_name}
 								</div>
 							</div>
-							<div class="ticket_price">
+							<div class="ticket_price" id="price${dto.store_num}">
 								${dto.store_price}
 							</div>	
-							
-							
-								<input type="hidden" id="store_num" name="store_num" value="${dto.store_num }">
-								<input type="hidden" id="store_name" name="store_name" value="${dto.store_name }">
-								<input type="hidden" id="store_price" name="store_price" value="${dto.store_price }">
-								<input type="hidden" id="store_category" name="store_category" value="${dto.store_category}">
-								<input type="hidden" id="store_period" name="store_period" value="${dto.store_period}">
-								<input type="hidden" id="store_count" name="store_count" value="${dto.store_count}">
-								<input type="hidden" id="store_cancel" name="store_cancel" value="${dto.store_cancel}">
-						
-							<c:forEach items="${noTheaterList }" var="noTh" varStatus="j">
-								<c:if test="${dto.store_num eq noTh.store_num }">	
-									<input type="hidden" name="store_noTheaters" value="${noTh.theater_name}"> 
-								</c:if>
-							</c:forEach>
-							
-							</form>
+							<div class="ticket_category" id="cate${dto.store_num}"> <!-- display none -->
+								${dto.store_category}
+							</div>							
+							<div class="ticket_category" id="per${dto.store_num}"> <!-- display none -->
+								${dto.store_period}
+							</div>	
+							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
+								${dto.store_price}
+							</div>										
 						</li>
 						</a>
 						</c:forEach>
@@ -491,40 +459,26 @@
 				<div class="ticket_list">
 					<ul>
 						<c:forEach items ="${megaChance}" var="dto" varStatus="i">
-						<form name="megaChance_form${i.index}" id="megaChance_form${i.index}">
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="megaChance_form${i.index}">
+						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">
 						<li>
-							 <div class="tt">
-								<c:forEach items="${images}" var="img">
-							 		<c:if test="${dto.store_num eq img.num }">
-										<img alt="" src="../storeUpload/${img.oname}" >
-										<input type="hidden" id="store_img" name="store_img" value="${img.oname}">
-									</c:if>
-							 	</c:forEach>
+							<div class="tt">
+								<img alt="" src="../images/chance${i.count}.jpg" >
 								<div class="ticket_info" id="name${dto.store_num}">
 									${dto.store_name}
 								</div>
 							</div>
-							<div class="ticket_price">
+							<div class="ticket_price" id="price${dto.store_num}">
 								${dto.store_price}
 							</div>	
-							
-						
-								<input type="hidden" id="store_num" name="store_num" value="${dto.store_num }">
-								<input type="hidden" id="store_name" name="store_name" value="${dto.store_name }">
-								<input type="hidden" id="store_price" name="store_price" value="${dto.store_price }">
-								<input type="hidden" id="store_category" name="store_category" value="${dto.store_category}">
-								<input type="hidden" id="store_period" name="store_period" value="${dto.store_period}">
-								<input type="hidden" id="store_count" name="store_count" value="${dto.store_count}">
-								<input type="hidden" id="store_cancel" name="store_cancel" value="${dto.store_cancel}">
-						
-							<c:forEach items="${noTheaterList }" var="noTh" varStatus="j">
-								<c:if test="${dto.store_num eq noTh.store_num }">	
-									<input type="hidden" name="store_noTheaters" value="${noTh.theater_name}"> 
-								</c:if>
-							</c:forEach>
-							
-							</form>
+							<div class="ticket_category" id="cate${dto.store_num}"><!-- display none -->
+								${dto.store_category}
+							</div>		
+							<div class="ticket_category" id="per${dto.store_num}"> <!-- display none -->
+								${dto.store_period}
+							</div>	
+							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
+								${dto.store_price}
+							</div>										
 						</li>
 						</a>
 						</c:forEach>
@@ -538,40 +492,32 @@
 				<div class="ticket_list">
 					<ul>
 						<c:forEach items ="${goods}" var="dto" varStatus="i">
-						<form name="goods_form${i.index}" id="goods_form${i.index}">
-						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="goods_form${i.index}">
+						<a href="" class="alink" data-toggle="modal" data-target="#myModal" title="${dto.store_num}">
 						<li>
-							 <div class="tt">
-								<c:forEach items="${images}" var="img">
-							 		<c:if test="${dto.store_num eq img.num }">
-										<img alt="" src="../storeUpload/${img.oname}" >
-										<input type="hidden" id="store_img" name="store_img" value="${img.oname}">
-									</c:if>
-								 </c:forEach>
+							<div class="tt">
+								<img alt="" src="../images/pop${i.count}.jpg" >
 								<div class="ticket_info" id="name${dto.store_num}">
 									${dto.store_name}
 								</div>
 							</div>
-							<div class="ticket_price">
+							<div class="ticket_price" id="price${dto.store_num}">
 								${dto.store_price}
 							</div>	
-							
-							
-								<input type="hidden" id="store_num" name="store_num" value="${dto.store_num }">
-								<input type="hidden" id="store_name" name="store_name" value="${dto.store_name }">
-								<input type="hidden" id="store_price" name="store_price" value="${dto.store_price }">
-								<input type="hidden" id="store_category" name="store_category" value="${dto.store_category}">
-								<input type="hidden" id="store_period" name="store_period" value="${dto.store_period}">
-								<input type="hidden" id="store_count" name="store_count" value="${dto.store_count}">
-								<input type="hidden" id="store_cancel" name="store_cancel" value="${dto.store_cancel}">
-						
-							<c:forEach items="${noTheaterList }" var="noTh" varStatus="j">
-								<c:if test="${dto.store_num eq noTh.store_num }">	
-									<input type="hidden" name="store_noTheaters" value="${noTh.theater_name}"> 
-								</c:if>
-							</c:forEach>
-							
-							</form>
+							<div class="ticket_category" id="cate${dto.store_num}"> <!-- display none -->
+								${dto.store_category}
+							</div>	
+							<div class="ticket_category" id="per${dto.store_num}"> <!-- display none -->
+								${dto.store_period}
+							</div>	
+							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
+								${dto.store_price}
+							</div>	
+							<div class="ticket_category" id="count${dto.store_num}"> <!-- display none -->
+								${dto.store_count}
+							</div>	
+							<div class="ticket_category" id="cancel${dto.store_num}"> <!-- display none -->
+								${dto.store_cancel}
+							</div>																
 						</li>
 						</a>
 						</c:forEach>
@@ -587,25 +533,94 @@
 	<!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content" id="myModalCont">
-      
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          	<div class="left">
+          		<h3>image</h3>
+          	</div>
+          	<div class="right">
+          		<div class="row2">
+          			<h2 class="right_title"></h2>
+          		</div>
+          		<div class="row2 row2_cont">
+          			<div>사용가능 영화관 : <span>전체영화관</span></div>
+          			<div> 사용제외 지점:
+          				<c:forEach items="">
+          					<span></span>
+          				</c:forEach>
+          			</div>
+          		</div>
+          		<div class="row2">
+          			<span class="btn_info">* 구매 전 사용가능 영화관을 꼭 확인해주세요.</span>
+          			<button class="btn_buy" data-toggle="modal" data-target="#myModal2">구매하기</button>
+          		</div>
+          	</div>
+        </div>
       </div>
     </div>
   </div>
   
   
   <!-- modal 2 -->
- <!--  <div class="modal fade" id="myModal2" role="dialog">
+  <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog">
     
-      Modal content
-      <div class="modal-content" id="myModal2Cont">
-       
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal2-title">결제하기</h4>
+        </div>
+        <div class="modal2-body">
+          <div class="store_title">
+          	<h4 id="s_title"></h4>
+          	<dl class="s_period">
+          		<dt>유효기간: </dt>
+          		<dd class="s_dd"></dd>
+          	</dl>
+          </div>
+          <div class="store_payment_row">
+				<h5 class="pull-left">총 결제금액</h5>
+				<span class="total_price pull-right"><strong id="store_balance"></strong>원</span>
+		  </div>
+		  <div class="store_payment_row">
+				<h5 class="pull-left">결제수단선택</h5>
+				<span class="f pull-right">
+					<input type="radio"> KaKaoPay
+				</span>
+		  </div>
+		  <div class="store_sms_info">
+				<dl class="clearfix">
+					<dt><label for="sender-mobileNo1">보내는 분 <span class="sel_line"></span></label></dt>
+					<dd>
+						<input type="text" id="sender-mobileNo1" name="sender-mobileNo1" title="휴대폰 번호 첫번째 자리 입력" maxlength="3" allowtype="number" validate="number" fieldname="보내는 분 휴대폰 번호" required="" value="1544" readonly="readonly"> -
+						<input type="text" id="sender-mobileNo2" name="sender-mobileNo2" title="휴대폰 번호 두번째 자리 입력" maxlength="4" allowtype="number" validate="number" fieldname="보내는 분 휴대폰 번호" required="" value="0070" readonly="readonly">
+					</dd>
+				</dl>
+				<dl class="clearfix">
+					<dt><label for="receiver-mobileNo1">받는 분 <span>(쿠폰번호가 전송됩니다)</span></label></dt>
+						<dd class="receiver">
+							<input type="text" id="receiver-mobileNo1" name="receiver-mobileNo1" title="휴대폰 번호 첫번째 자리 입력" value="010" maxlength="3" allowtype="number" validate="number" fieldname="받는 분 휴대폰 번호" required=""> -
+							<input type="text" id="receiver-mobileNo2" name="receiver-mobileNo2" title="휴대폰 번호 두번째 자리 입력" value="4111" maxlength="4" allowtype="number" validate="number" fieldname="받는 분 휴대폰 번호" required=""> -
+							<input type="text" id="receiver-mobileNo3" name="receiver-mobileNo3" title="휴대폰 번호 세번째 자리 입력" value="1520" maxlength="4" allowtype="number" validate="number" fieldname="받는 분 휴대폰 번호" required="">
+						</dd>
+				</dl>
+			</div>
+		  	
+		  	<div class="store_btn_wrap">
+				<button class="btn-l btn-st2" data-dismiss="modal" aria-hidden="true" onclick="cancelStorePay()">취소</button>
+				<button class="btn-l btn-st1" id="check_module">결제</button>
+			</div>
+          
+        </div><!-- end of modal2-body -->
       </div>
       
     </div>
-  </div> -->
-  <!-- end of modal2 -->
+  </div><!-- end of modal2 -->
 	
 	<jsp:include page="../temp/footer.jsp" />
 </body>
