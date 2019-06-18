@@ -152,7 +152,11 @@
   	margin: 0px;
   	padding: 25px 40px 20px 30px;
   	color:black;
+  	border: 1px solid #9999;
   	
+  }
+  .row2_cont{
+  
   }
   .btn_buy{
   	width:204px;
@@ -279,6 +283,10 @@
  }
  .reg_btn{
  	float:right;
+ }
+ .btn-info{
+ 	text-align: center;
+ 	width:50px;
  }
 </style>
 <script type="text/javascript">
@@ -494,6 +502,12 @@
 							</div>	
 							<div class="ticket_category" id="price${dto.store_num}"> <!-- display none -->
 								${dto.store_price}
+							</div>	
+							<div class="ticket_category" id="count${dto.store_num}"> <!-- display none -->
+								${dto.store_count}
+							</div>	
+							<div class="ticket_category" id="cancel${dto.store_num}"> <!-- display none -->
+								${dto.store_cancel}
 							</div>																
 						</li>
 						</a>
@@ -523,7 +537,16 @@
           		<div class="row2">
           			<h2 class="right_title"></h2>
           		</div>
+          		<div class="row2 row2_cont">
+          			<div>사용가능 영화관 : <span>전체영화관</span></div>
+          			<div>
+          				<c:forEach items="">
+          				
+          				</c:forEach>
+          			</div>
+          		</div>
           		<div class="row2">
+          			<span class="btn_info">* 구매 전 사용가능 영화관을 꼭 확인해주세요.</span>
           			<button class="btn_buy" data-toggle="modal" data-target="#myModal2">구매하기</button>
           		</div>
           	</div>
