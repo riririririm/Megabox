@@ -3,8 +3,7 @@ package com.megabox.movieAPI;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,6 +18,8 @@ public class MovieJson {
 		MovieApiDTO movieApiDTO = null;
 		String urlStr = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?" + "collection="+collection + "&sort=" +sort+ "&1&releaseDte="+ releaseDte + "&ServiceKey=" + serviceKey +"&_type=json"; 		
 		
+
+		MovieApiDAO movieApiDAO = new MovieApiDAO();
 		
 		
 		try {
@@ -65,7 +66,7 @@ public class MovieJson {
 				
 				movieApiDTO.setMovie_code(obj2.get("DOCID").toString());
 				movieApiDTO.setMovie_title(obj2.get("title").toString());
-			
+				movieApiDAO.insertMovie(movieApiDTO);
 			}
 	
 	
