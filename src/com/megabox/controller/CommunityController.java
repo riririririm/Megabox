@@ -33,7 +33,6 @@ public class CommunityController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();
-		System.out.println(command);
 		ActionForward actionForward = null;
 		
 		if(command.equals("/communityList")) {

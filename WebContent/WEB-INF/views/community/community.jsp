@@ -96,9 +96,11 @@ h5{
 	$(function() {
 		
 		$("#write_btn").click(function() {
+			var writer = $('#writer').val();
 			var contents=$("#contents").val();
 			var num = $("#listNum").val();
 			$.get("./communityWrite",{
+				writer:writer,
 				num:num,
 				contents:contents
 			}, function(data) {
@@ -109,6 +111,7 @@ h5{
 					
 				} else {
 					alert("Fail");
+					location.reload();
 				}
 			});
 	

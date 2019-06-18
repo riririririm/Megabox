@@ -5,6 +5,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class MemberDAO {
+	//개인정보 수정 
+	public int update(Connection conn, MemberDTO memberDTO)throws Exception{
+		int result=0;
+		String sql = "update member set phone=? and email=? and name=? where id=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, memberDTO.getPhone());
+		st.setString(2, memberDTO.getEmail());
+		st.setString(3, memberDTO.getName());
+		st.setString(4, memberDTO.getId());
+		
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+	//비밀번호 확인
+	public MemberDTO pwCheck(Connection conn, String id, String pw) throws Exception{
+		MemberDTO memberDTO = null;
+		String sql = "select * from member where id=? and pw=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, id);
+		st.setString(2, pw);
+		ResultSet rs = st.executeQuery();
+		if(rs.next()) {
+			memberDTO = new MemberDTO();
+			memberDTO.setId(rs.getNString("id"));
+			memberDTO.setPw(rs.getString("pw"));
+			memberDTO.setName(rs.getString("name"));
+			memberDTO.setEmail(rs.getString("Email"));
+			memberDTO.setPhone(rs.getString("phone"));
+		}
+		rs.close();
+		st.close();
+		return memberDTO;
+	}
 	
 	//로그인
 	public MemberDTO memberLogin(Connection conn, MemberDTO memberDTO) throws Exception{
