@@ -78,7 +78,7 @@ public class CommunityDAO {
 		int result = 0;
 		String sql = "insert into community values(community_seq.nextval,?,?,sysdate)";
 		PreparedStatement st = conn.prepareStatement(sql);
-		st.setString(1, communityDTO.getWriter());
+		st.setString(1, "k");
 		st.setString(2, communityDTO.getContents());
 		result = st.executeUpdate();
 	
