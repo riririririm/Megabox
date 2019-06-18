@@ -5,14 +5,6 @@
     <param-value>../WEB-INF/views</param-value>
   </context-param>
   <servlet>
-    <servlet-name>home</servlet-name>
-    <servlet-class>com.megabox.controller.HomeController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>home</servlet-name>
-    <url-pattern>/index.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>community</servlet-name>
     <servlet-class>com.megabox.controller.CommunityController</servlet-class>
   </servlet>
@@ -20,8 +12,23 @@
     <servlet-name>community</servlet-name>
     <url-pattern>/community/*</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
+    <servlet-name>member</servlet-name>
+    <servlet-class>com.megabox.controller.MemberController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>member</servlet-name>
+    <url-pattern>/member/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>myPage</servlet-name>
+    <servlet-class>com.megabox.controller.MyPageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>myPage</servlet-name>
+    <url-pattern>/myPage/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>movie</servlet-name>
     <servlet-class>com.megabox.controller.MovieController</servlet-class>
   </servlet>
@@ -29,4 +36,52 @@
     <servlet-name>movie</servlet-name>
     <url-pattern>/movie/*</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <servlet-name>book</servlet-name>
+    <servlet-class>com.megabox.controller.BookController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>book</servlet-name>
+    <url-pattern>/book/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>kakao</servlet-name>
+    <servlet-class>com.megabox.controller.KakaoPayController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>kakao</servlet-name>
+    <url-pattern>/kakao/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>store</servlet-name>
+    <servlet-class>com.megabox.controller.StoreController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>store</servlet-name>
+    <url-pattern>/store/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>home</servlet-name>
+    <servlet-class>com.megabox.controller.HomeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>home</servlet-name>
+    <url-pattern>/index.do</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 </web-app>

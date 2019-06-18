@@ -105,7 +105,8 @@ h5{
 				data = data.trim();
 				if(data=="1"){
 					alert("success");
-					getList(1);
+					location.reload();
+					
 				} else {
 					alert("Fail");
 				}
@@ -164,6 +165,7 @@ h5{
 					data = data.trim();
 					if(data=="1") {
 						alert("삭제 되었습니다.");
+						location.reload();
 					} else {
 						alert("Fail");
 					}
