@@ -17,7 +17,7 @@ import com.megabox.theater.TheaterDAO;
 import com.megabox.theater.TheaterDTO;
 import com.megabox.util.DBConnector;
 
-public class MovieService implements Action{
+public class MovieService2 implements Action{
 	private MovieDAO movieDAO;
 	private TheaterDAO theaterDAO;
 	private SeatDAO seatDAO;

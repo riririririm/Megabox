@@ -99,6 +99,13 @@ public class MyPageService implements Action{
 			request.setAttribute("path", "../index.do");
 			path = "../WEB-INF/views/common/result.jsp";
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		actionForward.setPath(path);
@@ -193,6 +200,13 @@ public class MyPageService implements Action{
 			path = "../index.do";
 			check = true;
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 
@@ -269,6 +283,13 @@ public class MyPageService implements Action{
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/common/result.jsp");
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return actionForward;
@@ -306,6 +327,13 @@ public class MyPageService implements Action{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return actionForward;
 	}

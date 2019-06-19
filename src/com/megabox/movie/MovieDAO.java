@@ -15,7 +15,7 @@ import java.util.Locale;
 public class MovieDAO  {
 	
 	////////////////////////////////////////////////
-	//수현 0618 movie update
+	//수현 0618 movie select
 	public MovieDTO movieSelect(Connection conn, int num)throws Exception{
 		MovieDTO movieDTO = null;
 		String sql = "select * from movie where num=?";
@@ -24,6 +24,7 @@ public class MovieDAO  {
 		ResultSet rs = st.executeQuery();
 		if(rs.next()) {
 			movieDTO = new MovieDTO();
+			movieDTO.setNum(rs.getInt("num"));
 			movieDTO.setMovie_code(rs.getString("movie_code"));
 			movieDTO.setMovie_title(rs.getString("movie_title"));
 			movieDTO.setMovie_kind(rs.getString("movie_kind"));
@@ -35,7 +36,48 @@ public class MovieDAO  {
 		st.close();
 		return movieDTO;
 	}
-	/////////////////////////////////////////////////
+	
+	
+	//상영시간표 삭제
+	public int showTimeDelete(Connection conn, int num) throws Exception{
+		int result = 0;
+		String sql = "delete showtime where movie_num = ?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setInt(1, num);
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+	
+	//영화Update
+	
+	public int movieUpdate(Connection conn, MovieDTO movieDTO) throws Exception{
+		int result =0;
+		String sql = "update movie set movie_code=?, movie_title=?, movie_kind=?, theater=?, auditorium=?, view_date=? where num=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, movieDTO.getMovie_code());
+		st.setString(2, movieDTO.getMovie_title());
+		st.setString(3, movieDTO.getMovie_kind());
+		st.setString(4, movieDTO.getTheater());
+		st.setString(5, movieDTO.getAuditorium());
+		st.setString(6, movieDTO.getView_date());
+		st.setInt(7, movieDTO.getNum());
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+	
+	//영화 삭제
+	public int deleteMovie(Connection conn, int num) throws Exception{
+		int result = 0;
+		String sql = "delete movie where num=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setInt(1, num);
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+	/////////////////////////////////////////////////jsh
 	
 	public int getNum(Connection con) throws Exception { //영화db의 인덱스번호
 		int result=0;

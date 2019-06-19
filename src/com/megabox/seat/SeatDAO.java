@@ -3,13 +3,32 @@ package com.megabox.seat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.megabox.book.BookDTO;
+import com.megabox.movie.MovieDTO;
 
 
 public class SeatDAO {
+	
+	//////////////////////////////////
+	//06.19수현 상영시간표 좌석삭제
+	public int deleteSeat(Connection conn, MovieDTO movieDTO)throws Exception{
+		int result=0;
+		String sql = "delete seat where theater=? and auditorium=? and view_date=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, movieDTO.getTheater());
+		st.setString(2, movieDTO.getAuditorium());
+		String [] vd = movieDTO.getView_date().split(" ");
+		st.setString(3, vd[0]);
+		
+		result = st.executeUpdate();
+		st.close();
+		return result;
+	}
+	/////////////////////////////////////
+	
+	
 	//예매 취소하고나서 좌석 state =1로 바꾸는 sql문
 	public int updateSeat(Connection conn, int book_num)throws Exception{
 		int result = 0;

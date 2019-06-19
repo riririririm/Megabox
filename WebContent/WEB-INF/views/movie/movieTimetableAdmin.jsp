@@ -19,6 +19,7 @@
 			var num = $(this).attr('title');
 			location.href="./movieSelect?num="+num;
 		});
+		
 	});
 </script>
 </head>
@@ -58,7 +59,10 @@
 							</c:if>
 						</c:forEach>
 					</td>
-					<td><button class="movieSelect" title="${dto.num}">수정</button></td>
+					<td>
+					<button class="movieSelect" title="${dto.num}">수정</button>
+					<a href="./movieDelete?num=${dto.num}"><button>삭제</button></a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -63,8 +63,10 @@ public class MovieController extends HttpServlet {
 			actionForward = movieService.movieSelectOne(request, response);
 		}else if(command.equals("/movieUpdate")) {
 			actionForward = movieService.movieUpdate(request, response);
+		}else if(command.equals("/movieDelete")) {
+			actionForward = movieService.movieDelete(request, response);
 		}
-		
+		//////////jsh/////
 		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());

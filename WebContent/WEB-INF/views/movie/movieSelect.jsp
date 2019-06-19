@@ -33,6 +33,10 @@
 .ui-datepicker-trigger{cursor: pointer;}
 /*datepicer input 롤오버 시 손가락 모양 표시*/
 .hasDatepicker{cursor: pointer;}
+
+.id_num{
+	visibility: hidden;
+}
 </style>
 
 <script type="text/javascript">
@@ -61,6 +65,7 @@
 	<div class="container">
 		<h1> 상영시간표 등록 </h1>
 		<form id="movieTimeTable" action="./movieUpdate" method="post">
+		<div class="id_num"><input type="text" name="num" value="${movie.num}" id="num"></div>
 		<div class="form-group">
 			<label for="movie_code">영화코드:</label> 
 			<input type="text" class="form-control" id="movie_code" name="movie_code" value="${movie.movie_code}">
