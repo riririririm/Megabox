@@ -15,12 +15,12 @@
     font-family: 'NanumGothic','나눔고딕','맑은 고딕','Malgun Gothic','돋움',dotum,'Apple SD Gothic Neo',sans-serif;
     color: #777;
   }
-  h3, h4 {
+ /*  h3, h4 {
     margin: 10px 0 30px 0;
     letter-spacing: 10px;      
     font-size: 20px;
     color: #111;
-  }
+  } */
  
   
   #nav_con{
@@ -80,7 +80,7 @@
     background-color: #fff;
     color: #000;
   }
-  .modal-header, h4, .close {
+ /*  .modal-header, h4, .close {
     background-color: #333;
     color: #fff !important;
     text-align: center;
@@ -88,7 +88,7 @@
   }
   .modal-header, .modal-body {
     padding: 40px 50px;
-  }
+  } */
   .nav-tabs li a {
     color: #777;
   }
@@ -99,13 +99,14 @@
     margin-bottom: 0;
     background-color: white;
     border: 0;
-    font-size: 15px !important;
+    font-size: 13px !important;
     color:black;
     
   }
   .nav>li>a { 
-    width:110px;
+    width:80px;
     text-align:center;
+    padding:15px 0px 15px 0px;
  	   
   }
   .navbar-nav li a:hover {
@@ -150,6 +151,7 @@
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid" id="nav_container">
 			<div class="conainer">
@@ -161,14 +163,15 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#myPage">
-					<img src="./images/header_nav_logo.png"></a>
+					<img src="/Megabox/images/header_nav_logo.png"></a>
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 					<!-- href #부분에 각자 보여줄 페이지 링크 넣어주세요 -->
 						<li><a href="#myPage">영화</a></li>
 						<li><a href="#band">상영시간표</a></li>
-						<li><a href="#tour">고객센터</a></li>
+						<li><a href="#store">스토어</a></li>
+						<li><a href="<%=application.getContextPath()%>/notice/noticeList">고객센터</a></li>
 						<li><a href="#contact">커뮤니티</a></li>
 						<li><a href="#more">로그인</a></li>
 					</ul>
@@ -187,3 +190,5 @@
 
 </body>
 </html>
+
+
