@@ -431,7 +431,7 @@
   							<a href = "#boxOffice" id="box_office">박스 오피스</a>
   						</dt>
   						<dd id="tab1">
-  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
+  							<p class="text-right"><a href="${pageContext.request.contextPath}/movieAPI/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
   							<div id="movie_slide1">
   								<ul tabindex=0 id="movie_list1">
   									<!-------------- forEach -------------->
@@ -484,7 +484,7 @@
   							<a href="#releseMovie" id="release_movie">최신 개봉작</a>
   						</dt>
   						<dd id="tab2">
-  							<p class="text-right"><a href="${pageContext.request.contextPath}/movie/releaseMovie" id="movie_all2">최신 개봉작 전체보기 </a></p>
+  							<p class="text-right"><a href="${pageContext.request.contextPath}/movieAPI/releaseMovie" id="movie_all2">최신 개봉작 전체보기 </a></p>
   							<div id="movie_slide2">
   								<ul tabindex=0 id="movie_list2">
   								<c:forEach begin="1" end="4" var="i">
@@ -584,6 +584,7 @@
     	</div>
 
     </div>	<!-- container end -->
+    
 	<!------------------------ 상세정보 Modal ------------------------------->
 	<c:forEach begin="1" end="4" var="modal">
 	
@@ -615,8 +616,9 @@
 										<strong>1</strong> 위 
 										<span> %</span>
 									</p>
-									<button type="button" class="modalBtn_book">예매하기</button>
+									<button type="button" class="modalBtn_book btn btn-primary">예매하기</button>
 								</div>
+									<input type="hidden" id="modal_code${modal }">
 								<ul class="modal_info_wrap">
 									<li id="modal_release${modal }"><strong>개봉일 : </strong></li>
 									<li id="director${modal }"><strong>감독 : </strong></li>
@@ -634,11 +636,12 @@
 						<div id="summary">
 						</div>
 					<div class="popupbox3">
-						<h3>한줄평</h3> <span>(0)</span>
+						<h3>한줄평</h3><span>(0)</span>
 					<div class="modal_review_wrap">
 						<div class="review_write">
 							<div class="review_id">							
-							</div>						
+							</div>		
+											
 							<form class="review_form">
 								<div class="review_input">
 									<div class="review_rate">
@@ -647,7 +650,7 @@
 										<textarea class="write_textarea"> </textarea>					
 									</div>
 									<div class="review_btn">
-										<button type="submit" class="writeBtn">등록</button>
+										<button type="submit" class="writeBtn btn btn-primary">등록</button>
 									
 									</div>
 								</div>
@@ -755,20 +758,22 @@
 					var modal_release = r.repRlsDate;
 					var movie_type = r.genre;
 					var plot = r.plot;
-					var movie_code = r.movieSeq;
+					var movie_code = r.DOCID;
 					
 						r.director.forEach(function(dir) {
 							var director = dir.directorNm;
 						
 					$('#box_poster'+num).append(img);	// 포스터 이미지
 					$('#box_title'+num).append(title);	// 메인 타이틀
+					
+					
 					$('#modal_img'+num).append(modal_img); 	// 모달 포스터 이미지
 					$('#modal_title'+num).append(title);	// 모달 영화타이틀
 					$('#modal_release' +num).append(modal_release);	// 모달 개봉일
 					$('#director'+num).append(director);	// 모달 감독
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
-					$
+					$('#modal_code'+num).append(movie_code);
 					
 					num=num+1;
 					

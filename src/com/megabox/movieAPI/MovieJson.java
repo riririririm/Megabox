@@ -14,9 +14,9 @@ import org.json.simple.parser.JSONParser;
 public class MovieJson {
 	final static String serviceKey = "19TKUUT86TYFU6699SQ4";
 	
-	public MovieApiDTO getMovieApiDTO(String collection, String sort, String releaseDte) {
+	public MovieApiDTO getMovieApiDTO(String collection, String sort, String releaseDte, int listCount) {
 		MovieApiDTO movieApiDTO = null;
-		String urlStr = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?" + "collection="+collection + "&sort=" +sort+ "&1&releaseDte="+ releaseDte + "&ServiceKey=" + serviceKey +"&_type=json"; 		
+		String urlStr = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?" + "collection="+collection + "&sort=" +sort+ "&1&releaseDte="+ releaseDte + "&listCount="+ listCount + "&ServiceKey=" + serviceKey +"&_type=json"; 		
 		
 
 		MovieApiDAO movieApiDAO = new MovieApiDAO();
@@ -66,6 +66,7 @@ public class MovieJson {
 				
 				movieApiDTO.setMovie_code(obj2.get("DOCID").toString());
 				movieApiDTO.setMovie_title(obj2.get("title").toString());
+				
 				movieApiDAO.insertMovie(movieApiDTO);
 			}
 	

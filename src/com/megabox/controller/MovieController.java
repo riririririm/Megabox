@@ -44,8 +44,6 @@ public class MovieController extends HttpServlet {
 			actionForward = movieService.searchDateList(request, response);
 		}else if(command.equals("/movieShowTime")) {
 			actionForward = movieService.searchShowTimeList(request, response);
-		}else if(command.equals("/boxoffice")) {
-			actionForward = movieService.boxofficeList(request, response);
 		}
 		
 		

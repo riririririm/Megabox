@@ -36,7 +36,20 @@
     <servlet-name>movie</servlet-name>
     <url-pattern>/movie/*</url-pattern>
   </servlet-mapping>
-   <servlet>
+  
+    <servlet>
+   <servlet-name>movieAPI</servlet-name>
+   <servlet-class>com.megabox.controller.MovieApiController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>movieAPI</servlet-name>
+    <url-pattern>/movieAPI/*</url-pattern>
+  </servlet-mapping>
+  
+
+  
+  
+  <servlet>
     <servlet-name>book</servlet-name>
     <servlet-class>com.megabox.controller.BookController</servlet-class>
   </servlet>

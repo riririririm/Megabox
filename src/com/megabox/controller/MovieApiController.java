@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
-import com.megabox.review.ReviewService;
+import com.megabox.movieAPI.MovieAPIServiece;
 
 /**
- * Servlet implementation class ReviewController
+ * Servlet implementation class MovieApiController
  */
-@WebServlet("/ReviewController")
-public class ReviewController extends HttpServlet {
+@WebServlet("/MovieApiController")
+public class MovieApiController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private ReviewService reviewService;
+    private MovieAPIServiece movieAPIServiece;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewController() {
+    public MovieApiController() {
         super();
-        reviewService = new ReviewService();
+        movieAPIServiece = new MovieAPIServiece();
         // TODO Auto-generated constructor stub
     }
 
@@ -33,23 +33,22 @@ public class ReviewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();
-		ActionForward actionForward = null;
+		ActionForward actionForward = new ActionForward();
 		
-		if(command.equals("/reviewWrite")) {
-			actionForward=reviewService.insert(request, response);
-		} else if(command.equals("/reviewList")) {
-			actionForward=reviewService.selectList(request, response);
+		if(command.equals("/boxoffice")) {
+			actionForward = movieAPIServiece.boxofficeList(request, response);
 		}
+		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);
 		} else {
 			response.sendRedirect(actionForward.getPath());
 		}
+			
 	
 	}
-	
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
