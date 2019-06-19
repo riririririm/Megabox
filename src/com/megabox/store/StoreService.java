@@ -256,11 +256,16 @@ public class StoreService implements Action{
 				}
 				
 				NoTheaterDTO noTheaterDTO = new NoTheaterDTO();
-				for(int i=0;i<noTheaters.length;i++) {
-					noTheaterDTO.setStore_num(storeDAO.searchStoreNum(storeDTO.getStore_name(), con));
-					noTheaterDTO.setTheater_name(noTheaters[i]);	
-					result3 =noTheaterDAO.insert(noTheaterDTO, con);
+				if(noTheaters!=null) {
+					for(int i=0;i<noTheaters.length;i++) {
+						noTheaterDTO.setStore_num(storeDAO.searchStoreNum(storeDTO.getStore_name(), con));
+						noTheaterDTO.setTheater_name(noTheaters[i]);	
+						result3 =noTheaterDAO.insert(noTheaterDTO, con);
+					}
+				}else {
+					result3=1;
 				}
+				
 			
 				if(result1* result2* result3>0) {
 					request.setAttribute("message", "상품을 등록했습니다.");
@@ -462,7 +467,7 @@ public class StoreService implements Action{
 		ActionForward actionForward = new ActionForward();
 		boolean check=true;
 		String path="../WEB-INF/views/common/result.jsp";
-		int store_num = Integer.parseInt(request.getParameter("num"));
+		int store_num = Integer.parseInt(request.getParameter("store_num"));
 		int result =0;
 		Connection con=null;
 		

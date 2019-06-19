@@ -361,10 +361,10 @@
 												<%-- ${seatStatus[i.index*10+j]}  --%>
 												<c:choose>
 													<c:when test="${seatStatus[i.index*10+j] eq 1 }">
-														<button class="btn btn2 snum_btn" title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}">${j+1}</button> 
+														<button class="btn btn2 snum_btn" title="${ch}${j}" id="${ch}${j}" value="${ch}${j}">${j}</button> 
 													</c:when>
 													<c:when test="${seatStatus[i.index*10+j] eq 0 }">
-														<button class="btn btn2_1 " title="${ch}${j+1}" id="${ch}${j+1}" value="${ch}${j+1}"></button> 
+														<button class="btn btn2_1 " title="${ch}${j}" id="${ch}${j}" value="${ch}${j}"></button> 
 													</c:when>
 												</c:choose>
 												</td>
