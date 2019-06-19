@@ -96,10 +96,11 @@ h5{
 	$(function() {
 		
 		$("#write_btn").click(function() {
+			var writer=$("#writer").val();
 			var contents=$("#contents").val();
 			var num = $("#listNum").val();
 			$.get("./communityWrite",{
-	
+				writer:writer,
 				num:num,
 				contents:contents
 			}, function(data) {
@@ -111,6 +112,7 @@ h5{
 				} else {
 					alert("Fail");
 					location.reload();
+					alert(writer);
 				}
 			});
 	
@@ -121,6 +123,7 @@ h5{
 		$("#communityList").on("click", ".update", function () {
 			var id=$(this).attr("title");
 			var con =$("#c"+id).html();
+			alert(con);
 			$("#updateContents").val(con);
 			$("#num").val(id);
 		});
@@ -190,6 +193,7 @@ h5{
 			<div id="list_result">
 				<h2>community</h2>
 				<div id="write_form">
+					<input type="hidden" id="writer" value="${member.id }">
 					<p>자유롭게 작성하세요.</p>
 
 					<textarea rows cols class="write_area" id="contents" name="contents"></textarea>
@@ -198,6 +202,7 @@ h5{
 
 				</div>
 				<!-- write_form end -->
+				
 			<div id="communityList">
 				<c:forEach items="${communityList}" var="dto">
 					<div class="media" >
@@ -205,7 +210,7 @@ h5{
 							<input type="hidden" id="listNum" value="${dto.num }"> 
 							<div class="hidden">${dto.num }</div>
 							<div class="media-heading">
-							<h5 id="writer">${dto.writer } </h5>
+							<h5 id="writer" >${member.id } </h5>
 							<h5 id="reg_date">${dto.reg_date }</h5>
 							</div>
 							
