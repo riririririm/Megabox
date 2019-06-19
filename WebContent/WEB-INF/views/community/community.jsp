@@ -169,13 +169,14 @@ h5{
 		});
 		// 삭제 버튼
 		$(".del").click(function() {
-			var num = $("#listNum").val();
+			var num = $('#listNum').val();
 			var check=confirm("삭제 하시겠습니까?");
 			if(check) {
 				$.get("./communityDelete?num="+num, function(data) {
 					data = data.trim();
 					if(data=="1") {
 						alert("삭제 되었습니다.");
+						alert(num);
 						location.reload();
 					} else {
 						alert("Fail");

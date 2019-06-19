@@ -433,6 +433,7 @@
   						<dd id="tab1">
   							<p class="text-right"><a href="${pageContext.request.contextPath}/movieAPI/boxoffice" id="movie_all1">박스 오피스 전체보기 </a></p>
   							<div id="movie_slide1">
+  							
   								<ul tabindex=0 id="movie_list1">
   									<!-------------- forEach -------------->
   									<c:forEach begin="1" end="4" var="i">
