@@ -100,16 +100,16 @@ h5{
 			var contents=$("#contents").val();
 			var num = $("#listNum").val();
 			$.get("./communityWrite",{
-				writer,
+				writer:writer,
 				num:num,
 				contents:contents
 			}, function(data) {
 				data = data.trim();
 				if(data=="1"){
 					alert("등록 되었습니다.");
-				} else if(data.contents==null && writer!=null ){
+				} else if(data.contents==null && writer!=""){
 					alert("내용을 입력해주세요.");
-				} else if(writer==null) {
+				} else if(writer=="") {
 					alert("로그인 하세요.");
 				} else {
 					alert("Fail");
