@@ -56,9 +56,7 @@
 	float: left;
 	border: 1px solid #ddd;
 }
-table tr th{
-	border: 1px solid black; 
-}
+
 
 table{
 	margin: auto;
@@ -66,7 +64,53 @@ table{
 	height: 250px;
 	border-collapse: collapse;
 }
+.p1{
+ 	width: 100px;
+ 	border: 1px solid #d2d2d2;
+ 	padding-left: 10px;
+ 	background-color: #f8f8f8;
+}
 
+.p2-1{
+	border-top: 2px solid #503396;
+	border-bottom: 2px solid #d2d2d2;
+}
+
+.p2-2{
+	border-bottom: 2px solid #d2d2d2;
+}
+.p3{
+	width: 300px;
+	padding-left: 15px;
+}
+
+.t1 th:first-child{
+	width: 100px;
+	padding-left: 20px;
+	border: 1px solid #d2d2d2;
+	background-color: #f8f8f8;
+}
+
+.t1 th:last-child{
+	padding-left: 20px;
+	border: 1px solid #d2d2d2;
+}
+
+.t2 th:first-child{
+	width: 150px;
+	padding-left: 20px;
+	border: 1px solid #d2d2d2;
+	background-color: #f8f8f8;
+}
+
+.t2 th:last-child{
+	padding-left: 20px;
+	border: 1px solid #d2d2d2;
+}
+
+.t2-1 th{
+	height: 80px;
+}
 </style>
 </head>
 <body>
@@ -112,13 +156,13 @@ table{
 							</div>
 							</th>
 						</tr>
-						<tr>
-							<th><div>*아이디</div></th>
-							<th><div>${member.id}</div></th>
+						<tr class="p2-1">
+							<th class="p1">*아이디</th>
+							<th><div class="p3">${member.id}</div></th>
 						</tr>
-						<tr>
+						<tr class="p2-2">
 							<th class="p1">*비밀번호</th>
-							<th><input type="password" name="password" id="pw"></th>
+							<th><div class="p3"><input type="password" name="password" id="pw"></div></th>
 						</tr>
 						
 						<tr>
@@ -138,28 +182,28 @@ table{
 				<!-- 회원정보 수정하는 부분 -->
 				<div class="updateForm" style="display: none">
 					<form action="./myPersonalUpdate" method="post" onsubmit="return update()">
-						<table>
-							<tr>
-								<th>아이디</th>
+						<table class="t1">
+							<tr class="p2-1">
+								<th>*아이디</th>
 								<th>${member.id}</th>
 							</tr>
-							<tr>
-								<th>이름</th>
+							<tr class="p2-2">
+								<th>*이름</th>
 								<th>${member.name}</th>
 							</tr>
-							<tr>
-								<th>휴대폰</th>
+							<tr class="p2-2">
+								<th>*휴대폰</th>
 								<th><input type="text" class="phone1" title="phone" name="phone1" value="${member.phone.substring(0, 3)}" maxlength="3">-
 								<input type="text" class="phone2" title="phone" name="phone2" value="${member.phone.substring(4, 8)}" maxlength="4">-
 								<input type="text" class="phone3" title="phone" name="phone3" value="${member.phone.substring(9, 13)}" maxlength="4"></th>
 							</tr>
-							<tr>
-								<th>이메일</th>
+							<tr class="p2-2">
+								<th>*이메일</th>
 								<th><input type="text" class="email"name="email" value="${member.email}"></th>
 							</tr>
 							<tr>
-								<th><input type="submit" value="확인" id="ddddd"></th>
-								<th><input type="button" id="updateCancel" value="취소"></th>
+								<th style="border: none; background-color: white;"><input type="submit" value="확인" id="ddddd" ></th>
+								<th style="border: none; background-color: white;"><input type="button" id="updateCancel" value="취소" ></th>
 							</tr>
 						</table>
 					</form>
@@ -169,22 +213,22 @@ table{
 				<!-- 비밀번호 수정 -->
 				<div class="pwChage1" style="display:none">
 				<form action="./myPwChange" method="post" onsubmit="return pwChange()">
-					<table>
-						<tr>
+					<table class="t2">
+						<tr class="p2-1">
 							<th>현재비밀번호</th>
 							<th><input type="password" id="curpw" name="pw"></th>
 						</tr>
-						<tr>
+						<tr class="p2-2">
 							<th>새 비밀번호</th>
-							<th><input type="text" id="changePW" name="new_pw"></th>
+							<th><input type="password" id="changePW" name="new_pw"></th>
 						</tr>
-						<tr>
+						<tr class="p2-2">
 							<th>새 비밀번호 확인</th>
-							<th><input type="text" id="newChangePW" name="new_pwck"></th>
+							<th><input type=""password"" id="newChangePW" name="new_pwck"></th>
 						<tr>
-						<tr>
-							<th><input type="submit" value="확인"></th>
-							<th><input  type="button" id="backBtn" value="취소"></th>
+						<tr >
+							<th style="border: none; background-color: white;"><input type="submit" value="확인"></th>
+							<th style="border: none; background-color: white;"><input  type="button" id="backBtn" value="취소"></th>
 						</tr>
 					</table>
 				</form>
@@ -194,13 +238,14 @@ table{
 				<!-- 회원탈퇴 폼 -->
 				<div class="memberDrop" style="display:none">
 					<form action="./dropMember" method="post">
-						<table>
-							<tr>
+						<table class="t2 t2-1" style="margin-top: 50px;">
+							<tr class="p2-1">
 								<th>비밀번호 입력</th>
 								<th><input type="password" id="dropPw" name="dropPw"></th>
 							</tr>
-							<tr>
-								<th><input type="submit" value="탈퇴"></th>
+							<tr >
+								<th style="border: none; background-color: white;"><input type="submit" value="탈퇴"></th>
+								<th style="border: none; background-color: white;"><input  type="button" id="backBtn1" value="취소"></th>
 							</tr>
 						</table>
 					</form>
@@ -290,6 +335,11 @@ table{
 		$('#backBtn').click(function() {
 			$('.personal').attr('style', 'display:block');
 			$('.pwChage1').attr('style', 'display:none');
+		});
+		
+		$('#backBtn1').click(function() {
+			$('.personal').attr('style', 'display:block');
+			$('.memberDrop').attr('style', 'display:none');
 		});
 	</script>
 </body>

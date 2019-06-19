@@ -57,7 +57,15 @@ public class MovieController extends HttpServlet {
 			actionForward = seatService.selectList(request, response);
 		}else if(command.equals("/movieReadyPay")) {
 			actionForward =seatService.insert(request, response);
+		}////jsh 0618 movieUpdate
+		else if(command.equals("/movieSelect")) {
+			actionForward = movieService.movieSelectOne(request, response);
+		}else if(command.equals("/movieUpdate")) {
+			actionForward = movieService.movieUpdate(request, response);
+		}else if(command.equals("/movieDelete")) {
+			actionForward = movieService.movieDelete(request, response);
 		}
+		//////////jsh/////
 		
 		
 		if(actionForward.isCheck()) {

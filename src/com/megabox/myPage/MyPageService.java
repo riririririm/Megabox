@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.ast.ThrowStatement;
+
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
+import com.megabox.book.BookDAO;
+import com.megabox.book.BookDTO;
 import com.megabox.member.MemberDTO;
 import com.megabox.page.QnaSearchMakePage;
 import com.megabox.page.SearchPager;
@@ -17,30 +21,154 @@ import com.megabox.page.SearchRow;
 import com.megabox.page.StoreSearchMakePage;
 import com.megabox.qna.QnaDAO;
 import com.megabox.qna.QnaDTO;
+import com.megabox.seat.SeatDAO;
 import com.megabox.store.Store_historyDAO;
 import com.megabox.store.Store_historyDTO;
 import com.megabox.util.DBConnector;
-import com.sun.java_cup.internal.runtime.Scanner;
-import com.sun.java_cup.internal.runtime.Symbol;
 
 
 
 public class MyPageService implements Action{
 	Store_historyDAO store_historyDAO = null;
 	QnaDAO qnaDAO = null;
+	BookDAO bookDAO = null;
+	SeatDAO seatDAO = null;
 	public MyPageService() {
 		// TODO Auto-generated constructor stub
 		store_historyDAO = new Store_historyDAO();
+		seatDAO = new SeatDAO();
 		qnaDAO = new QnaDAO();
+		bookDAO = new BookDAO();
 	}
-	
 
+	
+	//BookPage
+	public ActionForward bookPage(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/myPage/bookPage.jsp";
+		boolean check = true;
+		//예약 확인하는 부분//
+		int curPage=1;
+		try {
+			curPage = Integer.parseInt(request.getParameter("curPage"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		StoreSearchMakePage storeSearchMakePage = new StoreSearchMakePage(curPage);
+		SearchRow searchRow = storeSearchMakePage.makeRow(); //행과 열이 만들어 지는 부분
+		ArrayList<BookDTO> ar = null;
+		//예약 확인하는 부분//
+		
+		//예약 취소확인하는 부분//
+		int curPage2=1;
+		try {
+			curPage2 = Integer.parseInt(request.getParameter("curPage2"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		StoreSearchMakePage storeSearchMakePage2 = new StoreSearchMakePage(curPage2);
+		SearchRow searchRow2 = storeSearchMakePage2.makeRow(); //행과 열이 만들어 지는 부분
+		//예약 취소확인하는 부분//
+		Connection conn = null;
+		
+		ArrayList<BookDTO> ar2 = null; //취소하는거 받는 변수명
+		try {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			String id = memberDTO.getId();
+			conn = DBConnector.getConnect();
+			//예약 확인하는 부분//
+			int bookTotalCount = bookDAO.bookTotalCount(conn, id);
+			SearchPager searchPager = storeSearchMakePage.makePage(bookTotalCount); //예약상태 페이저
+			ar = bookDAO.bookList(conn, id, searchRow);
+			request.setAttribute("bookList", ar);
+			request.setAttribute("pager", searchPager);
+			//예약 확인하는 부분//
+			
+			//예약 취소확인하는 부분//
+			int bookCancelCount = bookDAO.bookCancelCount(conn, id);
+			SearchPager searchPager2 = storeSearchMakePage2.makePage(bookCancelCount);
+			ar2 = bookDAO.bookCancelList(conn, id, searchRow2);
+			request.setAttribute("bookCancelList", ar2);
+		
+			request.setAttribute("cancelPager", searchPager2);
+			//예약 취소확인하는 부분//
+			
+		} catch (Exception e) {
+			request.setAttribute("message", "다시 로그인 해주세요");
+			request.setAttribute("path", "../index.do");
+			path = "../WEB-INF/views/common/result.jsp";
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		actionForward.setPath(path);
+		actionForward.setCheck(check);
+		return actionForward;
+	}
+
+	//BookDelete 
+	public ActionForward bookDelete(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward= new ActionForward();
+		String path = "../WEB-INF/views/myPage/myQnA.jsp";
+		boolean check = true;
+		Connection conn = null;
+		int result = 0;
+		try {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			String id = memberDTO.getId();
+			int book_num = Integer.parseInt(request.getParameter("book_num"));
+			conn = DBConnector.getConnect();
+			conn.setAutoCommit(false);//자동으로 commit되는 것을 막는다.  true면 자동 commit
+			result = bookDAO.bookDelete(conn, id, book_num);
+			if(result<1) {//삭제가 안되었을 때
+				throw new Exception(); //예외 발생해서 catch문 안으로 가게 하는 부분
+			}
+			result = seatDAO.updateSeat(conn, book_num);
+			if(result<1) {
+				throw new Exception();
+			}
+			conn.commit(); //두개 다 끝나고 성공하면 commit시킨다.
+
+		} catch (Exception e) {
+			try {
+				conn.rollback(); //마지막commit으로 돌린다. 
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+				try {
+					conn.setAutoCommit(true); //기본상태로 되돌려준다. 
+					conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}//
+			}
+
+			request.setAttribute("message", "다시 로그인 해주세요");
+			request.setAttribute("path", "../index.do");
+			path = "../WEB-INF/views/common/result.jsp";
+			e.printStackTrace();
+		}
+
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
 	//QnAList
 	public ActionForward qnaList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		String path = "../WEB-INF/views/myPage/myQnA.jsp";
 		boolean check = true;
-		
+
 		int curPage = 1;
 		try {
 			curPage = Integer.parseInt(request.getParameter("curPage"));
@@ -60,7 +188,7 @@ public class MyPageService implements Action{
 				conn = DBConnector.getConnect();
 				ar = new ArrayList<QnaDTO>();
 				String id = memberDTO.getId();
-				
+
 				int totalCount = qnaDAO.QnaTotalCount(conn, id, searchRow);
 				ar = qnaDAO.myQnaList(conn, id, searchRow);
 				SearchPager searchPager = qnaSearchMakePage.makePage(totalCount);
@@ -72,14 +200,21 @@ public class MyPageService implements Action{
 			path = "../index.do";
 			check = true;
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		
+
+
 		actionForward.setPath(path);
 		actionForward.setCheck(check);
 		return actionForward;
 	}
-	
+
 	//myPage Main화면
 	public ActionForward myPageMain(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
@@ -91,21 +226,6 @@ public class MyPageService implements Action{
 		return actionForward;
 	}
 
-	//BookPage
-	public ActionForward bookPage(HttpServletRequest request, HttpServletResponse response) {
-		ActionForward actionForward = new ActionForward();
-		String path = "../WEB-INF/views/myPage/bookPage.jsp";
-		boolean check = true;
-
-
-		actionForward.setPath(path);
-		actionForward.setCheck(check);
-		return actionForward;
-	}
-
-	
-
-	
 	//StoprePage
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
@@ -158,11 +278,18 @@ public class MyPageService implements Action{
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}
 		}catch (Exception e) {
-			request.setAttribute("msg", "다시 로그인 해주세요");
+			request.setAttribute("message", "다시 로그인 해주세요");
 			request.setAttribute("path", "../index.do");
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/common/result.jsp");
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return actionForward;
@@ -192,7 +319,7 @@ public class MyPageService implements Action{
 				actionForward.setCheck(true);
 				actionForward.setPath("../WEB-INF/views/myPage/myStorePage.jsp");
 			}else {
-				request.setAttribute("msg", "다시 시도해주세요");
+				request.setAttribute("message", "다시 시도해주세요");
 				request.setAttribute("path", "./myStorePage");
 				actionForward.setPath("../WEB-INF/views/common/result.jsp");
 				actionForward.setCheck(true);
@@ -200,6 +327,13 @@ public class MyPageService implements Action{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return actionForward;
 	}

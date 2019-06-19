@@ -25,6 +25,238 @@ public class MovieService implements Action{
 		theaterDAO =new TheaterDAO();
 		seatDAO = new SeatDAO();
 	}
+	
+///////////////////////////////////////////////////////////////////////////////////
+//수현 movie_update
+	public ActionForward movieUpdate(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/movie/movieSelect.jsp";
+		boolean check = true;
+		String method = request.getMethod();
+
+		if (method.equals("POST")) {
+			Connection conn = null;
+			MovieDTO movieDTO = new MovieDTO();
+			SeatDTO seatDTO = new SeatDTO();
+			ArrayList<String> seatRows = new ArrayList<String>();
+			int result1 = 0;
+			int result2 = 0;
+			int result3 = 0;
+			try {
+				conn = DBConnector.getConnect();
+				movieDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				movieDTO.setMovie_code(request.getParameter("movie_code"));
+				movieDTO.setMovie_title(request.getParameter("movie_title"));
+				movieDTO.setMovie_kind(request.getParameter("movie_kind"));
+				movieDTO.setTheater(request.getParameter("theater"));
+				movieDTO.setAuditorium(request.getParameter("auditorium"));
+				movieDTO.setView_date(request.getParameter("view_date"));
+				String[] show_times = request.getParameterValues("show_time");
+
+				conn.setAutoCommit(false);
+				result1 = movieDAO.movieUpdate(conn, movieDTO);
+				if (result1 < 1) {
+					throw new Exception();
+				}
+
+				seatDTO.setTheater(movieDTO.getTheater());
+				seatDTO.setAuditorium(movieDTO.getAuditorium());
+				seatDTO.setView_date(movieDTO.getView_date());
+				seatRows = seatDAO.initSeat();
+				if (seatRows == null) {
+					throw new Exception();
+				}
+
+				int movie_num = Integer.parseInt(request.getParameter("num"));
+
+				ShowTimeDTO showTimeDTO = new ShowTimeDTO();
+				for (int i = 0; i < show_times.length; i++) {
+					showTimeDTO.setMovie_num(movie_num);
+					showTimeDTO.setMovie_code(movieDTO.getMovie_code());
+					showTimeDTO.setShow_time(show_times[i]);
+					showTimeDTO.setAuditorium(movieDTO.getAuditorium());
+					result2 = movieDAO.insertShowTime(showTimeDTO, conn);
+				}
+				if (result2 < 1) {
+					throw new Exception();
+				}
+
+				for (int i = 0; i < show_times.length; i++) {
+					seatDTO.setShow_time(show_times[i]);
+					for (int j = 0; j < seatRows.size(); j++) {
+						for (int k = 1; k < 11; k++) {
+							seatDTO.setSeat_num(seatRows.get(j) + k);
+							result3 = seatDAO.insert(seatDTO, conn);
+						}
+					}
+				}
+				if (result3 < 1) {
+					throw new Exception();
+				}
+				conn.commit();
+				request.setAttribute("message", "영화 상영정보를 수정했습니다.");
+				request.setAttribute("path", "./movieTimetableAdmin");
+				check = true;
+				path = "../WEB-INF/views/common/result.jsp";
+			} catch (Exception e) {
+				try {
+					request.setAttribute("message", "영화 상영정보 수정 실패.");
+					request.setAttribute("path", "./movieTimetableAdmin");
+					check = true;
+					path = "../WEB-INF/views/common/result.jsp";
+					conn.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} finally {
+					try {
+						conn.setAutoCommit(true);
+						conn.close();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
+
+//수현 movie_selectOne
+	public ActionForward movieSelectOne(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/movie/movieSelect.jsp";
+		boolean check = true;
+		int num = Integer.parseInt(request.getParameter("num"));
+		MovieDTO movieDTO = null;
+		Connection conn = null;
+		int result = 0, result1 = 0;
+
+		try {
+			conn = DBConnector.getConnect();
+			conn.setAutoCommit(false);
+			movieDTO = movieDAO.movieSelect(conn, num);
+			if (movieDTO == null) {
+				throw new Exception();
+			}
+			request.setAttribute("movie", movieDTO);
+
+////////좌석삭제하는 부분//////////////
+			result = seatDAO.deleteSeat(conn, movieDTO);
+			if (result < 1) {
+				throw new Exception();
+			}
+
+////////상영시간표 삭제하는 부분////////
+			result1 = movieDAO.showTimeDelete(conn, num);
+			if (result1 < 1) {
+				throw new Exception();
+			}
+			conn.commit();
+
+		} catch (Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				request.setAttribute("message", "Sever Error");
+				request.setAttribute("path", "../index.do");
+				actionForward.setCheck(true);
+				actionForward.setPath("../WEB-INF/views/common/result.jsp");
+				e1.printStackTrace();
+			} finally {
+				try {
+					conn.setAutoCommit(true);
+					conn.close();
+				} catch (SQLException e1) {
+// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			request.setAttribute("message", "Sever Error");
+			request.setAttribute("path", "../index.do");
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/views/common/result.jsp");
+			e.printStackTrace();
+		}
+
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
+
+//movieDelete
+	public ActionForward movieDelete(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		String path = "../WEB-INF/views/movie/movieTimetableAdmin.jsp";
+		boolean check = true;
+		int num = Integer.parseInt(request.getParameter("num"));
+		MovieDTO movieDTO = null;
+		Connection conn = null;
+		int result = 0, result1 = 0, result2 = 0;
+		try {
+			conn = DBConnector.getConnect();
+			conn.setAutoCommit(false);
+			movieDTO = movieDAO.movieSelect(conn, num);
+			if (movieDTO == null) {
+				throw new Exception();
+			}
+
+////////좌석삭제하는 부분//////////////
+			result = seatDAO.deleteSeat(conn, movieDTO);
+			if (result < 1) {
+				throw new Exception();
+			}
+
+////////상영시간표 삭제하는 부분////////
+			result1 = movieDAO.showTimeDelete(conn, num);
+			if (result1 < 1) {
+				throw new Exception();
+			}
+
+//////영화삭제하는 부분///////////////
+			result2 = movieDAO.deleteMovie(conn, num);
+			if (result < 1) {
+				throw new Exception();
+			}
+			conn.commit();
+			request.setAttribute("message", "영화 상영정보를 삭제했습니다.");
+			request.setAttribute("path", "./movieTimetableAdmin");
+			check = true;
+			path = "../WEB-INF/views/common/result.jsp";
+		} catch (Exception e) {
+			try {
+				request.setAttribute("message", "영화 상영정보 삭제 실패.");
+				request.setAttribute("path", "./movieTimetableAdmin");
+				check = true;
+				path = "../WEB-INF/views/common/result.jsp";
+				conn.rollback();
+			} catch (SQLException e1) {
+// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+				try {
+					conn.setAutoCommit(true);
+					conn.close();
+				} catch (SQLException e1) {
+// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		return actionForward;
+	}
+//////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//유라
 	public ActionForward boxofficeList(HttpServletRequest request, HttpServletResponse response) {
