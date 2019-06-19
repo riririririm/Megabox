@@ -34,7 +34,8 @@
 	}
 	.bottom{
 		text-align: center;
-		padding-top:50px;
+		padding-top:10px;
+		padding-bottom:20px;
 	}
 	.left{
 		padding-top:60px;
@@ -84,28 +85,12 @@
 		});
 		
 		//구매하기 버튼 눌렀을때
-		$(".btn_buy").click(function() {
-			/* sname= $("#store_name").val().trim();
-			scategory =$("#store_category").val.trim();
-			speriod=$("#store_period").val.trim();
-			$("#s_title").text(sname);
-			var str="";
-			if(scategory=="메가티켓"){
-				str="예매 가능 유효기간은 구매일로부터 "+speriod+"개월 입니다";
-			}else if(scategory=="메가찬스"){
-				str="＜주말/공휴일 사용가능, 종영시 사용 불가＞"
-			}else if(scategory=="팝콘/음료/굿즈"){
-				str="사용가능 기간은 구매일로부터 "+speriod+"개월 입니다";
-			}
-			$(".s_dd").text(str);
-			$("#store_balance").text($("#store_total_count").val); */
-		
+		$(".btn_buy").click(function() {		
 			$("#store_buy_count").val(buy_count);
 			$("#store_total_price").val(price*buy_count*1);
 			
 			var queryString = $("form[name=myModal_form]").serialize() ;
 			
-			alert(queryString);
 			$.ajax({
 				url:"./myModal2",
 				type:"POST",
@@ -209,6 +194,10 @@
           	</div>
           	<div class="bottom">
           		<img alt="info" src="../images/store_announce2.png" style="margin-bottom:50px;">
+          	</div>
+          	<div class="bottom">
+          		<a href="./storeUpdate?store_num=${storeDTO.store_num }" class="btn">상품수정</a>
+          		<a href="./storeDelete?store_num=${storeDTO.store_num }" class="btn">상품삭제</a>
           	</div>
         </div><!-- end of body -->
 

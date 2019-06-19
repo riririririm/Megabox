@@ -46,7 +46,23 @@ public class StoreDAO {
 		
 	}
 	//update
-	//delete
+	public int update(StoreDTO storeDTO, Connection con) throws Exception {
+		int result=0;
+		String sql = "update store set store_category=?, store_name=?, store_period=?, "
+				+ "store_count=?, store_cancel=?, store_price=? where store_num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, storeDTO.getStore_category());
+		st.setString(2, storeDTO.getStore_name());
+		st.setInt(3, storeDTO.getStore_period());
+		st.setInt(4, storeDTO.getStore_count());
+		st.setString(5, storeDTO.getStore_cancel());
+		st.setInt(6, storeDTO.getStore_price());
+		st.setInt(7, storeDTO.getStore_num());
+		
+		result=st.executeUpdate();
+		st.close();
+		return result;
+	}
 	//searchStoreNum
 	public int searchStoreNum(String store_name, Connection con) throws Exception {
 		int store_num=0;
@@ -66,7 +82,28 @@ public class StoreDAO {
 	}
 	
 	//selectOne
-	
+	public StoreDTO selectOne(int store_num, Connection con) throws Exception{
+		String sql="select * from store where store_num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, store_num);
+		ResultSet rs = st.executeQuery();
+		
+		StoreDTO storeDTO = null;
+		if(rs.next()) {
+			storeDTO = new StoreDTO();
+			storeDTO.setStore_num(rs.getInt("store_num"));
+			storeDTO.setStore_category(rs.getString("store_category"));
+			storeDTO.setStore_name(rs.getString("store_name"));
+			storeDTO.setStore_period(rs.getInt("store_period"));
+			storeDTO.setStore_count(rs.getInt("store_count"));
+			storeDTO.setStore_cancel(rs.getString("store_cancel"));
+			storeDTO.setStore_price(rs.getInt("store_price"));
+			
+		}
+		rs.close();
+		st.close();
+		return storeDTO;
+	}
 	
 	//selectList
 	public ArrayList<StoreDTO> selectList(Connection con) throws Exception{
@@ -121,6 +158,17 @@ public class StoreDAO {
 		rs.close();
 		st.close();
 		return ar;
+	}
+	
+	public int delete(int store_num, Connection con) throws Exception {
+		int result=0;
+		String sql="delete store where store_num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, store_num);
+		result = st.executeUpdate();
+		
+		st.close();
+		return result;
 	}
 	
 }

@@ -45,7 +45,7 @@
 	float: left;
 	z-index: 3;
 	padding-right: 50px;
-	list-style: none
+	list-style: none;
 }
 .store_sub li >a{
 	text-decoration: none;
@@ -292,24 +292,10 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		var store_num;
-		var store_name;
-		var store_category;
-		var store_period;
-		var store_count;
-		var store_price;
-		
 		var result="";
 		//상품명 클릭시 모달창 뜨기
 		$(".alink").click(function() {
-			/* store_num= $(this).attr("title");
-			store_name = $("#name"+store_num).text().trim();
-			store_category = $("#cate"+store_num).text().trim();
-			store_period = $("#per"+store_num).text().trim();
-			//store_count= $("#count"+store_num).text();
-			store_price= $("#price"+store_num).text().trim();
-			$(".modal-title").text(store_category);
-			$(".right_title").text(store_name); */
+			
 			var form_name=$(this).attr("title");
 			var queryString = $("form[name="+form_name+"]").serialize() ;
 			
@@ -325,88 +311,7 @@
 		            console.log("ajax call went wrong:" + request.responseText);
 		        }
 			});
-		});
-		
-		//구매하기 버튼 눌렀을때
-		/*$(".btn_buy").click(function() {
-			$("#s_title").text(store_name);
-			var str="";
-			if(store_category=="메가티켓"){
-				str="예매 가능 유효기간은 구매일로부터 "+store_period/12+"년입니다"
-			}else if(store_category=="메가찬스"){
-				str="＜주말/공휴일 사용가능, 종영시 사용 불가＞"
-			}else if(store_category=="팝콘/음료/굿즈"){
-				str="ooo부터~ooo까지";
-			}
-			$(".s_dd").text(str);
-			$("#store_balance").text(store_price);
-		}); */
-		
-		//kakaopay
-		$("#check_module").click(function () {
-         	var IMP = window.IMP; // 생략가능
-        	IMP.init('imp72232577');// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	       	IMP.request_pay({
-        	pg: 'kakao', // version 1.1.0부터 지원.
-         	/*'kakao':카카오페이,  	html5_inicis':이니시스(웹표준결제)   	'nice':나이스페이       	'jtnet':제이티넷       	'uplus':LG유플러스       	'danal':다날
-        		'payco':페이코        	'syrup':시럽페이        	'paypal':페이팔*/
-        	pay_method: 'card',
-	       	merchant_uid: 'merchant_' + new Date().getTime(),
-        	name: '주문명:'+store_name,
-        	//결제창에서 보여질 이름
-        	amount: store_price,
-        	//가격
-         	buyer_email: '${sessionScope.member.email}',
-        	buyer_name: '${sessionScope.member.id}',
-        	buyer_tel: '${sessionScope.member.phone}',
-        	//buyer_addr: '서울특별시 강남구 삼성동',
-        	//buyer_postcode: '123-456',
-         	m_redirect_url: 'http://localhost/Megabox/store/storeList'
-        	/*
-        	모바일 결제시,
-        	결제가 끝나고 랜딩되는 URL을 지정
-        	(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
-        	*/
-        	 }, function (rsp) {
-        	console.log(rsp);
-        	if (rsp.success) {
-        	var msg = '결제가 완료되었습니다.';
-        	msg += '고유ID : ' + rsp.imp_uid;
-        	msg += '상점 거래ID : ' + rsp.merchant_uid;
-        	msg += '결제 금액 : ' + rsp.paid_amount;
-        	msg += '카드 승인번호 : ' + rsp.apply_num;
-        	
-        	
-        	/////////
-        	$.post("./storePurchase",{
-        		id: "${sessionScope.member.id}",
-       	   	 	category: store_category,
-       	     	store_name: store_name,
-       	     	buy_count: "1",
-       	     	store_price: store_price,
-       	     	store_period: store_period
-       	     	
-        		}, function(data){
-        	         result="success";
-        	});
-        	
-        	} else {
-        		var msg = '결제에 실패하였습니다.';
-        		msg += '에러내용 : ' + rsp.error_msg;
-        		result="fail";
-        	}
-        	
-        /* 	if(result=="success"){
-        		//window.location.href="../index.do"
-        		
-        	}else{
-        		alert(msg);
-        	} */
-    		location.reload();
-    		alert(msg);
-        	}); 
-        	
-		});
+		});		
 		
 	});
 </script>
@@ -508,8 +413,6 @@
 							<div class="ticket_price">
 								${dto.store_price}
 							</div>	
-							
-						
 								<input type="hidden" id="store_num" name="store_num" value="${dto.store_num }">
 								<input type="hidden" id="store_name" name="store_name" value="${dto.store_name }">
 								<input type="hidden" id="store_price" name="store_price" value="${dto.store_price }">
@@ -555,8 +458,6 @@
 							<div class="ticket_price">
 								${dto.store_price}
 							</div>	
-							
-							
 								<input type="hidden" id="store_num" name="store_num" value="${dto.store_num }">
 								<input type="hidden" id="store_name" name="store_name" value="${dto.store_name }">
 								<input type="hidden" id="store_price" name="store_price" value="${dto.store_price }">

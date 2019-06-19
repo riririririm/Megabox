@@ -9,9 +9,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
+import com.megabox.member.MemberDTO;
 import com.megabox.theater.NoTheaterDAO;
 import com.megabox.theater.NoTheaterDTO;
 import com.megabox.theater.TheaterDAO;
@@ -57,7 +59,13 @@ public class StoreService implements Action{
 			//String img = request.getParameter("store_img");
 			int store_total_price = Integer.parseInt(request.getParameter("store_total_price"));
 			
-			//request.setAttribute("store_noTheaters", store_noTheaters);
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			
+			String phone = memberDTO.getPhone();
+			String[] phones = phone.split("-");
+			
+			request.setAttribute("phones", phones);
 			request.setAttribute("storeDTO", storeDTO);
 			request.setAttribute("store_total_price", store_total_price);
 			actionForward.setCheck(true);
@@ -95,12 +103,12 @@ public class StoreService implements Action{
 		ActionForward actionForward = new ActionForward();
 		
 		Store_historyDTO historyDTO = new Store_historyDTO();
-		historyDTO.setId(request.getParameter("id"));
-		historyDTO.setCategory(request.getParameter("category"));
-		historyDTO.setStore_name(request.getParameter("store_name"));
-		historyDTO.setBuy_count(Integer.parseInt(request.getParameter("buy_count")));
-		historyDTO.setPrice(Integer.parseInt(request.getParameter("store_price"))*Integer.parseInt(request.getParameter("buy_count")));
-		int period = Integer.parseInt(request.getParameter("store_period"));
+		historyDTO.setId(request.getParameter("kakao_id"));
+		historyDTO.setCategory(request.getParameter("kakao_category"));
+		historyDTO.setStore_name(request.getParameter("kakao_store_name"));
+		historyDTO.setBuy_count(Integer.parseInt(request.getParameter("kakao_buy_count")));
+		historyDTO.setPrice(Integer.parseInt(request.getParameter("kakao_total_price")));
+		int period = Integer.parseInt(request.getParameter("kakao_store_period"));
 		
 		Connection con=null;
 		int result=0;
@@ -166,8 +174,7 @@ public class StoreService implements Action{
 				e.printStackTrace();
 			}
 		}
-		
-		System.out.println(images.size());
+	
 		request.setAttribute("megaTicket", megaTicket);
 		request.setAttribute("megaChance", megaChance);
 		request.setAttribute("goods", goods);
@@ -308,14 +315,183 @@ public class StoreService implements Action{
 
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionForward actionForward = new ActionForward();
+		boolean check=true;
+		String path="../WEB-INF/views/common/result.jsp";
+		String method = request.getMethod();
+		
+		int store_num =0;
+		Connection con=null;
+		StoreDTO storeDTO = null;
+		ArrayList<NoTheaterDTO> noTheaters = null;
+		ArrayList<TheaterDTO> theaters = null;
+		StoreUploadDTO uploadDTO = null;
+		
+		if(method.equals("POST")) {
+			String saveDirectory = request.getServletContext().getRealPath("storeUpload");
+			int result1=0; int result2=0; int result3 = 0;
+			int maxPostSize=1024*1024*100;
+	
+			File file = new File(saveDirectory);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			
+			try {
+				
+				MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, maxPostSize, "UTF-8", new DefaultFileRenamePolicy());
+			 	Enumeration<String> e= multipartRequest.getFileNames();//파일의 파라미터 이름들
+			 	ArrayList<StoreUploadDTO> ar = new ArrayList<StoreUploadDTO>();
+			 	while(e.hasMoreElements()) {
+			 		String s = e.nextElement();
+			 		String fname = multipartRequest.getFilesystemName(s);
+			 		String oname = multipartRequest.getOriginalFileName(s);
+			 		uploadDTO = new StoreUploadDTO();
+			 		uploadDTO.setFname(fname);
+			 		uploadDTO.setOname(oname);
+			 		ar.add(uploadDTO);
+			 	}
+				
+				store_num = Integer.parseInt(multipartRequest.getParameter("store_num")); 
+
+				storeDTO = new StoreDTO();
+				storeDTO.setStore_num(store_num);
+				storeDTO.setStore_category(multipartRequest.getParameter("store_category"));
+				storeDTO.setStore_name(multipartRequest.getParameter("store_name"));
+				storeDTO.setStore_theater(multipartRequest.getParameter("store_theater")); 
+				storeDTO.setStore_period(Integer.parseInt(multipartRequest.getParameter("store_period")));
+				storeDTO.setStore_count(Integer.parseInt(multipartRequest.getParameter("store_count")));
+				storeDTO.setStore_cancel(multipartRequest.getParameter("store_cancel"));
+				storeDTO.setStore_price(Integer.parseInt(multipartRequest.getParameter("store_price")));
+				String[] noTheater = multipartRequest.getParameterValues("store_noTheater"); //사용불가능 매장이름
+				
+				con = DBConnector.getConnect();
+				
+				//1.기존 store update
+				result1 =storeDAO.update(storeDTO, con);
+				//2.기존 noTheater delete -> insert
+				result2 = noTheaterDAO.delete(store_num,con);
+				
+				NoTheaterDTO noTheaterDTO = new NoTheaterDTO();
+				for(int i=0;i<noTheater.length;i++) {
+					noTheaterDTO.setStore_num(storeDAO.searchStoreNum(storeDTO.getStore_name(), con));
+					noTheaterDTO.setTheater_name(noTheater[i]);	
+					result2 =noTheaterDAO.insert(noTheaterDTO, con);
+				}
+				//3.기존 storeUpload update
+				if(ar.get(0).getFname()!=null) {
+					for(StoreUploadDTO img:ar) {
+						img.setNum(store_num);
+						result3 = uploadDAO.update(img, con);
+						if(result3<1) {
+							throw new Exception();
+						}
+					}
+					
+				}else {
+					result3=1;
+				}
+				
+				
+		
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+				System.out.println(result1); System.out.println(result2); System.out.println(result3);
+				if(result1* result2* result3>0) {
+					request.setAttribute("message", "상품을 수정했습니다.");
+					request.setAttribute("path", "./storeList");
+					check = true;
+					path = "../WEB-INF/views/common/result.jsp";
+				}else {
+					request.setAttribute("message", "상품 수정 실패.");
+					request.setAttribute("path", "./storeList");
+					check = true;
+					path = "../WEB-INF/views/common/result.jsp";
+				}
+		}else {
+			store_num = Integer.parseInt(request.getParameter("store_num"));
+			try {
+				con = DBConnector.getConnect();
+				storeDTO = storeDAO.selectOne(store_num, con);
+				noTheaters = noTheaterDAO.selectListByNum(store_num, con);
+				theaters = theaterDAO.selectList(con);
+				uploadDTO = uploadDAO.selectOne(store_num);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(storeDTO != null && noTheaters !=null) {
+				request.setAttribute("storeDTO", storeDTO);
+				request.setAttribute("noTheaters", noTheaters);
+				request.setAttribute("theaters", theaters);
+				request.setAttribute("uploadDTO", uploadDTO);
+				check=true;
+				path="../WEB-INF/views/store/storeUpdate.jsp";
+			}else {
+				request.setAttribute("message", "상품업데이트 실패.");
+				request.setAttribute("path", "./storeList");
+				check = true;
+				path = "../WEB-INF/views/common/result.jsp";
+			}
+		}
+		
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		
+		return actionForward;
 	}
 
 	@Override
 	public ActionForward delete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionForward actionForward = new ActionForward();
+		boolean check=true;
+		String path="../WEB-INF/views/common/result.jsp";
+		int store_num = Integer.parseInt(request.getParameter("num"));
+		int result =0;
+		Connection con=null;
+		
+		try {
+			con = DBConnector.getConnect();
+			result= storeDAO.delete(store_num, con);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(result>0) {
+			request.setAttribute("message", "상품을 삭제했습니다.");
+			request.setAttribute("path", "./storeList");	
+		}else {
+			request.setAttribute("message", "상품삭제 실패.");
+			request.setAttribute("path", "./storeList");
+		}
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		
+		return actionForward;
 	}
 
 }

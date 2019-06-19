@@ -10,6 +10,21 @@ import com.megabox.util.DBConnector;
 
 
 public class StoreUploadDAO {
+	public int update(StoreUploadDTO img, Connection conn) throws Exception {
+		int result=0;
+		
+		String sql="update storeUpload set oname=?, fname=? where num=?";
+		PreparedStatement pst = conn.prepareStatement(sql);
+		pst.setString(1, img.getOname());
+		pst.setString(2, img.getFname());
+		pst.setInt(3, img.getNum());
+		result = pst.executeUpdate();
+		
+		pst.close();
+		
+		return result;
+	}
+	
 	public int delete(int pnum, Connection conn) throws Exception {
 		int result=0;
 		
