@@ -73,7 +73,7 @@
 								<input type="password" placeholder="비밀번호" id="member_pw" name="pw">
 							</div>
 							<div class="join_content">
-								<button>LOGIN</button>
+								<button id="logbtn">LOGIN</button>
 								<input type="checkbox" id="remember" name="remember">ID기억
 							</div>
 								
@@ -90,5 +90,12 @@
 		</div>
 	</div>
 	<!-- dropdown login 부분 -->
+<script type="text/javascript">
+	$(function() {
+		$("#logbtn").click(function() {
+			location.reload();
+		});
+	});
+</script>
 </body>
 </html>
