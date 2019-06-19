@@ -88,8 +88,8 @@
 		$(".theater").click(function() {
 			th = $(this).text().trim();
 			getDateList();
-			$("#date-ul").css("visibility","visible");
-			
+			/* $("#date-ul").css("visibility","visible");
+			 */
 			
 		});
 		
@@ -100,6 +100,7 @@
 			},function(data){
 				data = data.trim();
 				$("#date-list").html(data);
+				$("#date-ul").css("visibility","visible");
 			});
 		};
 		
@@ -113,6 +114,7 @@
 				view_date:date
 			},function(data){
 				data = data.trim();
+				console.log(data);
 				$("#show_time-list").html(data);
 				$("#show_time-ul").css("visibility","visible");
 			});
@@ -133,7 +135,15 @@
 			$("#view_date").val(date);
 			$("#auditorium").val(aud);
 			$("#show_time").val(sh);
+			console.log(mCode); 
+			console.log(m);
+			console.log(th);
+			console.log(date);
+			console.log(aud);
+			console.log(sh);
 			$("#bookInfo").submit();
+			
+			
 		});
 	
 	});

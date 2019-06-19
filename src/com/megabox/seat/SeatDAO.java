@@ -13,7 +13,7 @@ public class SeatDAO {
 	
 	public ArrayList<Integer> selectStateList(BookDTO bookDTO, Connection con) throws Exception{
 		ArrayList<Integer> seatStatus = new ArrayList<Integer>();
-		String sql="select state from seat where theater=? and auditorium=? and view_date=? and show_time=?";
+		String sql="select state from seat where theater=? and auditorium=? and view_date=? and show_time=? order by seat_num asc";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, bookDTO.getTheater());
 		st.setString(2, bookDTO.getAuditorium());

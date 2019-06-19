@@ -30,7 +30,9 @@ public class SeatService implements Action {
 		String command = request.getMethod();
 		ArrayList<String> seatInit= seatDAO.initSeat(); 
 		ArrayList<Integer> seatStatus = null;
-			
+		
+		//
+		System.out.println("aaa:"+seatInit);
 		request.setAttribute("seatInit", seatInit);
 		
 		BookDTO bookDTO = new BookDTO();
