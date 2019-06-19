@@ -169,14 +169,13 @@ h5{
 		});
 		// 삭제 버튼
 		$(".del").click(function() {
-			var num = $('#listNum').val();
+			var num = $(this).attr("id");
 			var check=confirm("삭제 하시겠습니까?");
 			if(check) {
 				$.get("./communityDelete?num="+num, function(data) {
 					data = data.trim();
 					if(data=="1") {
 						alert("삭제 되었습니다.");
-						alert(num);
 						location.reload();
 					} else {
 						alert("Fail");
@@ -222,7 +221,7 @@ h5{
 				<c:forEach items="${communityList}" var="dto">
 					<div class="media" >
 						<div class="media-body" >
-							<input type="hidden" id="listNum" value="${dto.num }"> 
+							<input type="hidden" id="${dto.num }" value="${dto.num }"> 
 							<div class="hidden">${dto.num }</div>
 							<div class="media-heading">
 							<h5 id="writer" >${dto.writer } </h5>

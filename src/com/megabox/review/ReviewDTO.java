@@ -8,8 +8,7 @@ public class ReviewDTO {
 	private String id;
 	private String contents;
 	private Date reg_date;
-	private int recommend;		// 추천수?
-	private int star_rating;
+
 	public int getNum() {
 		return num;
 	}
@@ -40,16 +39,5 @@ public class ReviewDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public int getRecommend() {
-		return recommend;
-	}
-	public void setRecommend(int recommend) {
-		this.recommend = recommend;
-	}
-	public int getStar_rating() {
-		return star_rating;
-	}
-	public void setStar_rating(int star_rating) {
-		this.star_rating = star_rating;
-	}
+
 }

@@ -427,6 +427,7 @@
   			<div id="flip_wrapper"> 
   				<div id= "flip_box">
   					<dl id= "flip_dl">
+  					<!-------------------- 박스오피스 ------------------->
   						<dt id = "flip_btn1">
   							<a href = "#boxOffice" id="box_office">박스 오피스</a>
   						</dt>
@@ -457,6 +458,7 @@
   													<button type = "button"> 보고싶어 </button>
   												</div>
   												<span class="bg"></span>
+  												
   												<a href ="#" class="blank" title="상세보기"> <span class="blind"> 상세보기 </span></a>
   											</div>  <!-- lower end -->
   										
@@ -643,11 +645,16 @@
 							<div class="review_id">							
 							</div>		
 											
-							<form class="review_form">
+											
+											
+											
+											
+							<form class="review_form" action ="./reviewWrite">
 								<div class="review_input">
 									<div class="review_rate">
 									</div>
-									<div class="review_area">
+									<div class="review_area" id="code_hidden${modal }">
+										
 										<textarea class="write_textarea"> </textarea>					
 									</div>
 									<div class="review_btn">
@@ -656,6 +663,9 @@
 									</div>
 								</div>
 							</form>
+		
+							
+							
 						</div>
 					</div>			<!------------ modal_review_wrap end----------->
 					<div class="review_list_wrap">
@@ -665,28 +675,30 @@
 							<li><a>평점순</a></li>
 						</ul>
 						<div class="review_list">
-							<c:forEach begin="1" end="5">
+						
+						
+							<c:forEach items="${reviewList }" var="dto">
 							<div class="review_row">
 								<div class="review_cell">
 									<div class="cell_content">
 										<div class="cell_member_id">
-											<strong>id</strong>
+											<strong>${member.id }</strong>
 										</div>
 										<div class="cell_data">
-											<span>2019</span>
+											<span></span>
 											<div class="cell_star">
 											
 											</div>
 										</div>
 										<p>
-											<span>review content</span>
+											<span>${dto.contents }</span>
 										</p>
 									</div>
 								</div> 		<!------------ review_cell end ----------->	
 								<div class="review_cell">
 									<div class="cell_content">
 										<div class="cell_member_id">
-											<strong>id</strong>
+											<strong>${member.id }</strong>
 										</div>
 										<div class="cell_data">
 											<span>2019</span>
@@ -702,10 +714,30 @@
 														
 							</div>			<!----------- review_row end ------------>
 							</c:forEach>
+									<div id="pager_wrap">
+			<ul class="pager">
+				<c:if test="${pager.curBlock gt 1}">
+	    		<li class="previous"><a href="./communityList?curPage=${pager.startNum-1}&communityKind=${pager.search.communityKind}&search=${pager.search.search}">Previous</a></li>
+	    		</c:if>
+	    		<li>
+	    			<ul class="pagination">
+					   <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
+					    	<li><a href="./communityList?curPage=${i}&communityKind=${pager.search.communityKind}&search=${pager.search.search}">${i}</a></li>
+					    </c:forEach>
+					   
+					</ul>
+	    		
+	    		</li>
+	    		<c:if test="${pager.curBlock lt pager.totalBlock}">
+	    		<li class="next"><a href="./communityList?curPage=${pager.lastNum+1}&communityKind=${pager.search.communityKind}&search=${pager.search.search}">Next</a></li>
+	    		</c:if>
+	  		</ul>
+		</div>
+						
 						
 						</div>
 					</div>
-					
+
 					
 				</div>
 				</div>
@@ -742,6 +774,8 @@
 			$('#tab1').addClass("action_hidden");
 			$("#tab2").removeClass("action_hidden");
 		});
+
+		
 		
 		/* =========== 박스오피스 API ========= */
 		
@@ -761,6 +795,7 @@
 					var plot = r.plot;
 					var movie_code = r.DOCID;
 					
+					
 						r.director.forEach(function(dir) {
 							var director = dir.directorNm;
 						
@@ -775,6 +810,8 @@
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
 					$('#modal_code'+num).append(movie_code);
+					$('#code_hidden'+num).append('<input type="hidden" id="' + movie_code + '" name="movie_code">');
+					
 					
 					num=num+1;
 					

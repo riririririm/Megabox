@@ -1,24 +1,24 @@
 package com.megabox.page;
 
-public class SearchMakePage_2 {
+public class SearchMakePage_review {
 	private int perPage;
 	private int curPage;
 	private Search search;
 	
-	
-	public SearchMakePage_2(int curPage, String communityKind, String search) {
-		this(curPage, 5, communityKind, search);
+	public SearchMakePage_review(int curPage, String reviewKind, String search) {
+		this(curPage, 5, reviewKind, search);
+		
 	}
 	
-	public SearchMakePage_2(int curPage, int perPage, String communityKind, String search) {
+	public SearchMakePage_review(int curPage, int perPage, String reviewKind, String search ) {
 		this.perPage=perPage;
 		this.curPage=curPage;
 		this.search = new Search();
-		this.search.setCommunityKind(communityKind);
+		this.search.setReviewKind(reviewKind);
 		this.search.setSearch(search);
 	}
 	
-	//row
+	
 	public SearchRow makeRow() {
 		int startRow = (curPage-1)*perPage+1;
 		int lastRow = curPage*perPage;
@@ -69,5 +69,22 @@ public class SearchMakePage_2 {
 		return searchPager;
 	}
 
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
