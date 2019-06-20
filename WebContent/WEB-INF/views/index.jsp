@@ -581,10 +581,7 @@
     		</div>		<!-- section2_wrap end -->
     		
     	</div> 		<!-- section2 end -->
-    	<div id="main_banner">
-    		<h1>배너 넣을지 말지</h1>
-    	
-    	</div>
+
 
     </div>	<!-- container end -->
     
@@ -660,14 +657,10 @@
 										<textarea class="write_textarea" id="contents"> </textarea>					
 										
 									<div class="review_btn">
-										<button type="button" class="writeBtn btn btn-primary">등록</button>
+										<button type="button" id="writeCode${modal }" class="writeBtn btn btn-primary">등록</button>
 									
 									</div>
 								</div>
-							
-		
-							
-							
 						</div>
 					</div>			<!------------ modal_review_wrap end----------->
 					<div class="review_list_wrap">
@@ -680,15 +673,16 @@
 						<!--------------------- 리뷰 리스트   --------------------->
 						
 						<div class="review_list">
+		
+						<c:forEach items="${reviewList }" var="dto">
 						
-						
-							<c:forEach items="${reviewList }" var="dto">
 							<div class="review_row">
 								<div class="review_cell">
 									<div class="cell_content">
 										<input type="hidden" id="${dto.num }" value ="${dto.num }">
+										<input type="hidden" id="${dto.movie_code }">
 										<div class="cell_member_id">
-											<strong>${member.id }</strong>
+											<strong>${dto.id }</strong>
 										</div>
 										<div class="cell_data">
 											<span>${dto.reg_date }</span>
@@ -704,7 +698,7 @@
 								<div class="review_cell">
 									<div class="cell_content">
 										<div class="cell_member_id">
-											<strong>${member.id }</strong>
+											<strong>${dto.id }</strong>
 										</div>
 										<div class="cell_data">
 											<span>${dto.reg_date }</span>
@@ -723,19 +717,19 @@
 									<div id="pager_wrap">
 			<ul class="pager">
 				<c:if test="${pager.curBlock gt 1}">
-	    		<li class="previous"><a href="./communityList?curPage=${pager.startNum-1}&communityKind=${pager.search.communityKind}&search=${pager.search.search}">Previous</a></li>
+	    		<li class="previous"><a href="./reviewList?curPage=${pager.startNum-1}&reviewKind=${pager.search.communityKind}&search=${pager.search.search}">Previous</a></li>
 	    		</c:if>
 	    		<li>
 	    			<ul class="pagination">
 					   <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
-					    	<li><a href="./communityList?curPage=${i}&communityKind=${pager.search.communityKind}&search=${pager.search.search}">${i}</a></li>
+					    	<li><a href="./reviewList?curPage=${i}&reviewKind=${pager.search.communityKind}&search=${pager.search.search}">${i}</a></li>
 					    </c:forEach>
 					   
 					</ul>
 	    		
 	    		</li>
 	    		<c:if test="${pager.curBlock lt pager.totalBlock}">
-	    		<li class="next"><a href="./communityList?curPage=${pager.lastNum+1}&communityKind=${pager.search.communityKind}&search=${pager.search.search}">Next</a></li>
+	    		<li class="next"><a href="./reviewList?curPage=${pager.lastNum+1}&reviewKind=${pager.search.communityKind}&search=${pager.search.search}">Next</a></li>
 	    		</c:if>
 	  		</ul>
 		</div>
@@ -785,7 +779,7 @@
 		$('.writeBtn').click (function() {
 			var id = "test";
 			var contents = $("#contents").val();
-			var movie_code = $(".movie_code").attr("title");
+			var movie_code = $(this).val();
 			
 			$.get("../Megabox/review/reviewWrite" ,{
 				movie_code:movie_code,		
@@ -805,13 +799,10 @@
 				}
 				location.reload();
 			});
-			
-			
-	
 		});
 		
-		
-		
+		/*================= List ajax ================= */
+		$(".film_btn").click()		
 		
 		
 		
@@ -854,6 +845,7 @@
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
 					$('#modal_code'+num).append(movie_code);
+					$('#writeCode'+num).val(movie_code);
 					$('#code_hidden'+num).append('<input type="hidden" title="' + movie_code + '" name="movie_code" class="movie_code" >');
 					
 					
