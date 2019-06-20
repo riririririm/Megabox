@@ -38,9 +38,9 @@ public class ReviewController extends HttpServlet {
 		
 		if(command.equals("/reviewWrite")) {
 			actionForward=reviewService.insert(request, response);
-		} else if(command.equals("/reviewList")) {
+		} else if(command.equals("/APIModal")) {
 			actionForward=reviewService.selectList(request, response);
-		}
+		} 
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);

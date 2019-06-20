@@ -69,7 +69,7 @@ public class ReviewService implements Action{
 		request.setAttribute("pager", searchPager);
 		
 		actionForward.setCheck(true);
-		actionForward.setPath("../WEB-INF/views/review/reviewList.jsp");
+		actionForward.setPath("../WEB-INF/views/review/APIModal.jsp");
 		
 		
 		return actionForward;

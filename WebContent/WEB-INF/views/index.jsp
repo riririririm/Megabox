@@ -380,6 +380,134 @@
 <!-- 헤더 -->
 <jsp:include page="./temp/header.jsp"/>
 	
+	
+<script type="text/javascript">
+	$(function() {
+		$('#box_office').click(function() {
+			$('#tab1').show();
+			$('#tab2').hide();
+			$("#box_office").css("background", "#d9d9d9");
+			$('#release_movie').css("background", "white");
+			$('#tab2').addClass("action_hidden");
+			$("#tab1").removeClass("action_hidden");
+		});
+		$('#release_movie').click(function() {
+			$('#tab1').hide();
+			$('#tab2').show();
+			$("#box_office").css("background", "white");
+			$('#release_movie').css("background", "#d9d9d9");
+			$('#tab1').addClass("action_hidden");
+			$("#tab2").removeClass("action_hidden");
+		});
+
+		
+		$('.film_btn').click(function() {
+			
+			$.ajax({url:"../Megabox/review/APIModal", success : function(result) {
+				alert(result);
+				$("myModalCont").html(result);
+				$("#myModal").modal("show");
+				
+			}});
+	
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		/*=================== 리뷰 등록 ======================*/
+		$('.writeBtn').click (function() {
+			var id = "test";
+			var contents = $("#contents").val();
+			var movie_code = $(this).val();
+			
+			$.get("../Megabox/review/reviewWrite" ,{
+				movie_code:movie_code,		
+				id:id,
+				contents:contents
+			}, function(data) {
+				data=data.trim();
+				if(data=="1"){
+					alert("등록되었습니다.");
+					alert(movie_code);
+				} else {
+					alert("fail");
+					alert ("data :" + data);
+					alert ("id :" + id);
+					alert ("movie_code :" + movie_code);
+					alert ("contents :" + contents);
+				}
+				location.reload();
+			});
+		});
+		
+		/*================= List ajax ================= */
+
+		
+
+		/* =========== 박스오피스 API ========= */
+		
+		$.getJSON("http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?collection=kmdb_new&sort=repRlsDate&1&releaseDte=20190626&ServiceKey=19TKUUT86TYFU6699SQ4", function(data) {
+			var num=1;
+			data.Data.forEach(function(d) {
+				d.Result.forEach(function(r) {
+					var n = r.posters.indexOf("jpg")+3;
+					var url = r.posters.substring(0,n);
+		
+					var img = '<img src="'+url+'" class="api_img1">';
+					var title = r.title;
+					var modal_img = '<img src="'+url+'" class="modal_img1">';
+					var modal_title = r.title;
+					var modal_release = r.repRlsDate;
+					var movie_type = r.genre;
+					var plot = r.plot;
+					var movie_code = r.DOCID;
+					
+					
+						r.director.forEach(function(dir) {
+							var director = dir.directorNm;
+						
+					$('#box_poster'+num).append(img);	// 포스터 이미지
+					$('#box_title'+num).append(title);	// 메인 타이틀
+					
+
+					
+					num=num+1;
+					
+					});	//director
+	
+				});		// Result
+			});		// Data
+			
+		/*	
+			data.Data.forEach(function(d) {
+				d.Result.forEach(function(r) {
+					r.actor.forEach(function(act) {
+						num=1;
+						var actors = act.actorNm;
+						
+						$('#actors'+num).append(actors);
+						num=num+1;
+					});
+				});
+			});
+			
+			*/
+			
+		});		//Json
+		
+	});		// function
+	
+
+
+
+</script>
+	
 <!-- 컨테이너 -->
 		<!---------- Contents Start ---------->
 	<div class="container">
@@ -471,7 +599,7 @@
 												</h3>
 								<!---------------- 버튼  ------------------>
 												<div class="film_btn_wrap">		
-													<button class="film_btn btn btn-primary" id="listCode${i}" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
+													<button class="film_btn btn btn-primary" id="listCode${i}" title="film_detail" data-toggle="modal" data-target="#myModal">상세정보</button>    
 													<button class="film_btn btn btn-primary" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
 												</div>
 											</div>
@@ -521,7 +649,7 @@
 												</h3>
 												<div class="film_btn_wrap">
 													
-													<button class="film_btn btn btn-primary" title="film_detail" data-toggle="modal" data-target="#myModal${i}">상세정보</button>     
+													<button class="film_btn btn btn-primary" title="film_detail" data-toggle="modal" data-target="#myModal">상세정보</button>     
 													<button class= "film_btn btn btn-primary" title="film_book">예매하기</button>
 												</div>
 				
@@ -586,115 +714,17 @@
 
     </div>	<!-- container end -->
     
-	<!------------------------ 상세정보 Modal ------------------------------->
-	<c:forEach begin="1" end="4" var="modal">
-	
-	<div class="modal fade" id="myModal${modal }" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal_detail">
-					<div class="popupbox1">
-						<div class="left_wrap" id="modal_img${modal }">
-							<!---------------- 영화 포스터 ------------------->
-						</div>
-						<div class="right_wrap">
-							<div class="modal_title_wrap">
-								<h2>
-									<span id="modal_title${modal }"> </span>
-								</h2>
-							</div>
-							<div class="modal_text_wrap">
-								<div class="reservation_wrap">
-									<p class="left_p">
-										<span class="smallStar">
-											<span class="fill">	명 참여</span>							
-										</span>
-									<strong class="averageScore"></strong>
-									<span class="divider"></span>
-									</p>
-									<p class="right_p"> 예매율
-										<strong>1</strong> 위 
-										<span> %</span>
-									</p>
-									<button type="button" class="modalBtn_book btn btn-primary">예매하기</button>
-								</div>
-									<input type="hidden" id="modal_code${modal }">
-								<ul class="modal_info_wrap">
-									<li id="modal_release${modal }"><strong>개봉일 : </strong></li>
-									<li id="director${modal }"><strong>감독 : </strong></li>
-									<li id="actors${modal }"><strong>출연진 : </strong></li>
-									<li id="movie_type${modal}"><strong>장르 : </strong></li>
-								</ul>
-							</div>          <!------------- modal_text_wrap end -------------->
-							<div class="modal_rating"> 
-							</div>		
-						</div> 				<!--------------- right_wrap end --------------->
-					</div> 						<!------------- popupbox1 end --------------->
-					<div class="popupbox2">
-						<h3>줄거리</h3>
-						<p id="plot${modal}"></p>
-						<div id="summary">
-						</div>
-					<div class="popupbox3">
-						<h3>한줄평</h3><span>(0)</span>
-					<div class="modal_review_wrap">
-						<div class="review_write">
-							<div class="review_id">							
-							</div>		
-											
-											
-											
-											
-							<!-------------- 리뷰 등록 폼 ------------->	
-							
-								<div class="review_input">
-									<div class="review_rate">
-									</div>
-									
-									<div class="review_area" id="code_hidden${modal }" title="movie_code">
-									
-									</div>
-										<textarea class="write_textarea" id="contents"> </textarea>					
-										
-									<div class="review_btn">
-										<button type="button" id="writeCode${modal }" class="writeBtn btn btn-primary">등록</button>
-									
-									</div>
-								</div>
-						</div>
-					</div>			<!------------ modal_review_wrap end----------->
-					<div class="review_list_wrap" >
-						<ul>
-							<li><a>최신순</a></li>
-							<li><a>추천순</a></li>
-							<li><a>평점순</a></li>
-						</ul>
-						
-						<!--------------------- 리뷰 리스트   --------------------->
-						
-						<div class="review_list" id="listCode${modal }">
-					
-						
-
-						
-						
-						</div>		<!-------------- reviewList end ------------->
-						
-					
-					</div>
-
-					
-				</div>
-				</div>
-			</div>
-			<button type="button" class="close" class= "modal_close" data-dismiss="modal">&times;</button>
-
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="myModalCont">
+		
+		
 		</div>
+	
+	</div>
 
-	</div>
-	</div>
-	</c:forEach>
+
+</div>
 	
 
 	
@@ -702,134 +732,7 @@
 <jsp:include page="./temp/footer.jsp"/>
 
 
-<script type="text/javascript">
-	$(function() {
-		$('#box_office').click(function() {
-			$('#tab1').show();
-			$('#tab2').hide();
-			$("#box_office").css("background", "#d9d9d9");
-			$('#release_movie').css("background", "white");
-			$('#tab2').addClass("action_hidden");
-			$("#tab1").removeClass("action_hidden");
-		});
-		$('#release_movie').click(function() {
-			$('#tab1').hide();
-			$('#tab2').show();
-			$("#box_office").css("background", "white");
-			$('#release_movie').css("background", "#d9d9d9");
-			$('#tab1').addClass("action_hidden");
-			$("#tab2").removeClass("action_hidden");
-		});
 
-		/*=================== 리뷰 등록 ======================*/
-		$('.writeBtn').click (function() {
-			var id = "test";
-			var contents = $("#contents").val();
-			var movie_code = $(this).val();
-			
-			$.get("../Megabox/review/reviewWrite" ,{
-				movie_code:movie_code,		
-				id:id,
-				contents:contents
-			}, function(data) {
-				data=data.trim();
-				if(data=="1"){
-					alert("등록되었습니다.");
-					alert(movie_code);
-				} else {
-					alert("fail");
-					alert ("data :" + data);
-					alert ("id :" + id);
-					alert ("movie_code :" + movie_code);
-					alert ("contents :" + contents);
-				}
-				location.reload();
-			});
-		});
-		
-		/*================= List ajax ================= */
-
-		$(".film_btn").click(function() {
-			
-			$.ajax({url:"../Megabox/review/reviewList", success : function(result) {
-
-				
-				$(".review_list").append(result);
-				
-			}});
-		});
-		
-
-		/* =========== 박스오피스 API ========= */
-		
-		$.getJSON("http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?collection=kmdb_new&sort=repRlsDate&1&releaseDte=20190626&ServiceKey=19TKUUT86TYFU6699SQ4", function(data) {
-			var num=1;
-			data.Data.forEach(function(d) {
-				d.Result.forEach(function(r) {
-					var n = r.posters.indexOf("jpg")+3;
-					var url = r.posters.substring(0,n);
-		
-					var img = '<img src="'+url+'" class="api_img1">';
-					var title = r.title;
-					var modal_img = '<img src="'+url+'" class="modal_img1">';
-					var modal_title = r.title;
-					var modal_release = r.repRlsDate;
-					var movie_type = r.genre;
-					var plot = r.plot;
-					var movie_code = r.DOCID;
-					
-					
-						r.director.forEach(function(dir) {
-							var director = dir.directorNm;
-						
-					$('#box_poster'+num).append(img);	// 포스터 이미지
-					$('#box_title'+num).append(title);	// 메인 타이틀
-					
-					
-					$('#modal_img'+num).append(modal_img); 	// 모달 포스터 이미지
-					$('#modal_title'+num).append(title);	// 모달 영화타이틀
-					$('#modal_release' +num).append(modal_release);	// 모달 개봉일
-					$('#director'+num).append(director);	// 모달 감독
-					$('#movie_type'+num).append(movie_type); // 모달 장르
-					$('#plot'+num).append(plot);
-					$('#modal_code'+num).append(movie_code);	
-					$('#writeCode'+num).val(movie_code);	// this.val() 를 위한 movie_code (review DB에 insert하기 위해)
-					$('#listCode'+num).val(movie_code);  //review DB를 불러오기 위해
-					
-					
-					$('#code_hidden'+num).append('<input type="hidden" title="' + movie_code + '" name="movie_code" class="movie_code" >');
-					
-					
-					num=num+1;
-					
-					});	//director
-	
-				});		// Result
-			});		// Data
-			
-		/*	
-			data.Data.forEach(function(d) {
-				d.Result.forEach(function(r) {
-					r.actor.forEach(function(act) {
-						num=1;
-						var actors = act.actorNm;
-						
-						$('#actors'+num).append(actors);
-						num=num+1;
-					});
-				});
-			});
-			
-			*/
-			
-		});		//Json
-		
-	});		// function
-	
-
-
-
-</script>
 
 </body>
 </html>
