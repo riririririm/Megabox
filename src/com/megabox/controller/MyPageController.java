@@ -49,9 +49,10 @@ public class MyPageController extends HttpServlet {
 		//0620jsh
 		else if(command.equals("/bookDelete")) {
 			actionForward = myPageService.bookDelete(request, response);
-		}else if(command.equals("/bookCancel")) {
-			actionForward = myPageService.bookCancel(request, response);
-		}
+		} /*
+			 * else if(command.equals("/bookCancel")) { actionForward =
+			 * myPageService.bookCancel(request, response); }
+			 */
 		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());

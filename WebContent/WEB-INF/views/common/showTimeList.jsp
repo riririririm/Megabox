@@ -4,5 +4,5 @@
 
 
 <c:forEach items="${show_times}" var="st">
-	<li>[${st.auditorium}]<span class="show_time" title="${st.auditorium }">${st.sar }</span></li>
+	<li class="show_time" title="${st.auditorium }" name="${st.sar }">[${st.auditorium}]${st.sar }</li>
 </c:forEach>

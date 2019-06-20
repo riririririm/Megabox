@@ -54,8 +54,8 @@
 		width: :100%;
 	}
 	.seat_btn{
-		padding_top:50px;
 		float:right;
+		padding:22px;
 	}
 	.emp{
 		width:212px;
@@ -80,16 +80,22 @@
 		$(".movie").click(function() {
 			m = $(this).text().trim();
 			mCode = $(this).attr("title").trim();
-			//alert(mCode);
+			$(".movie").css("font-weight","normal");
+			$(".theater").css("font-weight","normal");
+			$(".seat_btn").attr("src","../images/gotoSeat.png");
+			$(this).css("font-weight","bold");
 			$("#date-ul").css("visibility","hidden");
 			$("#show_time-ul").css("visibility","hidden");
 			
 		});
 		$(".theater").click(function() {
 			th = $(this).text().trim();
+			$(".theater").css("font-weight","normal");
+			$(this).css("font-weight","bold");
+			$(".seat_btn").attr("src","../images/gotoSeat.png");
 			getDateList();
 			$("#date-ul").css("visibility","visible");
-			
+			$("#show_time-ul").css("visibility","hidden");
 			
 		});
 		
@@ -107,6 +113,9 @@
 		
 		$("#date-list").on("click",".date",function() {
 			date = $(this).text().trim();
+			$(".date").css("font-weight","normal");
+			$(".seat_btn").attr("src","../images/gotoSeat.png");
+			$(this).css("font-weight","bold");
 			$.post("./movieShowTime",{
 				movie_title: m,
 				theater: th,
@@ -120,12 +129,15 @@
 		
 		$("#show_time-list").on("click",".show_time",function() {
 			aud=$(this).attr("title");
-			sh = $(this).text().trim();
-			//alert(aud); alert(sh);
+			sh = $(this).attr("name").trim();
+			$(".show_time").css("font-weight","normal");
+			$(this).css("font-weight","bold");
+			$(".seat_btn").attr("src","../images/seat_btn1.png");
+			$(".seat_btn").attr("id","seat");
 		});
 		
 		
-		$("#seat").click(function() {
+		$("#seatdiv").on("click","#seat",function() {
 			//form의 value값들
 			$("#movie_code").val(mCode);
 			$("#movie_title").val(m);
@@ -133,8 +145,9 @@
 			$("#view_date").val(date);
 			$("#auditorium").val(aud);
 			$("#show_time").val(sh);
+			
 			$("#bookInfo").submit();
-		});
+		});		
 	
 	});
 </script>
@@ -157,7 +170,7 @@
 								<!-- <li ><span class="movie">${dto}</span></li>   -->
 								<c:forEach items="${movie_codes}" var="m" varStatus="j">
 									<c:if test="${i.index eq j.index }">
-										<li ><span class="movie" title="${m}">${dto}</span></li>
+										<li class="movie" title="${m}">${dto}</span></li>
 									</c:if>
 								</c:forEach>
 							</c:forEach>
@@ -224,7 +237,7 @@
 		<span class="emp"><img src="../images/step_seat.png"></span>
 		<span class="emp"><img src="../images/step_pay.png"></span>
 		</div>
-		<img class="seat_btn" src="../images/seat_btn1.png" id="seat">
+		<div id="seatdiv"><img class="seat_btn" src="../images/gotoSeat.png" id="seat2"></div>
 	</div>
 		<form action="./movieSeat" method="post" id="bookInfo">
 			<input type="hidden" class="form-group" id="movie_code" name="movie_code">
