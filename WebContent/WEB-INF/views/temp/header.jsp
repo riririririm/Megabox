@@ -175,7 +175,7 @@
 							</c:otherwise>
 						</c:choose>
 						<li><a href="${pageContext.request.contextPath}/store/storeList">스토어</a></li>
-						<li><a href="#tour">고객센터</a></li>
+						<li><a href="${pageContext.request.contextPath}/notice/noticeList">고객센터</a></li>
 						<li><a href="${pageContext.request.contextPath}/community/communityList">커뮤니티</a></li>
 						<li><jsp:include page="/WEB-INF/views/temp/header_drop_down.jsp"/></li>
 					</ul>
