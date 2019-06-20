@@ -86,7 +86,7 @@
 			<ul class="pager">
 				<c:if test="${pager.curBlock gt 1}">
 					<li class="previous"><a
-						href="./${board}List?curPage=${pager.startNum-1}&kind=${pager.search.kind}&search=${pager.search.search}">Previous</a></li>
+						href="./${board}List?curPage=${pager.startNum-1}">Previous</a></li>
 				</c:if>
 
 				<li>
@@ -94,19 +94,18 @@
 						<c:forEach begin="${pager.startNum}" end="${pager.lastNum}"
 							var="i" step="1">
 							<li><a
-								href="./${board}List?curPage=${i}&kind=${pager.search.kind}&search=${pager.search.search}">${i}</a></li>
+								href="./${board}List?curPage=${i}">${i}</a></li>
 						</c:forEach>
 					</ul>
 				</li>
 
 				<c:if test="${pager.curBlock lt pager.totalBlock}">
 					<li class="next"><a
-						href="./${board}List?curPage=${pager.lastNum+1}&kind=${pager.search.kind}&search=${pager.search.search}">Next</a></li>
+						href="./${board}List?curPage=${pager.lastNum+1}">Next</a></li>
 				</c:if>
 			</ul>
 
 
-			</table>
 
 			<%-- <% if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
            <input type="button" value="Write" style="float:right">

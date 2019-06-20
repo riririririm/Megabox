@@ -68,12 +68,11 @@ public class NoticeDAO implements BoardDAO{
 		/* String sql = "select num,title,reg_date from notice"; */
 		String sql="select * from "
 				+ "(select rownum R, N.* from "
-				+ "(select num, title, reg_date from notice where "+searchRow.getSearch().getKind()+ " like ? order by num desc)N) "
+				+ "(select num, title, reg_date from notice order by num desc)N) "
 				+ "where R between ? and ?";
 		PreparedStatement st = conn.prepareStatement(sql);
-		st.setString(1, "%"+searchRow.getSearch().getSearch()+"%");
-		st.setInt(2, searchRow.getStartRow());
-		st.setInt(3,searchRow.getLastRow());
+		st.setInt(1, searchRow.getStartRow());
+		st.setInt(2,searchRow.getLastRow());
 		ResultSet rs = st.executeQuery();
 		
 		
