@@ -46,6 +46,15 @@
     <url-pattern>/movieAPI/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>review</servlet-name>
+  	<servlet-class>com.megabox.controller.ReviewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+ 	<servlet-name>review</servlet-name>
+ 	<url-pattern>/review/*</url-pattern>
+  </servlet-mapping>
+  
 
   
   

@@ -37,7 +37,7 @@ public class Search {
 	}
 	
 	public String getReviewKind() {
-		return communityKind;
+		return reviewKind;
 	}
 	
 	public void setReviewKind(String reviewKind) {

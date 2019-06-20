@@ -648,21 +648,23 @@
 											
 											
 											
-											
-							<form class="review_form" action ="./reviewWrite">
+							<!-------------- 리뷰 등록 폼 ------------->	
+							
 								<div class="review_input">
 									<div class="review_rate">
 									</div>
-									<div class="review_area" id="code_hidden${modal }">
-										
-										<textarea class="write_textarea"> </textarea>					
+									
+									<div class="review_area" id="code_hidden${modal }" title="movie_code">
+									
 									</div>
+										<textarea class="write_textarea" id="contents"> </textarea>					
+										
 									<div class="review_btn">
-										<button type="submit" class="writeBtn btn btn-primary">등록</button>
+										<button type="button" class="writeBtn btn btn-primary">등록</button>
 									
 									</div>
 								</div>
-							</form>
+							
 		
 							
 							
@@ -674,6 +676,9 @@
 							<li><a>추천순</a></li>
 							<li><a>평점순</a></li>
 						</ul>
+						
+						<!--------------------- 리뷰 리스트   --------------------->
+						
 						<div class="review_list">
 						
 						
@@ -681,11 +686,12 @@
 							<div class="review_row">
 								<div class="review_cell">
 									<div class="cell_content">
+										<input type="hidden" id="${dto.num }" value ="${dto.num }">
 										<div class="cell_member_id">
 											<strong>${member.id }</strong>
 										</div>
 										<div class="cell_data">
-											<span></span>
+											<span>${dto.reg_date }</span>
 											<div class="cell_star">
 											
 											</div>
@@ -701,7 +707,7 @@
 											<strong>${member.id }</strong>
 										</div>
 										<div class="cell_data">
-											<span>2019</span>
+											<span>${dto.reg_date }</span>
 											<div class="cell_star">
 											
 											</div>
@@ -775,6 +781,44 @@
 			$("#tab2").removeClass("action_hidden");
 		});
 
+		/*=================== 리뷰 등록 ======================*/
+		$('.writeBtn').click (function() {
+			var id = "test";
+			var contents = $("#contents").val();
+			var movie_code = $(".movie_code").attr("title");
+			
+			$.get("../Megabox/review/reviewWrite" ,{
+				movie_code:movie_code,		
+				id:id,
+				contents:contents
+			}, function(data) {
+				data=data.trim();
+				if(data=="1"){
+					alert("등록되었습니다.");
+					alert(movie_code);
+				} else {
+					alert("fail");
+					alert ("data :" + data);
+					alert ("id :" + id);
+					alert ("movie_code :" + movie_code);
+					alert ("contents :" + contents);
+				}
+				location.reload();
+			});
+			
+			
+	
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		/* =========== 박스오피스 API ========= */
@@ -810,7 +854,7 @@
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
 					$('#modal_code'+num).append(movie_code);
-					$('#code_hidden'+num).append('<input type="hidden" id="' + movie_code + '" name="movie_code">');
+					$('#code_hidden'+num).append('<input type="hidden" title="' + movie_code + '" name="movie_code" class="movie_code" >');
 					
 					
 					num=num+1;

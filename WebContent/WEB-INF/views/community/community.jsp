@@ -98,15 +98,14 @@ h5{
 		$(".write_btn").click(function() {
 			var writer="${member.id}";
 			var contents=$("#contents").val();
-			var num = $("#listNum").val();
 			$.get("./communityWrite",{
 				writer:writer,
-				num:num,
 				contents:contents
 			}, function(data) {
 				data = data.trim();
 				if(data=="1"){
 					alert("등록 되었습니다.");
+	
 				} else if(data.contents==null && writer!=""){
 					alert("내용을 입력해주세요.");
 				} else if(writer=="") {

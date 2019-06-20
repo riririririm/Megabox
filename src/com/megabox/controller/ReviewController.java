@@ -34,6 +34,7 @@ public class ReviewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();
 		ActionForward actionForward = null;
+		System.out.println(command);
 		
 		if(command.equals("/reviewWrite")) {
 			actionForward=reviewService.insert(request, response);
