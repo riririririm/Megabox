@@ -61,6 +61,7 @@ public class NoticeService implements Action{
 		try {
 			con = DBConnector.getConnect();
 			ar = noticeDAO.selectList(searchRow, con);
+			System.out.println(ar.size());
 			//2. page
 			int totalCount= noticeDAO.getTotalCount(searchRow, con);
 			SearchPager searchPager = s.makePage(totalCount);

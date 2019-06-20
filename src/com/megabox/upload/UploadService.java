@@ -84,7 +84,7 @@ public class UploadService implements Action{
 		int result=0;
 		
 		try {
-			conn=DBConnector.getConnection();
+			conn=DBConnector.getConnect();
 			int pnum = Integer.parseInt(request.getParameter("pnum"));
 			result=uploadDAO.delete(pnum, conn);
 		} catch (Exception e) {

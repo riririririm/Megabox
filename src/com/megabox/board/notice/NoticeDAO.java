@@ -18,7 +18,7 @@ public class NoticeDAO implements BoardDAO{
 	@Override
 	public int getNum() throws Exception {
 		int result=0;
-		Connection con = DBConnector.getConnection();
+		Connection con = DBConnector.getConnect();
 		String sql ="select notice_seq.nextval from dual";
 		PreparedStatement st =con.prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
