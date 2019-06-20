@@ -11,9 +11,9 @@ import com.megabox.board.BoardDTO;
 import com.megabox.page.SearchRow;
 import com.megabox.util.DBConnector;
 
-public class QnaDAO implements BoardDAO {
+public class QnaDAO {
 
-	@Override
+	
 	public int getNum() throws Exception {
 		int result=0;
 		Connection con = DBConnector.getConnection();
@@ -26,7 +26,7 @@ public class QnaDAO implements BoardDAO {
 		return result;
 	}
 
-	@Override
+	
 	public int getTotalCount(SearchRow searchRow, Connection conn) throws Exception {
 		int result=0;
 		String sql="select count(num) from qna where "+searchRow.getSearch().getKind()+" like ?";
@@ -40,8 +40,8 @@ public class QnaDAO implements BoardDAO {
 		return result;
 	}
 
-	@Override
-	public BoardDTO selectOne(int num, Connection conn) throws Exception {
+	
+	public QnaDTO selectOne(int num, Connection conn) throws Exception {
 		QnaDTO qnaDTO = null;
 		String sql = "select * from qna where num=?";
 		PreparedStatement st = conn.prepareStatement(sql);
@@ -65,9 +65,9 @@ public class QnaDAO implements BoardDAO {
 		
 	}
 
-	@Override
-	public List<BoardDTO> selectList(SearchRow searchRow, Connection conn) throws Exception {
-		ArrayList<BoardDTO> ar = new ArrayList<BoardDTO>();
+	
+	public List<QnaDTO> selectList(SearchRow searchRow, Connection conn) throws Exception {
+		ArrayList<QnaDTO> ar = new ArrayList<QnaDTO>();
 		String sql ="select * from "
 				+ "(select rownum R, Q.* from "
 				+ "(select * from qna where "+searchRow.getSearch().getKind()+" like ?) Q) "
@@ -97,31 +97,36 @@ public class QnaDAO implements BoardDAO {
 		return ar;
 	}
 
-	@Override
-	public int insert(BoardDTO boardDTO, Connection conn) throws Exception {
-		QnaDTO qnaDTO = new QnaDTO();
+	
+	public int insert(QnaDTO qnaDTO, Connection conn) throws Exception {
 		int result=0;
-		String sql = "insert into qna values(?,?,?,?,sysdate,?,?,?)";
+		String sql = "insert into qna values(qna_seq.nextval,?,?,?,sysdate,?,0,0)";
 		PreparedStatement st = conn.prepareStatement(sql);
-		st.setInt(1, boardDTO.getNum());
-		st.setString(2, boardDTO.getWriter());
-		st.setString(3, boardDTO.getTitle());
-		st.setString(4, boardDTO.getContents());
-		st.setString(5, qnaDTO.getPost_pw());
-		st.setString(6, qnaDTO.getState());
-		st.setString(7, qnaDTO.getAdmin_answer());
+		st.setString(1, qnaDTO.getWriter());
+		st.setString(2, qnaDTO.getTitle());
+		st.setString(3, qnaDTO.getContents());
+		st.setString(4, qnaDTO.getPost_pw());
+	
 		result=st.executeUpdate();
 		st.close();
 		return result;
 	}
 
-	@Override
-	public int update(BoardDTO boardDTO, Connection conn) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public int update(QnaDTO qnaDTO, Connection conn) throws Exception {
+		int result=0;
+		String sql = "update qna set title=?, contents=? where num=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setString(1, qnaDTO.getTitle());
+		st.setString(2, qnaDTO.getContents());
+		st.setInt(3, qnaDTO.getNum());
+		result = st.executeUpdate();
+		st.close();
+		
+		return result;
 	}
 
-	@Override
+	
 	public int delete(int num, Connection conn) throws Exception {
 		int result=0;
 		String sql="delete qna where num=?";

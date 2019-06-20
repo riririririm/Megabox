@@ -37,7 +37,30 @@
 <body>
 <c:import url = "../temp/header.jsp"/> 
 
+<script type="text/javascript">
+$("#commentsList").on("click", ".del", function() { //list.jsp의 버튼에 이벤트 위임
+	var cnum = $(this).attr("id");
+	var check = confirm("delete??");
+	if(check){
+		$.get("../comments/commentsDelete?cnum="+cnum,function(data){//data = respnseText의 값
+			data = data.trim();
+			if(data=="1"){
+				alert("성공");
+				location.reload();
+			}else {
+				alert("실패");
+			}
+		});	
+	}
+});
 
+$("#commentsList").on("click",".update", function() {
+	var id = $(this).attr("title");
+	var con = $("#c"+id).html();
+	$("#updateContents").val(con);
+	$("#cnum").val(id);
+});
+</script>
 
 	
 
@@ -76,18 +99,40 @@
    		<td colspan="4" height="250">${dto.contents}</td>
    </tr>
  	
+ 	<tr>
+ 		<a href="<%=application.getContextPath()%>/qna/qnaList"><input type="button" value="목록" style="float:left"></a>
+  		<a href="<%=application.getContextPath()%>/qna/qnaDelete?num=${dto.num}"><input type="button" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" >
+ 		<%--  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" value="수정" style="float:right"></a> --%>
+  		<a href="<%=application.getContextPath()%>/qna/qnaUpdate?num=${dto.num}"><input type="button"value="수정" style="float:right"></a>
+ 		
+ 	</tr>
   </table>
  
  
-  <a href="<%=application.getContextPath()%>/qna/qnaList"><input type="button" value="목록" style="float:left"></a>
-  <a href="<%=application.getContextPath()%>/qna/qnaDelete?num=${dto.num}"><input type="button" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" >
- <%--  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" value="수정" style="float:right"></a> --%>
-   <a href="<%=application.getContextPath()%>/qna/qnaUpdate"><input type="button"value="수정" style="float:right"></a>
+ 
+
+</div>
 
 <div class="answer">
-
-<textarea name="name" rows="10" col="100"></textarea>
-</div>
+			<!-- 댓글입력폼 -->
+			<div class="row">
+				<div class="form-group">
+		      <label for="writer">Writer:</label>
+		      <input type="text" class="form-control" id="writer" name="writer">
+		    </div>
+		    <div class="form-group">
+			  <label for="contents">Contents:</label>
+			  <textarea class="form-control" rows="10" id="contents" name="contents"></textarea>
+			   <button class="btn btn-danger" id="btn">Write</button>
+			</div>
+			</div>
+			<!-- 댓글리스트 -->
+			<div class="row">
+				<table class="table table-bordered" id="commentsList">
+					
+				</table>
+				<button id="more">더 보기</button>
+			</div>
 </div>
 </div>
 <c:import url = "../temp/footer.jsp"/>

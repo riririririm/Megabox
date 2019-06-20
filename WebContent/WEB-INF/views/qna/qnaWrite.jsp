@@ -126,35 +126,35 @@ textarea{
 				<p>개인정보 수집에 동의하십니까?<br>
 				※ 원활한 서비스 이용을 위한 최소한의 개인정보이므로 동의하지 않을 경우 서비스를 이용하실 수 없습니다.</p> 
 				<div class="agreeradio">
-				<label><input type="radio" name="rdbox">동의함</label>
+				<label><input type="radio" name="rdbox" checked="checked">동의함</label>
 				<label><input type="radio" name="rdbox">동의하지않음</label>
 				</div>
 	
 
 
 <div class="table">
-
+<form method ="post" action="./qnaWrite">
 <table class="table" >
    <tr>
 		<td style="background:#e6e6e6; width:220px">이름</td>
-		<td><input type="text" id="name" class="contents"></td>   
+		<td><input type="text" id="writer" name="writer" class="contents"></td>   
    </tr>
    <tr>
    		<td style="background:#e6e6e6; width:220px">제목</td>
-   		<td><input type="text" id="title" class="contents"></td>
+   		<td><input type="text" id="title" name="title" class="contents"></td>
    	</tr>
    	<tr>
    		<td style="background:#e6e6e6; width:220px">내용</td>
-   		<td><textarea></textarea></td>
+   		<td><textarea id="contents" name="contents"></textarea></td>
    	</tr>
    <tr>
    		<td style="background:#e6e6e6; width:220px" >비밀번호</td>
-   		<td><input type="text" id="pw" class="contents"><td>
+   		<td><input type="text" id="pw" name="pw" class="contents"><td>
    </tr>
  	
   </table>
     <input type="submit"  value="등록"  id="registration" >
- 
+ </form>
 
 </div>
 </div>

@@ -56,7 +56,7 @@ public class QnaService implements Action {
 		try {
 			con = DBConnector.getConnection();
 			totalCount = qnaDAO.getTotalCount(searchRow, con);
-			List<BoardDTO> ar = qnaDAO.selectList(searchRow, con);
+			List<QnaDTO> ar = qnaDAO.selectList(searchRow, con);
 			System.out.println(ar.size());
 			request.setAttribute("list", ar);
 			request.setAttribute("board", "qna");
@@ -122,22 +122,140 @@ public class QnaService implements Action {
 	@Override
 	public ActionForward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
-		actionForward.setCheck(true);
-		actionForward.setPath("../WEB-INF/views/qna/qnaWrite.jsp");
 		String method = request.getMethod();
+		
+		boolean check=true;
+		String path="../WEB-INF/views/qna/qnaWrite.jsp";
+		
 		if(method.equals("POST")) {
 			
+			Connection con=null;
+			try {
+				
+			 	QnaDTO qnaDTO = new QnaDTO();
+			 	qnaDTO.setWriter(request.getParameter("writer"));
+			 	qnaDTO.setTitle(request.getParameter("title"));
+			 	qnaDTO.setContents(request.getParameter("contents"));
+			 	qnaDTO.setPost_pw(request.getParameter("pw"));
+			 	System.out.println(qnaDTO.getPost_pw());
+			 	int result=0;
+			 	con=DBConnector.getConnection();
+			 	result=qnaDAO.insert(qnaDTO, con);
+			 	
+			 	if(result>0) {
+			 		request.setAttribute("message", "성공");
+					request.setAttribute("path", "./qnaList");
+					check=true;
+					path="../WEB-INF/views/common/result.jsp";
+			 	}else {
+					request.setAttribute("message", "실패");
+					request.setAttribute("path", "./qnaList");
+					path="../WEB-INF/views/common/result.jsp";
+				}
+			 	
+			 
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}finally {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
 			
-			
-		}
+		}//post끝
+		actionForward.setCheck(check);
+		actionForward.setPath(path);
+		
 		return actionForward;
 	}
+	
 	@Override
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		String method = request.getMethod();
+		QnaDTO qnaDTO = null;
+		Connection conn = null;
+		boolean check=true;
+		String path="";
+		if(method.equals("POST")) {
+			
+			
+			qnaDTO= new QnaDTO();
+			qnaDTO.setTitle(request.getParameter("title"));
+			qnaDTO.setContents(request.getParameter("contents"));
+			qnaDTO.setNum(Integer.parseInt(request.getParameter("num")));
+
+			int result=0;
+			try {
+				conn=DBConnector.getConnection();
+				result=qnaDAO.update(qnaDTO, conn);
+
+				if(result>0) {
+					request.setAttribute("message", "성공");
+					request.setAttribute("path", "./qnaList");
+					check=true;
+					path="../WEB-INF/views/common/result.jsp";
+				}else {
+					request.setAttribute("message", "실패");
+					request.setAttribute("path", "./qnaList");
+					path="../WEB-INF/views/common/result.jsp";
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			request.setAttribute("dto", qnaDTO);
+			actionForward.setCheck(check);
+			actionForward.setPath(path);
+
+		}else {
+			int num = Integer.parseInt(request.getParameter("num"));
+			try {
+				conn=DBConnector.getConnection();
+				qnaDTO = qnaDAO.selectOne(num, conn);
+				System.out.println(qnaDTO.getTitle());
+				System.out.println(qnaDTO.getContents());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			request.setAttribute("dto", qnaDTO);
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/views/qna/qnaUpdate.jsp");
+			
+			
+		}
 		
 		
+	
+
 		return actionForward;
 	}
 
