@@ -44,7 +44,7 @@ public class NoticeDAO implements BoardDAO{
 	@Override
 	public BoardDTO selectOne(int num, Connection conn) throws Exception {
 		NoticeDTO noticeDTO = null;
-		String sql = "select title, contents,reg_date from notice where num=?";
+		String sql = "select title, writer, contents,reg_date from notice where num=?";
 		PreparedStatement st = conn.prepareStatement(sql);
 		st.setInt(1, num);
 		ResultSet rs = st.executeQuery();
@@ -52,6 +52,7 @@ public class NoticeDAO implements BoardDAO{
 			noticeDTO = new NoticeDTO();
 			noticeDTO.setNum(num);
 			noticeDTO.setTitle(rs.getString("title"));
+			noticeDTO.setWriter(rs.getString("writer"));
 			noticeDTO.setContents(rs.getString("contents"));
 			noticeDTO.setReg_date(rs.getDate("reg_date"));
 		}

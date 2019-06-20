@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../temp/bootstrap.jsp"/>
-<script type="text/javascript" src="../dist/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="../se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <style type="text/css">
 .container{
 	padding-top:100px;
@@ -22,7 +22,7 @@
 	          oAppRef: oEditors,
 	          elPlaceHolder: "contents",
 	          //SmartEditor2Skin.html 파일이 존재하는 경로
-	          sSkinURI: "/Megabox/dist/SmartEditor2Skin.html",  
+	          sSkinURI: "/Megabox/se2/SmartEditor2Skin.html",  
 	          htParams : {
 	              // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 	              bUseToolbar : true,             
@@ -36,7 +36,7 @@
 	          }, 
 	          fOnAppLoad : function(){
 	              //기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
-	              oEditors.getById["contents"].exec("PASTE_HTML", ["기존 DB에 저장된 내용을 에디터에 적용할 문구"]);
+	              oEditors.getById["contents"].exec("PASTE_HTML", [""]);
 	          },
 	          fCreator: "createSEditor2"
 	      });

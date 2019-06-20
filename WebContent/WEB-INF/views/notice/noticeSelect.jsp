@@ -21,7 +21,11 @@
 	
 }
 .container{
-	min-height: 500px;
+	min-height: 1300px;
+}
+.table{
+	border: 1px solid #9999;
+	margin-top: 30px;
 }
 </style>
 <c:import url="../temp/bootstrap.jsp"/> 
@@ -145,7 +149,7 @@ $(function() {
 <a href="<%=application.getContextPath()%>/qna/qnaList"><img src="../images/qna.PNG" alt="qna"></a>
 <img src="../images/dreamcenter.PNG" alt="dreamcenter" style="float:right">
 
-<p style="font-size:20px;margin-top:10px; font-weight:bold;color:#000000;">공지사항, 메가박스의 최신소식을 알려드립니다</p>
+<p style="font-size:20px;padding-top:30px; font-weight:bold;color:#000000;">공지사항, 메가박스의 최신소식을 알려드립니다</p>
 </div>
 
 
@@ -157,20 +161,20 @@ $(function() {
    </tr>
    <tr>
    		<td style="background:#e6e6e6; width:220px">영화관</td>
-   		<td></td>
+   		<td>전체영화관</td>
    		<td style="background:#e6e6e6; width:220px">등록일</td>
    		<td>${dto.reg_date}</td>
    </tr>
    <tr>
-   		<td colspan="4" height="250">${dto.contents}</td>
+   		<td colspan="4" height="600">${dto.contents}</td>
    </tr>
  	
   </table>
 
-  <a href="<%=application.getContextPath()%>/notice/noticeList"><input type="button" value="목록" style="float:left"></a>
-  <a href="<%=application.getContextPath()%>/notice/noticeDelete?num=${dto.num}"><input type="button" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" ></a>
+  <a href="<%=application.getContextPath()%>/notice/noticeList"><input type="button" class="btn" value="목록" style="float:left"></a>
+  <a href="<%=application.getContextPath()%>/notice/noticeDelete?num=${dto.num}"><input type="button" class="btn" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" ></a>
 <!--   <input type="button" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" > -->
-  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" value="수정" style="float:right"></a>
+  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" class="btn" value="수정" style="float:right"></a>
   
 </div>
 <c:import url = "../temp/footer.jsp"/>

@@ -232,6 +232,7 @@ public class NoticeService implements Action{
 			try {
 				multipartRequest = new MultipartRequest(request, saveDirectory, maxPostSize, "UTF-8", new DefaultFileRenamePolicy());
 				boardDTO.setNum(Integer.parseInt(multipartRequest.getParameter("num")));
+				boardDTO.setWriter(multipartRequest.getParameter("writer"));
 				boardDTO.setTitle(multipartRequest.getParameter("title"));
 				boardDTO.setContents(multipartRequest.getParameter("contents"));
 

@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <servlet>
+    <servlet-name>file</servlet-name>
+    <servlet-class>com.megabox.controller.UploadController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>file</servlet-name>
+    <url-pattern>/file/*</url-pattern>
+  </servlet-mapping>
+ <servlet>
+    <servlet-name>comments</servlet-name>
+    <servlet-class>com.megabox.controller.CommentsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>comments</servlet-name>
+    <url-pattern>/comments/*</url-pattern>
+  </servlet-mapping>
   <context-param>
     <param-name>view</param-name>
     <param-value>../WEB-INF/views</param-value>

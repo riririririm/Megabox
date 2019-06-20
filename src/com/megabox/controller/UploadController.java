@@ -10,50 +10,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
-import com.megabox.qna.QnaService;
+import com.megabox.upload.UploadService;
 
 
 /**
- * Servlet implementation class QnaController
+ * Servlet implementation class UploadController
  */
-@WebServlet("/QnaController")
-public class QnaController extends HttpServlet {
+@WebServlet("/UploadController")
+public class UploadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private QnaService qnaService;
-       
+    private UploadService uploadService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaController() {
+    public UploadController() {
         super();
-        qnaService = new QnaService();
-        // TODO Auto-generated constructor stub
+        uploadService = new UploadService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String command = request.getPathInfo();
-		ActionForward actionForward = new ActionForward();
+		ActionForward actionForward = null;
 		
-		if(command.equals("/qnaList")) {
-			actionForward = qnaService.selectList(request, response);
-		}else if(command.equals("/qnaSelect")) {
-			actionForward = qnaService.selectOne(request, response);
-		}else if(command.equals("/qnaWrite")) {
-			actionForward = qnaService.insert(request, response);
-		}else if(command.equals("/qnaUpdate")) {
-			actionForward = qnaService.update(request, response);
-		}else if(command.equals("/qnaDelete")) {
-			actionForward = qnaService.delete(request, response);
-			
-		}else {
-			actionForward = new ActionForward();
+		if(command.equals("/fileDelete")) {
+			actionForward= uploadService.delete(request, response);
+		}else if(command.equals("/fileUpload")){
+			actionForward = uploadService.insert(request, response);
 		}
-		
-		
 		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
@@ -61,6 +47,7 @@ public class QnaController extends HttpServlet {
 		}else {
 			response.sendRedirect(actionForward.getPath());
 		}
+		
 	}
 
 	/**

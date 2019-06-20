@@ -83,7 +83,14 @@
 						</c:catch>
 						<a href="./qnaSelect?num=${dto.num}">${dto.title}</a>
 					</td>
-					<td>${dto.state}</td>
+					<c:choose>
+						<c:when test="${dto.state eq 0 }">
+							<td>미답변</td>
+						</c:when>
+						<c:otherwise>
+							<td>답변완료</td>
+						</c:otherwise>
+					</c:choose>
 					<td>${dto.reg_date}</td>
 					
 				
