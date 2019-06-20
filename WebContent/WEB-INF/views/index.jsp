@@ -53,7 +53,8 @@
 	#flip_btn1 {
 		left : 340px; position: absolute; display: block;
 		width: 160px; height: 50px;
-	}
+		}
+	
 	#flip_btn2 {
 		left : 500px; position: absolute;
 		width: 160px; height: 50px;
@@ -470,7 +471,7 @@
 												</h3>
 								<!---------------- 버튼  ------------------>
 												<div class="film_btn_wrap">		
-													<button class="film_btn btn btn-primary" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
+													<button class="film_btn btn btn-primary" id="listCode${i}" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
 													<button class="film_btn btn btn-primary" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
 												</div>
 											</div>
@@ -663,7 +664,7 @@
 								</div>
 						</div>
 					</div>			<!------------ modal_review_wrap end----------->
-					<div class="review_list_wrap">
+					<div class="review_list_wrap" >
 						<ul>
 							<li><a>최신순</a></li>
 							<li><a>추천순</a></li>
@@ -672,7 +673,7 @@
 						
 						<!--------------------- 리뷰 리스트   --------------------->
 						
-						<div class="review_list">
+						<div class="review_list" id="listCode${modal }">
 					
 						
 
@@ -749,10 +750,12 @@
 		/*================= List ajax ================= */
 
 		$(".film_btn").click(function() {
+			
 			$.ajax({url:"../Megabox/review/reviewList", success : function(result) {
+
 				
+				$(".review_list").append(result);
 				
-				$(".review_list").html(result);
 			}});
 		});
 		
@@ -789,8 +792,11 @@
 					$('#director'+num).append(director);	// 모달 감독
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
-					$('#modal_code'+num).append(movie_code);
-					$('#writeCode'+num).val(movie_code);
+					$('#modal_code'+num).append(movie_code);	
+					$('#writeCode'+num).val(movie_code);	// this.val() 를 위한 movie_code (review DB에 insert하기 위해)
+					$('#listCode'+num).val(movie_code);  //review DB를 불러오기 위해
+					
+					
 					$('#code_hidden'+num).append('<input type="hidden" title="' + movie_code + '" name="movie_code" class="movie_code" >');
 					
 					

@@ -4,35 +4,38 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 			
-					<c:forEach items="${reviewList }" var="reviewDTO">
+					<c:forEach items="${reviewList }" var="rdto">
+				
 							<div class="review_row">
 								<div class="review_cell">
 									<div class="cell_content">
-										<input type="hidden" id="${reviewDTO.num }" value ="${reviewDTO.num }">
-										<input type="hidden" id="${reviewDTO.movie_code}">
+										<input type="hidden" id="${rdto.num }" value ="${rdto.num }">
+										<form>
+										<input type="hidden" id="${rdto.movie_code }" name="movie_code" value="${rdto.movie_code}">
+										</form>
 										<div class="cell_member_id">
-											<strong>${reviewDTO.id }</strong>
+											<strong>${rdto.id }</strong>
 											
 										</div>
 										<div class="cell_data">
-											<span>${reviewDTO.reg_date }</span>
+											<span>${rdto.reg_date }</span>
 											<div class="cell_star">
 											
 											</div>
 										</div>
 										<p>
-											<span>${reviewDTO.contents }</span>
+											<span>${rdto.contents }</span>
 										</p>
 									</div>
 								</div> 		<!------------ review_cell end ----------->	
 								<div class="review_cell">
 									<div class="cell_content">
 										<div class="cell_member_id">
-											<strong>${reviewDTO.id }</strong>
+											<strong>${rdto.id }</strong>
 											
 										</div>
 										<div class="cell_data">
-											<span>${reviewDTO.reg_date }</span>
+											<span>${rdto.reg_date }</span>
 											<div class="cell_star">
 											
 											</div>
