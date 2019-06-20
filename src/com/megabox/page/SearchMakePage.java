@@ -16,6 +16,15 @@ public class SearchMakePage {
 		this.search.setKind(kind);
 		this.search.setSearch(search);
 	}
+	
+	public SearchMakePage(int curPage, int perPage) {
+		this.perPage = perPage;
+		this.curPage=curPage;
+	}
+	
+	public SearchMakePage(int curPage) {
+		this(curPage, 10);
+	}
 
 	//row
 	public SearchRow makeRow() {

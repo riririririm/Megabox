@@ -31,9 +31,8 @@ public class NoticeDAO implements BoardDAO{
 	@Override
 	public int getTotalCount(SearchRow searchRow, Connection conn) throws Exception {
 		int result=0;
-		String sql ="select count(num) from notice where "+searchRow.getSearch().getKind()+" like ?";
+		String sql ="select count(num) from notice";
 		PreparedStatement st = conn.prepareStatement(sql);
-		st.setString(1, "%"+searchRow.getSearch().getSearch()+"%");
 		ResultSet rs = st.executeQuery();
 		rs.next();
 		result = rs.getInt(1);

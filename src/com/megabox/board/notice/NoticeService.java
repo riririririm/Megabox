@@ -47,12 +47,9 @@ public class NoticeService implements Action{
 			// TODO: handle exception
 		}
 
-		String kind = request.getParameter("kind");
-		String search = request.getParameter("search");
-
 
 		/////////////////////////////////////////////////////////////
-		SearchMakePage s = new SearchMakePage(curPage, kind, search);
+		SearchMakePage s = new SearchMakePage(curPage);
 
 		//1. row
 		SearchRow searchRow = s.makeRow();

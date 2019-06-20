@@ -86,7 +86,7 @@
 			<ul class="pager">
 				<c:if test="${pager.curBlock gt 1}">
 					<li class="previous"><a
-						href="./${board}List?curPage=${pager.startNum-1}">Previous</a></li>
+						href="./noticeList?curPage=${pager.startNum-1}">Previous</a></li>
 				</c:if>
 
 				<li>
@@ -94,14 +94,14 @@
 						<c:forEach begin="${pager.startNum}" end="${pager.lastNum}"
 							var="i" step="1">
 							<li><a
-								href="./${board}List?curPage=${i}">${i}</a></li>
+								href="./noticeList?curPage=${i}">${i}</a></li>
 						</c:forEach>
 					</ul>
 				</li>
 
 				<c:if test="${pager.curBlock lt pager.totalBlock}">
 					<li class="next"><a
-						href="./${board}List?curPage=${pager.lastNum+1}">Next</a></li>
+						href="./noticeList?curPage=${pager.lastNum+1}">Next</a></li>
 				</c:if>
 			</ul>
 
