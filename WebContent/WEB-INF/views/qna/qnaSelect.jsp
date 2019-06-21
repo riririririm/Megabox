@@ -188,20 +188,20 @@
 				</table>
 				<button id="more" class="btn">더 보기</button>
 			</div>
-			
-			<!-- 댓글입력폼 -->
-			<div class="answer">
-				<div class="form-group">
-		      <label for="writer">Writer:</label>
-		      <input type="text" class="form-control" id="writer" name="writer">
-		    </div>
-		    <div class="form-group">
-			  <label for="contents">Contents:</label>
-			  <textarea class="form-control" rows="10" id="contents" name="contents"></textarea>
-			   <button class="btn btn-danger" id="btn">Write</button>
-			</div>
-			</div>
-			
+			<c:if test="${id eq 'admin'}">
+				<!-- 댓글입력폼 -->
+				<div class="answer">
+					<div class="form-group">
+			      <label for="writer">Writer:</label>
+			      <input type="text" class="form-control" id="writer" name="writer">
+			    </div>
+			    <div class="form-group">
+				  <label for="contents">Contents:</label>
+				  <textarea class="form-control" rows="10" id="contents" name="contents"></textarea>
+				   <button class="btn btn-danger" id="btn">Write</button>
+				</div>
+				</div>
+			</c:if>
 		</div>
 		
 	</div>

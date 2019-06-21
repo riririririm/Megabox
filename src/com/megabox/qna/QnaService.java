@@ -10,11 +10,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
 import com.megabox.upload.UploadDAO;
 import com.megabox.board.BoardDTO;
+import com.megabox.member.MemberDTO;
 import com.megabox.page.SearchMakePage;
 import com.megabox.page.SearchPager;
 import com.megabox.page.SearchRow;
@@ -83,27 +85,38 @@ public class QnaService implements Action {
 		QnaDTO qnaDTO = null;
 		List<UploadDTO> ar = null;
 		Connection con = null;
+		String id = null;
 		try {
-			con = DBConnector.getConnect();
-			int num = Integer.parseInt(request.getParameter("num"));
-			qnaDTO = qnaDAO.selectOne(num, con);
-			ar = uploadDAO.selectList(num, con);
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			id = memberDTO.getId();
+		}catch (Exception e){
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
+		}
+		finally {
 			try {
-				con.close();
-			} catch (SQLException e) {
+				con = DBConnector.getConnect();
+				int num = Integer.parseInt(request.getParameter("num"));
+				qnaDTO = qnaDAO.selectOne(num, con);
+				ar = uploadDAO.selectList(num, con);
+				
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		String path="";
 		if(qnaDTO != null) {
 			request.setAttribute("dto", qnaDTO);
 			request.setAttribute("upload", ar);
+			request.setAttribute("id", id);
 			path = "../WEB-INF/views/qna/qnaSelect.jsp";
 		}else {
 			request.setAttribute("message", "No Data");

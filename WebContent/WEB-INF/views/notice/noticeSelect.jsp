@@ -172,9 +172,11 @@ $(function() {
   </table>
 
   <a href="<%=application.getContextPath()%>/notice/noticeList"><input type="button" class="btn" value="목록" style="float:left"></a>
-  <a href="<%=application.getContextPath()%>/notice/noticeDelete?num=${dto.num}"><input type="button" class="btn" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" ></a>
-<!--   <input type="button" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" > -->
-  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" class="btn" value="수정" style="float:right"></a>
+  <c:if test="${id eq 'admin' }">
+	  <a href="<%=application.getContextPath()%>/notice/noticeDelete?num=${dto.num}"><input type="button" class="btn" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" ></a>
+	<!--   <input type="button" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" > -->
+	  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" class="btn" value="수정" style="float:right"></a>
+  </c:if>
   
 </div>
 <c:import url = "../temp/footer.jsp"/>

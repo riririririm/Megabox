@@ -111,26 +111,37 @@ public class NoticeService implements Action{
 		BoardDTO boardDTO=null;
 		List<UploadDTO> ar = null;
 		Connection con = null;
+		String id = null;
 		try {
-			con = DBConnector.getConnect();
-			int num = Integer.parseInt(request.getParameter("num"));
-			boardDTO = noticeDAO.selectOne(num, con);
-			ar = uploadDAO.selectList(num, con);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			id = memberDTO.getId();
+		}catch (Exception e) {
+			
+		}finally {
 			try {
-				con.close();
-			} catch (SQLException e) {
+				con = DBConnector.getConnect();
+				int num = Integer.parseInt(request.getParameter("num"));
+				boardDTO = noticeDAO.selectOne(num, con);
+				ar = uploadDAO.selectList(num, con);
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+			
 		String path="";
 		if(boardDTO != null) {
 			request.setAttribute("dto", boardDTO);
 			request.setAttribute("upload", ar);
+			request.setAttribute("id", id);
 			path ="../WEB-INF/views/notice/noticeSelect.jsp";
 		}else {
 			request.setAttribute("message", "No Data");
