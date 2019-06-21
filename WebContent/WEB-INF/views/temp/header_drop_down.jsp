@@ -82,7 +82,6 @@
 					<div>
 						<hr>
 						<a href="${pageContext.request.contextPath}/member/memberCheck">회원가입</a>
-						<a>ID/PW찾기</a>
 					</div>
 				</c:if>
 			</div>

@@ -224,7 +224,7 @@ table{
 						</tr>
 						<tr class="p2-2">
 							<th>새 비밀번호 확인</th>
-							<th><input type=""password"" id="newChangePW" name="new_pwck"></th>
+							<th><input type="password" id="newChangePW" name="new_pwck"></th>
 						<tr>
 						<tr >
 							<th style="border: none; background-color: white;"><input type="submit" value="확인"></th>

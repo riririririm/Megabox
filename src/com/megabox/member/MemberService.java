@@ -66,8 +66,13 @@ public class MemberService implements Action{
 				}
 			}
 			if(result>0) {
-				path = "./myPersonalPage";
-				check = false;
+				request.setAttribute("message", "비밀번호 변경 성공");
+				request.setAttribute("path", "../index.do");
+				path = "../WEB-INF/views/common/result.jsp";
+				check = true;
+				///소스코드 고치기 전////
+				/*path = "./myPersonalPage";
+				check = false;*/
 			}else {
 				memberDTO.setPw(realPw);
 				request.setAttribute("message", "비밀번호 변경 실패");
@@ -361,9 +366,15 @@ public class MemberService implements Action{
 		}
 		if(result>0) {
 			session.invalidate();
+			request.setAttribute("message", "탈퇴성공");
+			request.setAttribute("path", "../index.do");
+			path = "../WEB-INF/views/common/result.jsp";
+			check = true;
+			//////고치기 전 부분////
+			/*session.invalidate();
 			request.setAttribute("result", result);
 			path = "../index.do";
-			check = false;
+			check = false;*/
 		}else {
 			request.setAttribute("message", "회원 탈퇴 실패");
 			request.setAttribute("path", "./myPersonalPage");
