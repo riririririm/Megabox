@@ -43,7 +43,7 @@ public class ReviewDAO{
 		List<ReviewDTO> ar = new ArrayList<ReviewDTO>();
 		String sql = "select * from "
 				+ "(select rownum N, R.* from "
-				+"(selet * from review where " + searchRow.getSearch().getCommunityKind()+" like ? order by num desc) R) "   
+				+"(select * from review where " + searchRow.getSearch().getReviewKind()+" like ? order by num desc) R) "   
 				+ "where N between ? and ?";
 		PreparedStatement st = conn.prepareStatement(sql);
 		st.setString(1, "%"+searchRow.getSearch().getSearch()+"%");

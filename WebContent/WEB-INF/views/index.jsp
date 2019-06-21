@@ -351,25 +351,27 @@
 	.review_row {
 		width: 888px; height: 138px;
 	}
-	.review_cell:first-child {
-		border-right: 1px solid #e5e5e5;
-	}
+
 	.review_cell {
-		width: 50%; height: 100%; padding:20px 50px; display : table-cell;
+		width: 100%; height: 100%; padding:20px 50px; display : table-cell;
 		border-bottom: 1px solid #e5e5e5; overflow: hidden; float: left;
 		
 	}
 	.cell_content {
-		width: 314px; height: 97px;
+		width: 780px; height: 97px;
 	}
 	.cell_member_id {
-		width: 314px; height: 20px; margin-bottom: 1px;
+		height: 20px; margin-bottom: 1px; float: left;
 	}
 	.cell_data {
-		width: 314px; height: 17px;
+	 height: 17px;
+	}
+	.cell_data > span {
+		float: right; margin: 0 30px;
 	}
 	.cell_content > p {
-		width: 314px; height: 20px; margin-bottom: 35px;
+		height: 20px; margin-bottom: 35px; margin-left: 30px;
+		margin-right: 0 30px;
 	
 	}
 </style>
@@ -641,10 +643,7 @@
 						<div class="review_write">
 							<div class="review_id">							
 							</div>		
-											
-											
-											
-											
+		
 							<!-------------- 리뷰 등록 폼 ------------->	
 							
 								<div class="review_input">
@@ -674,46 +673,7 @@
 						
 						<div class="review_list">
 		
-						<c:forEach items="${reviewList }" var="dto">
-						
-							<div class="review_row">
-								<div class="review_cell">
-									<div class="cell_content">
-										<input type="hidden" id="${dto.num }" value ="${dto.num }">
-										<input type="hidden" id="${dto.movie_code }">
-										<div class="cell_member_id">
-											<strong>${dto.id }</strong>
-										</div>
-										<div class="cell_data">
-											<span>${dto.reg_date }</span>
-											<div class="cell_star">
-											
-											</div>
-										</div>
-										<p>
-											<span>${dto.contents }</span>
-										</p>
-									</div>
-								</div> 		<!------------ review_cell end ----------->	
-								<div class="review_cell">
-									<div class="cell_content">
-										<div class="cell_member_id">
-											<strong>${dto.id }</strong>
-										</div>
-										<div class="cell_data">
-											<span>${dto.reg_date }</span>
-											<div class="cell_star">
-											
-											</div>
-										</div>
-										<p>
-											<span>review content</span>
-										</p>
-									</div>
-								</div>
-														
-							</div>			<!----------- review_row end ------------>
-							</c:forEach>
+					
 									<div id="pager_wrap">
 			<ul class="pager">
 				<c:if test="${pager.curBlock gt 1}">
@@ -777,7 +737,7 @@
 
 		/*=================== 리뷰 등록 ======================*/
 		$('.writeBtn').click (function() {
-			var id = "test";
+			var id = "${sessionScope.member.id}";
 			var contents = $("#contents").val();
 			var movie_code = $(this).val();
 			
@@ -789,7 +749,6 @@
 				data=data.trim();
 				if(data=="1"){
 					alert("등록되었습니다.");
-					alert(movie_code);
 				} else {
 					alert("fail");
 					alert ("data :" + data);
@@ -800,9 +759,15 @@
 				location.reload();
 			});
 		});
-		
 
-		
+				/*================= List ajax ================= */
+		$(".film_btn").click(function() {
+			$.ajax({url:"../Megabox/review/reviewList", success : function(result) {
+				
+				
+				$(".review_list").html(result);
+			}});
+		});
 		
 		
 		
@@ -816,7 +781,7 @@
 					var n = r.posters.indexOf("jpg")+3;
 					var url = r.posters.substring(0,n);
 		
-					var img = '<img src="'+url+'" class="api_img1">';
+					var img = '<img src="'+url+'" onError=javascript:this.src="./images/img_alt.jpg" border=0 class="api_img1">';
 					var title = r.title;
 					var modal_img = '<img src="'+url+'" class="modal_img1">';
 					var modal_title = r.title;
