@@ -146,7 +146,7 @@ $(function() {
 <div class="imgs">
 
 <a href="<%=application.getContextPath()%>/notice/noticeList"><img src="../images/notice.PNG" alt="notice"></a>
-<a href="<%=application.getContextPath()%>/qna/qnaList"><img src="../images/qna.PNG" alt="qna"></a>
+<a href="<%=application.getContextPath()%>/qna/qnaList"><img src="../images/qna1.PNG" alt="qna"></a>
 <img src="../images/dreamcenter.PNG" alt="dreamcenter" style="float:right">
 
 <p style="font-size:20px;padding-top:30px; font-weight:bold;color:#000000;">공지사항, 메가박스의 최신소식을 알려드립니다</p>

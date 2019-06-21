@@ -34,6 +34,31 @@ public class QnaService implements Action {
 		uploadDAO = new UploadDAO();
 	}
 
+	public ActionForward selectListForIndex(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		ArrayList<QnaDTO> ar=null;
+		
+		Connection con = null;
+		try {
+			con = DBConnector.getConnect();
+			ar = qnaDAO.selectListForIndex(con);
+			request.setAttribute("qnaList", ar);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		actionForward.setCheck(true);
+		actionForward.setPath("../WEB-INF/views/common/indexQnaList.jsp");
+		return actionForward;
+	}
+	
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();

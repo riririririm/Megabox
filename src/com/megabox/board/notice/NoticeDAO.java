@@ -89,6 +89,31 @@ public class NoticeDAO implements BoardDAO{
 		return ar;
 	}
 
+	public List<BoardDTO> selectListForIndex(Connection conn) throws Exception {
+		List<BoardDTO> ar = new ArrayList<BoardDTO>();
+		/* String sql = "select num,title,reg_date from notice"; */
+		String sql="select * from " + 
+				"(select rownum R, p.* from " + 
+				"(select * from notice order by num desc )p) " + 
+				"where R between 1 and 5";
+		PreparedStatement st = conn.prepareStatement(sql);
+		
+		ResultSet rs = st.executeQuery();
+		
+		
+		while(rs.next()) {
+			NoticeDTO noticeDTO = new NoticeDTO();
+			noticeDTO.setNum(rs.getInt("num"));
+			noticeDTO.setTitle(rs.getString("title"));
+			noticeDTO.setReg_date(rs.getDate("reg_date"));
+			ar.add(noticeDTO);
+		}
+		rs.close();
+		st.close();
+		
+		return ar;
+	}
+	
 	@Override
 	public int insert(BoardDTO boardDTO, Connection conn) throws Exception {
 		int result=0;

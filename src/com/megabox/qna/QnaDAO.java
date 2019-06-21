@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.megabox.board.BoardDTO;
+import com.megabox.board.notice.NoticeDTO;
 import com.megabox.page.SearchRow;
 import com.megabox.util.DBConnector;
 
@@ -23,6 +25,39 @@ public class QnaDAO {
 		DBConnector.disConnect(rs, st, con);
 		return result;
 	}
+	
+	public ArrayList<QnaDTO> selectListForIndex(Connection conn) throws Exception {
+		ArrayList<QnaDTO> ar = new ArrayList<QnaDTO>();
+		/* String sql = "select num,title,reg_date from notice"; */
+		String sql="select * from " + 
+				"(select rownum R, p.* from " + 
+				"(select * from qna order by num desc )p) " + 
+				"where R between 1 and 5";
+		PreparedStatement st = conn.prepareStatement(sql);
+		
+		ResultSet rs = st.executeQuery();
+		
+		
+		while(rs.next()) {
+			QnaDTO qnaDTO = new QnaDTO();
+			qnaDTO.setNum(rs.getInt("num"));
+			qnaDTO.setWriter(rs.getString("writer"));
+			qnaDTO.setTitle(rs.getString("title"));
+			qnaDTO.setContents(rs.getString("contents"));
+			qnaDTO.setReg_date(rs.getDate("reg_date"));
+			qnaDTO.setPost_pw(rs.getString("post_pw"));
+			qnaDTO.setState(rs.getInt("state"));
+			qnaDTO.setAdmin_answer(rs.getString("admin_answer"));
+			
+			
+			ar.add(qnaDTO);
+		}
+		rs.close();
+		st.close();
+		
+		return ar;
+	}
+	
 	public int getTotalCount(SearchRow searchRow, Connection conn) throws Exception {
 		int result=0;
 		String sql="select count(num) from qna ";

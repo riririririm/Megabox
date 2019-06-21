@@ -43,7 +43,7 @@
 	padding: 10px;
 }
 
-#write_btn {
+.write_btn {
 	float: right;
 }
 .content_wrap {
@@ -95,22 +95,32 @@ h5{
 <script type="text/javascript">
 	$(function() {
 		
-		$("#write_btn").click(function() {
+		$(".write_btn").click(function() {
+			var writer="${member.id}";
 			var contents=$("#contents").val();
-			var num = $("#listNum").val();
 			$.get("./communityWrite",{
-				num:num,
+				writer:writer,
 				contents:contents
 			}, function(data) {
 				data = data.trim();
 				if(data=="1"){
-					alert("success");
-					getList(1);
+					alert("등록 되었습니다.");
+	
+				} else if(data.contents==null && writer!=""){
+					alert("내용을 입력해주세요.");
+				} else if(writer=="") {
+					alert("로그인 하세요.");
 				} else {
 					alert("Fail");
 				}
+				location.reload();
+				
 			});
 	
+		});
+		
+		$("#contents_null").click(function() {
+			alert("로그인 하세요.");
 		});
 		
 		// 수정 - 모달창 띄우기
@@ -118,6 +128,7 @@ h5{
 		$("#communityList").on("click", ".update", function () {
 			var id=$(this).attr("title");
 			var con =$("#c"+id).html();
+		
 			$("#updateContents").val(con);
 			$("#num").val(id);
 		});
@@ -157,13 +168,14 @@ h5{
 		});
 		// 삭제 버튼
 		$(".del").click(function() {
-			var num = $("#listNum").val();
+			var num = $(this).attr("id");
 			var check=confirm("삭제 하시겠습니까?");
 			if(check) {
 				$.get("./communityDelete?num="+num, function(data) {
 					data = data.trim();
 					if(data=="1") {
 						alert("삭제 되었습니다.");
+						location.reload();
 					} else {
 						alert("Fail");
 					}
@@ -186,31 +198,43 @@ h5{
 			<div id="list_result">
 				<h2>community</h2>
 				<div id="write_form">
+					<input type="hidden" id="writer" value="${member.id }">
 					<p>자유롭게 작성하세요.</p>
-
-					<textarea rows cols class="write_area" id="contents" name="contents"></textarea>
-					<button id="write_btn">Write</button>
+					
+					<c:if test="${member.id eq null }">
+					<textarea rows cols class="write_area" id="contents_null" name="contents" readonly="readonly"> 로그인 후 작성하실 수 있습니다. </textarea>
+					</c:if>
+					<c:if test="${member.id ne null }">
+					<textarea rows cols class="write_area" id="contents" name="contents" ></textarea>
+					</c:if>
+					<button class="write_btn btn btn-primary">Write</button>
+					
+					
+					
 
 
 				</div>
 				<!-- write_form end -->
+				
 			<div id="communityList">
 				<c:forEach items="${communityList}" var="dto">
 					<div class="media" >
 						<div class="media-body" >
-							<input type="hidden" id="listNum" value="${dto.num }"> 
+							<input type="hidden" id="${dto.num }" value="${dto.num }"> 
 							<div class="hidden">${dto.num }</div>
 							<div class="media-heading">
-							<h5 id="writer">${dto.writer } </h5>
+							<h5 id="writer" >${dto.writer } </h5>
 							<h5 id="reg_date">${dto.reg_date }</h5>
 							</div>
 							
 							<div id="c${dto.num }" class="content_wrap">${dto.contents }</div>
 						</div>
+						<c:if test="${dto.writer eq member.id }">
 						<div id="buttons">
 							<button type="button" title="${dto.num }" class="update" id="update" data-toggle="modal" data-target="#myModal">수정</button>
 							<button class= "del" id="${dto.num }" >삭제 </button>
 						</div>
+						</c:if>
 					</div>
 				</c:forEach>
 			</div>

@@ -51,6 +51,9 @@ public class NoticeController extends HttpServlet {
 		}else if(command.equals("/noticeDelete")) {
 			actionForward = noticeService.delete(request, response);
 			
+		}else if(command.equals("/noticeIndexList")) {
+			actionForward = noticeService.selectListForIndex(request, response);
+			
 		}else {
 			actionForward = new ActionForward();
 		}

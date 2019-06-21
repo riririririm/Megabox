@@ -308,26 +308,28 @@
 		border-right: 1px solid #e5e5e5;
 	}
 	.review_cell {
-		width: 50%; height: 100%; padding:20px 50px; display : table-cell;
+		width: 100%; height: 100%; padding:20px 50px; display : table-cell;
 		border-bottom: 1px solid #e5e5e5; overflow: hidden; float: left;
 		
 	}
 	.cell_content {
-		width: 314px; height: 97px;
+		width: 780px; height: 97px;
 	}
 	.cell_member_id {
-		width: 314px; height: 20px; margin-bottom: 1px;
+		height: 20px; margin-bottom: 1px; float: left;
 	}
 	.cell_data {
-		width: 314px; height: 17px;
+	 height: 17px;
+	}
+	.cell_data > span {
+		float: right; margin: 0 30px;
 	}
 	.cell_content > p {
-		width: 314px; height: 20px; margin-bottom: 35px;
+		height: 20px; margin-bottom: 35px; margin-left: 30px;
+		margin-right: 0 30px;
 	
 	}
 </style>
-
-
 </head>
 <body>
 <div id ="content_wrap">
@@ -384,7 +386,7 @@
 								<!---------------- 버튼  ------------------>
 								<div class="film_btn_wrap">		
 									<button class="film_btn btn btn-primary" title="film_detail" data-toggle="modal" data-target="#myModal${i }">상세정보</button>    
-									<button class="film_btn btn btn-primary" title="film_book" data-toggle="modal" data-target="#myModal">예매하기</button>
+									<a href="../movie/movieTimetable" class="film_btn btn btn-primary" title="film_book" style="line-height: 32px">예매하기</a>
 								</div>
 							</div>
 						</div>							
@@ -403,8 +405,9 @@
 	</div>
 	
 	</div>
+
 	<!------------------------ 상세정보 Modal ------------------------------->
-	<c:forEach begin="1" end="400" var="modal">
+	<c:forEach begin="1" end="500" var="modal">
 	
 	<div class="modal fade" id="myModal${modal }" role="dialog">
 		<div class="modal-dialog">
@@ -423,14 +426,8 @@
 							</div>
 							<div class="modal_text_wrap">
 								<div class="reservation_wrap">
-									<p class="left_p">
-										<span class="smallStar">
-											<span class="fill">	명 참여</span>							
-										</span>
-									<strong class="averageScore"></strong>
-									<span class="divider"></span>
-									</p>
-									<p class="right_p"> 예매율
+									
+									<p class="right_p">예매율
 										<strong>1</strong> 위 
 										<span> %</span>
 									</p>
@@ -491,14 +488,30 @@
 						<!--------------------- 리뷰 리스트   --------------------->
 						
 						<div class="review_list">
+		
 					
+			<div id="pager_wrap">
+			<ul class="pager">
+				<c:if test="${pager.curBlock gt 1}">
+	    		<li class="previous"><a href="./reviewList?curPage=${pager.startNum-1}&reviewKind=${pager.search.communityKind}&search=${pager.search.search}">Previous</a></li>
+	    		</c:if>
+	    		<li>
+	    			<ul class="pagination">
+					   <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
+					    	<li><a href="./reviewList?curPage=${i}&reviewKind=${pager.search.communityKind}&search=${pager.search.search}">${i}</a></li>
+					    </c:forEach>
+					   
+					</ul>
+	    		
+	    		</li>
+	    		<c:if test="${pager.curBlock lt pager.totalBlock}">
+	    		<li class="next"><a href="./reviewList?curPage=${pager.lastNum+1}&reviewKind=${pager.search.communityKind}&search=${pager.search.search}">Next</a></li>
+	    		</c:if>
+	  		</ul>
+		</div>
 						
-
 						
-						
-						</div>		<!-------------- reviewList end ------------->
-						
-					
+						</div>
 					</div>
 
 					
@@ -516,6 +529,44 @@
 
 <script type="text/javascript">
 	$(function() {
+		/*=================== 리뷰 등록 ======================*/
+		$('.writeBtn').click (function() {
+			var id = "${sessionScope.member.id}";
+			var contents = $("#contents").val();
+			var movie_code = $(this).val();
+			
+			$.get("../review/reviewWrite" ,{
+				movie_code:movie_code,		
+				id:id,
+				contents:contents
+			}, function(data) {
+				data=data.trim();
+				if(data=="1"){
+					alert("등록되었습니다.");
+				} else {
+					alert("fail");
+					alert ("data :" + data);
+					alert ("id :" + id);
+					alert ("movie_code :" + movie_code);
+					alert ("contents :" + contents);
+				}
+				location.reload();
+			});
+		});
+
+				/*================= List ajax ================= */
+		$(".film_btn").click(function() {
+			$.ajax({url:"../review/reviewList", success : function(result) {
+				
+				
+				$(".review_list").html(result);
+			}});
+		});
+		
+		
+
+		
+		
 		$.getJSON("http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json.jsp?collection=kmdb_new&sort=repRlsDate&1&releaseDte=20190626&listCount=40&ServiceKey=19TKUUT86TYFU6699SQ4", function(data) {
 			var num=1;
 			data.Data.forEach(function(d) {
@@ -546,6 +597,8 @@
 					$('#movie_type'+num).append(movie_type); // 모달 장르
 					$('#plot'+num).append(plot);
 					$('#modal_code'+num).append(movie_code);
+					$('#writeCode'+num).val(movie_code);
+					$('#code_hidden'+num).append('<input type="hidden" title="' + movie_code + '" name="movie_code" class="movie_code" >');
 					
 					num=num+1;
 					
@@ -570,40 +623,6 @@
 			*/
 			
 		});		//Json
-		
-		
-		
-		$('.writeBtn').click (function() {
-			alert("click");
-			var id = "${sessionScope.member.id}";
-			var contents = $("#contents").val();
-			var movie_code = $(this).val();
-			
-			$.get("../Megabox/review/reviewWrite" ,{
-				movie_code:movie_code,		
-				id:id,
-				contents:contents
-			}, function(data) {
-				data=data.trim();
-				if(data=="1"){
-					alert("등록되었습니다.");
-					alert(movie_code);
-				} else {
-					alert("fail");
-					alert ("data :" + data);
-					alert ("id :" + id);
-					alert ("movie_code :" + movie_code);
-					alert ("contents :" + contents);
-				}
-				location.reload();
-			});
-		});
-		
-		
-		
-		
-		
-		
 		
 		
 	});

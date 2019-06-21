@@ -37,6 +37,32 @@ public class NoticeService implements Action{
 		uploadDAO = new UploadDAO();
 	}
 
+	
+	public ActionForward selectListForIndex(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward actionForward = new ActionForward();
+		List<BoardDTO> ar=null;
+		
+		Connection con = null;
+		try {
+			con = DBConnector.getConnect();
+			ar = noticeDAO.selectListForIndex(con);
+			request.setAttribute("noticeList", ar);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		actionForward.setCheck(true);
+		actionForward.setPath("../WEB-INF/views/common/indexNoticeList.jsp");
+		return actionForward;
+	}
+	
 	@Override
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 
