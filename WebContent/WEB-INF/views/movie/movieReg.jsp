@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +81,11 @@
       	</div>
       	<div class="form-group">
 			<label for="theater">극장</label> 
-			<input type="text" class="form-control" id="theater" name="theater" value="동대문" readonly="readonly">
+			<select class="form-control" id="theater" name="theater">
+				<c:forEach items="${theaters}" var="th">
+					<option>${th.theater_name}</option>			
+				</c:forEach>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="auditorium">상영관</label> 

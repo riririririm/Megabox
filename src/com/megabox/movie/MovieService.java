@@ -135,6 +135,7 @@ public class MovieService implements Action{
 		boolean check = true;
 		int num = Integer.parseInt(request.getParameter("num"));
 		MovieDTO movieDTO = null;
+		ArrayList<TheaterDTO> theaters=null;
 		Connection conn = null;
 		int result = 0, result1 = 0;
 
@@ -142,10 +143,12 @@ public class MovieService implements Action{
 			conn = DBConnector.getConnect();
 			conn.setAutoCommit(false);
 			movieDTO = movieDAO.movieSelect(conn, num);
+			theaters = theaterDAO.selectList(conn);
 			if (movieDTO == null) {
 				throw new Exception();
 			}
 			request.setAttribute("movie", movieDTO);
+			request.setAttribute("theaters", theaters);
 
 ////////좌석삭제하는 부분//////////////
 			result = seatDAO.deleteSeat(conn, movieDTO);
@@ -521,6 +524,24 @@ public class MovieService implements Action{
 				}
 			}
 		}//end of post
+		
+			Connection con=null;
+			try {
+				con = DBConnector.getConnect();
+				ArrayList<TheaterDTO> theaters = theaterDAO.selectList(con);
+				System.out.println(theaters.size());
+				request.setAttribute("theaters", theaters);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		
 		
 		actionForward.setCheck(check);

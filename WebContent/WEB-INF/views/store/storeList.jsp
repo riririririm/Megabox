@@ -311,7 +311,8 @@
 		            console.log("ajax call went wrong:" + request.responseText);
 		        }
 			});
-		});		
+		});	
+	
 		
 	});
 </script>
@@ -340,10 +341,11 @@
 		
 		<div class="sub_menu">
 			<div class="ticket">메가티켓</div>
+			<c:if test="${sessionScope.member.id eq 'admin' }">
 			<div class="reg_btn">
 				<a href="./storeReg" class="btn btn-primary">상품등록</a>
 			</div>
-			
+			</c:if>
 			<div class="ticket">
 				<div class="ticket_list">
 					<ul>

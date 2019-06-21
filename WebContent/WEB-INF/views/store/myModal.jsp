@@ -195,10 +195,12 @@
           	<div class="bottom">
           		<img alt="info" src="../images/store_announce2.png" style="margin-bottom:50px;">
           	</div>
+          	<c:if test="${sessionScope.member.id eq 'admin' }">
           	<div class="bottom">
           		<a href="./storeUpdate?store_num=${storeDTO.store_num }" class="btn">상품수정</a>
           		<a href="./storeDelete?store_num=${storeDTO.store_num }" class="btn">상품삭제</a>
           	</div>
+          	</c:if>
         </div><!-- end of body -->
 
 	<!-- modal 2 -->

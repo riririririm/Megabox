@@ -132,4 +132,20 @@
     <filter-name>myPage</filter-name>
     <url-pattern>/myPage/*</url-pattern>
   </filter-mapping>
+   <filter>
+    <filter-name>f2</filter-name>
+    <filter-class>com.megabox.filter.StoreFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>f2</filter-name>
+    <url-pattern>/store/*</url-pattern>
+  </filter-mapping>  
+  <filter>
+    <filter-name>f1</filter-name>
+    <filter-class>com.megabox.filter.MovieFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>f1</filter-name>
+    <url-pattern>/movie/*</url-pattern>
+  </filter-mapping>
 </web-app>
