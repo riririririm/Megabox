@@ -264,6 +264,8 @@ public class MovieService implements Action{
 	//유라
 	public ActionForward boxofficeList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
+		
+		
 		actionForward.setCheck(true);
 		actionForward.setPath("../WEB-INF/views/movie/boxoffice.jsp");
 		return actionForward;

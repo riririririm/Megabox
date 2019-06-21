@@ -575,7 +575,7 @@
 		
 		$('.writeBtn').click (function() {
 			alert("click");
-			var id = "${member.id}";
+			var id = "${sessionScope.member.id}";
 			var contents = $("#contents").val();
 			var movie_code = $(this).val();
 			

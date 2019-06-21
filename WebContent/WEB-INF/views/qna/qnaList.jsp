@@ -60,7 +60,7 @@
 </div>
 
 <div class="table">
-<a href="<%=application.getContextPath()%>/qna/qnaWrite"><input type="button" value="분실물문의/접수" style="float:left"></a>
+<a href="<%=application.getContextPath()%>/qna/qnaWrite"><input type="button" class="btn" value="분실물문의/접수" style="float:left"></a>
 <table class="table">
     
       <tr>
