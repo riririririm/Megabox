@@ -164,7 +164,7 @@
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 					<!-- href #부분에 각자 보여줄 페이지 링크 넣어주세요 -->
-						<li><a href="${pageContext.request.contextPath}/movie/boxoffice">영화</a></li>
+						<li><a href="${pageContext.request.contextPath}/movieAPI/boxoffice">영화</a></li>
 						
 						<c:choose>
 							<c:when test="${sessionScope.member.id eq 'admin'}">

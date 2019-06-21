@@ -5,7 +5,7 @@ public class Search {
 	private String kind;
 	private String search;
 	private String communityKind;
-	
+	private String reviewKind;
 	
 	public String getKind() {
 		return kind;
@@ -37,6 +37,20 @@ public class Search {
 		}else {
 			this.search = search;
 		}
+	}
+	
+	public String getReviewKind() {
+		return reviewKind;
+	}
+	
+	public void setReviewKind(String reviewKind) {
+		if(reviewKind==null) {
+			this.reviewKind = "contents";
+		} else if(reviewKind.equals("w")) {
+			this.reviewKind="id";
+		}else if(reviewKind.equals("c")) {
+			this.reviewKind="contents";
+		} else this.reviewKind="contents";
 	}
 	
 }

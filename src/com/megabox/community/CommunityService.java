@@ -50,6 +50,7 @@ public class CommunityService implements Action {
 		try {
 			conn = DBConnector.getConnect();
 			totalCount = communityDAO.getTotalCount(searchRow, conn);
+			
 			ar = communityDAO.selectList(searchRow, conn);
 			System.out.println("size : " + ar.size());
 			
@@ -66,6 +67,7 @@ public class CommunityService implements Action {
 		}
 
 		request.setAttribute("communityList", ar);
+		
 		SearchPager searchPager = searchMakePage_2.makePage(totalCount);
 		request.setAttribute("pager", searchPager);
 		
@@ -84,6 +86,7 @@ public class CommunityService implements Action {
 	@Override
 	public ActionForward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
+		
 		
 		CommunityDTO communityDTO = new CommunityDTO();
 		communityDTO.setWriter(request.getParameter("writer"));

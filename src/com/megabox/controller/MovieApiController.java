@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.megabox.action.ActionForward;
-import com.megabox.community.CommunityDAO;
-import com.megabox.community.CommunityService;
+import com.megabox.movieAPI.MovieAPIServiece;
 
 /**
- * Servlet implementation class CommController
+ * Servlet implementation class MovieApiController
  */
-@WebServlet("/CommController")
-public class CommunityController extends HttpServlet {
+@WebServlet("/MovieApiController")
+public class MovieApiController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       private CommunityService communityService;
+    private MovieAPIServiece movieAPIServiece;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityController() {
+    public MovieApiController() {
         super();
-        communityService= new CommunityService();
+        movieAPIServiece = new MovieAPIServiece();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,28 +33,19 @@ public class CommunityController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();
-		ActionForward actionForward = null;
+		ActionForward actionForward = new ActionForward();
 		
-		if(command.equals("/communityList")) {
-			actionForward = communityService.selectList(request, response);
-		} else if(command.equals("/communityWrite")) {
-			actionForward = communityService.insert(request, response);
-		} else if(command.equals("/communityUpdate")) {
-			actionForward = communityService.update(request, response);
-		} else if(command.equals("/communityDelete")) {
-			actionForward = communityService.delete(request, response);
+		if(command.equals("/boxoffice")) {
+			actionForward = movieAPIServiece.boxofficeList(request, response);
 		}
 		
-		//check 가 true이면
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
 			view.forward(request, response);
-			// forward로 전송
 		} else {
 			response.sendRedirect(actionForward.getPath());
 		}
-		
-		
+			
 	
 	}
 
