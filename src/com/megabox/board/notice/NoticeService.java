@@ -10,11 +10,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
 
 import com.megabox.board.BoardDTO;
+import com.megabox.member.MemberDTO;
 import com.megabox.page.SearchMakePage;
 import com.megabox.page.SearchPager;
 import com.megabox.page.SearchRow;
@@ -50,12 +52,23 @@ public class NoticeService implements Action{
 
 		/////////////////////////////////////////////////////////////
 		SearchMakePage s = new SearchMakePage(curPage);
-
+		String id = null;
+		
+		try {
+			HttpSession session = request.getSession();
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			 id = memberDTO.getId();
+		}catch(Exception e) {
+			
+		}finally {
+			
 		//1. row
 		SearchRow searchRow = s.makeRow();
 		List<BoardDTO> ar=null;
 		Connection con = null;
 		try {
+			
+			
 			con = DBConnector.getConnect();
 			ar = noticeDAO.selectList(searchRow, con);
 			
@@ -65,11 +78,12 @@ public class NoticeService implements Action{
 
 			request.setAttribute("pager", searchPager);
 			request.setAttribute("list", ar);
+			request.setAttribute("id", id);
 			actionForward.setCheck(true);
 			actionForward.setPath("../WEB-INF/views/notice/noticeList.jsp");
-		} catch (Exception e) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 			request.setAttribute("message", "Sever Error");
 			request.setAttribute("path", "../index.do");
 			actionForward.setCheck(true);
@@ -77,12 +91,13 @@ public class NoticeService implements Action{
 		}finally {
 			try {
 				con.close();
-			} catch (SQLException e) {
+			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 		}
-
+		}
+		
 		return actionForward;
 	}
 

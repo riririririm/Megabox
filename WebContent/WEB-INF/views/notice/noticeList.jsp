@@ -110,9 +110,13 @@
 			<%-- <% if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
            <input type="button" value="Write" style="float:right">
             <%} %> --%>
+            
+            <c:if test="${id eq 'admin' }">
+            
 			<a href="<%=application.getContextPath()%>/notice/noticeWrite">
 				<input type="button" value="글작성" style="float: right" >
 			</a>
+			</c:if>
 		</div>
 	</div>
 	<c:import url="../temp/footer.jsp" />
