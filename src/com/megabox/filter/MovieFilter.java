@@ -39,6 +39,7 @@ public class MovieFilter implements Filter {
         map.put("/movieTimetableAdmin",true);
         map.put("/movieReg",true);
         map.put("/movieDelete",true);
+        map.put("/movieUpdate",true);
     }
 
 	/**
