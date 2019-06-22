@@ -64,7 +64,10 @@ public class StoreFilter implements Filter {
 			if (memberDTO != null && memberDTO.getId().equals("admin")) {
 				// 관리자만 접근 가능
 				chain.doFilter(request, response);
-			} else {
+			} if(memberDTO != null) {
+				chain.doFilter(request, response);
+			}
+			else {
 				((HttpServletResponse) response).sendRedirect("./storeList");
 			}
 

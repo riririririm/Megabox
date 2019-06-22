@@ -494,7 +494,7 @@ public class MovieService implements Action{
 					//
 					seatDTO.setShow_time(show_times[i]);
 					for(int j=0;j<seatRows.size();j++) {
-						for(int k=1;k<11;k++) {
+						for(int k=0;k<10;k++) {
 							seatDTO.setSeat_num(seatRows.get(j)+k);
 							result3= seatDAO.insert(seatDTO, con);
 						}
