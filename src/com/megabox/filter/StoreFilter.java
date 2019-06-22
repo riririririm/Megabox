@@ -69,7 +69,7 @@ public class StoreFilter implements Filter {
 			}
 
 		} else {
-			if(command.equals("/myModal2")) {
+			if(command.equals("/myModal2") && memberDTO == null) {
 				((HttpServletRequest)request).setAttribute("message", "로그인 후 이용해주세요");
 				((HttpServletRequest)request).setAttribute("path", "./storeList");
 				RequestDispatcher view = ((HttpServletRequest)request).getRequestDispatcher("../WEB-INF/views/common/result.jsp");

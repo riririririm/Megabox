@@ -138,8 +138,8 @@ textarea{
 						<table class="table">
 							<tr>
 								<td style="background: #e6e6e6; width: 220px">이름</td>
-								<td><input type="text" id="writer" name="writer"
-									class="contents"></td>
+								<td><input type="text" id="writer" name="writer" value="${sessionScope.member.id }"
+									class="contents" readonly="readonly"></td>
 							</tr>
 							<tr>
 								<td style="background: #e6e6e6; width: 220px">제목</td>

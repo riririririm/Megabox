@@ -11,15 +11,18 @@ import com.megabox.action.Action;
 import com.megabox.action.ActionForward;
 import com.megabox.page.SearchMakePage;
 import com.megabox.page.SearchRow;
+import com.megabox.qna.QnaDAO;
 import com.megabox.util.DBConnector;
 
 
 
 public class CommentsService implements Action {
 	private CommentsDAO commentsDAO;
+	private QnaDAO qnaDAO;
 	
 	public CommentsService() {
 		commentsDAO = new CommentsDAO();
+		qnaDAO = new QnaDAO();
 	}
 
 	@Override
@@ -87,6 +90,7 @@ public class CommentsService implements Action {
 		try {
 			conn = DBConnector.getConnect();
 			result = commentsDAO.insert(commentsDTO, conn);
+			result = qnaDAO.updateState(commentsDTO.getNum(), conn);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

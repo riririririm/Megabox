@@ -153,8 +153,9 @@
 			<a href="<%=application.getContextPath()%>/notice/noticeList"><img src="../images/notice.PNG" alt="notice"></a>
 			<a href="<%=application.getContextPath()%>/qna/qnaList"><img src="../images/qna1.PNG" alt="qna"></a>
 			<img src="../images/dreamcenter.PNG" alt="dreamcenter" style="float:right">
-
+			<c:if test="${!empty sessionScope.member }">
 			<p style="font-size:20px;margin-top:10px; font-weight:bold;color:#000000;">문의/접수</p>
+			</c:if>
 		</div>
 		<div class="table-container">
 		<table class="table">
@@ -171,12 +172,14 @@
    			<tr>
    				<td colspan="4" height="250" style="border-bottom:1px solid #9999;">${dto.contents}</td>
   			</tr>
+  			<c:if test="${sessionScope.member.id eq dto.writer }">
  			<tr>
  				<a href="<%=application.getContextPath()%>/qna/qnaList"><input type="button" class="btn" value="목록" style="float:left"></a>
   				<a href="<%=application.getContextPath()%>/qna/qnaDelete?num=${dto.num}"><input type="button" class="btn" value="삭제" style="float:right;margin-left:10px" id="noticeDelete" >
  				<%--  <a href="<%=application.getContextPath()%>/notice/noticeUpdate?num=${dto.num}"><input type="button" value="수정" style="float:right"></a> --%>
   				<a href="<%=application.getContextPath()%>/qna/qnaUpdate?num=${dto.num}"><input type="button" class="btn" value="수정" style="float:right"></a>
  			</tr>
+ 			</c:if>
   		</table>
   	
  		</div>
@@ -193,7 +196,7 @@
 				<div class="answer">
 					<div class="form-group">
 			      <label for="writer">Writer:</label>
-			      <input type="text" class="form-control" id="writer" name="writer">
+			      <input type="text" class="form-control" id="writer" name="writer" value="${sessionScope.member.id }" readonly="readonly">
 			    </div>
 			    <div class="form-group">
 				  <label for="contents">Contents:</label>

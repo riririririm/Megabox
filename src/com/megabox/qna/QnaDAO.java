@@ -25,7 +25,17 @@ public class QnaDAO {
 		DBConnector.disConnect(rs, st, con);
 		return result;
 	}
-	
+	public int updateState(int num, Connection conn) throws Exception{
+		int result=0;
+		String sql = "update qna set state=1 where num=?";
+		PreparedStatement st = conn.prepareStatement(sql);
+		st.setInt(1, num);
+		
+		result = st.executeUpdate();
+		st.close();
+		
+		return result;
+	}
 	public ArrayList<QnaDTO> selectListForIndex(Connection conn) throws Exception {
 		ArrayList<QnaDTO> ar = new ArrayList<QnaDTO>();
 		/* String sql = "select num,title,reg_date from notice"; */

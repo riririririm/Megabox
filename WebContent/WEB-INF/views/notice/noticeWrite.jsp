@@ -92,7 +92,7 @@
 		    </div>
 		    <div class="form-group">
 		      <label for="writer">Writer:</label>
-		      <input type="text" class="form-control" id="writer" name="writer">
+		      <input type="text" class="form-control" id="writer" name="writer" value="${sessionScope.member.id }" readonly="readonly">
 		    </div>
 		    <div class="form-group">
 			  <label for="contents">Contents:</label>

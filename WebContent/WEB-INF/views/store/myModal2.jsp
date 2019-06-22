@@ -63,8 +63,7 @@
 			var queryString = $("form[name=payForm]").serialize() ;
 			store_name=$("#kakao_store_name").val().trim();
 			store_count=$("#kakao_total_price").val().trim();
-			alert(store_name);
-			alert(store_count);
+			
          	var IMP = window.IMP; // 생략가능
         	IMP.init('imp72232577');// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 	       	IMP.request_pay({

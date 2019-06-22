@@ -85,7 +85,7 @@ textarea{
 </div>
 
 <a href="<%=application.getContextPath()%>/notice/noticeList"><img src="../images/notice.PNG" alt="notice"></a>
-<a href="<%=application.getContextPath()%>/qna/qnaList"><img src="../images/qna.PNG" alt="qna"></a>
+<a href="<%=application.getContextPath()%>/qna/qnaList"><img src="../images/qna1.PNG" alt="qna"></a>
 <img src="../images/dreamcenter.PNG" alt="dreamcenter" style="float:right">
 
 
@@ -122,7 +122,7 @@ textarea{
    </tr>
  	<input type="hidden" id="num" name="num" class="num" value="${dto.num}">
   </table>
-    <input type="submit"  value="등록"  id="registration" >
+    <input type="submit"  class="btn" value="등록"  id="registration" >
  </form>
 
 </div>

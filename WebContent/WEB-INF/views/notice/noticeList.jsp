@@ -114,7 +114,7 @@
             <c:if test="${id eq 'admin' }">
             
 			<a href="<%=application.getContextPath()%>/notice/noticeWrite">
-				<input type="button" value="글작성" style="float: right" >
+				<input type="button" class="btn" value="글작성" style="float: right" >
 			</a>
 			</c:if>
 		</div>
