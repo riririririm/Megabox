@@ -837,12 +837,12 @@ button.close {
 					<dl id="flip_dl">
 						<!-------------------- 박스오피스 ------------------->
 						<dt id="flip_btn1">
-							<a href="#boxOffice" id="box_office">박스 오피스</a>
+							<a href="#boxOffice" id="box_office">개봉 예정작</a>
 						</dt>
 						<dd id="tab1">
 							<p class="text-right">
 								<a href="${pageContext.request.contextPath}/movieAPI/boxoffice"
-									id="movie_all1">박스 오피스 전체보기 </a>
+									id="movie_all1">개봉 예정작 전체보기 </a>
 							</p>
 							<div id="movie_slide1">
 

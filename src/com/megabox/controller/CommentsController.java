@@ -43,6 +43,7 @@ public class CommentsController extends HttpServlet {
 		}else if(command.equals("/commentsDelete")) {
 			actionForward = commentsService.delete(request, response);
 		}else if(command.equals("/commentsUpdate")) {
+			System.out.println("update");
 			actionForward = commentsService.update(request, response);
 		}else if(command.equals("/commentsList")) {
 			actionForward = commentsService.selectList(request, response);

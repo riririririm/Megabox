@@ -57,6 +57,7 @@
 		$("#updateBtn").click(function() {
 			//alert($('#updateContents').val());
 			//alert($("#cnum").val());
+			
 			var contents = $("#updateContents").val();
 			var cnum =$("#cnum").val();
 			$.post("../comments/commentsUpdate",{
@@ -132,6 +133,7 @@
 		$("#commentsList").on("click",".update", function() {
 			var id = $(this).attr("title");
 			var con = $("#c"+id).html();
+			
 			$("#updateContents").val(con);
 			$("#cnum").val(id);
 		});
@@ -208,6 +210,32 @@
 		</div>
 		
 	</div>
+	
+	 <!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h4 class="modal-title">${member.id}</h4>
+	        </div>
+	        <div class="modal-body">
+		         <div class="form-group">
+				  <label for="contents">Contents:</label>
+				  <textarea class="form-control" rows="10" id="updateContents" name="contents"></textarea>
+				  <input type="hidden" id="cnum">
+				</div>
+	        </div>
+	        <div class="modal-footer">
+			   <button class="btn btn-danger" id="updateBtn" data-dismiss="modal">Update</button>
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	
 	<c:import url = "../temp/footer.jsp"/>
 </body>
 </html>

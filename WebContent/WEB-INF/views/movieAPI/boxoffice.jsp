@@ -339,7 +339,7 @@
 	<div id="sub_navi">
 		<div id="sub_navi_wrap">
 			<ul id="sub_menu">
-				<li><a href="#" class="select" id="sub1">박스오피스</a></li>
+				<li><a href="#" class="select" id="sub1">개봉예정작</a></li>
 				<li><a href="#" class="select" id="sub2">최신개봉작</a></li>
 				<li><a href="#" class="select" id="sub3">♥ 보고싶어</a></li>
 				
